@@ -1,0 +1,81 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  theme: {
+    extend: {
+      colors: {
+        coral: {
+          50: '#FDF0EE',
+          100: '#FAD9D5',
+          200: '#F5B8B2',
+          300: '#EF9690',
+          400: '#E8776F',
+          500: '#D4756A',
+          600: '#C4605A',
+          700: '#A84D48',
+          800: '#8A3C38',
+          900: '#6B2D2A',
+        },
+        peach: {
+          50: '#FFF5F2',
+          100: '#FDE8E2',
+          200: '#FAD1C6',
+          300: '#F6B8A9',
+          400: '#F2A08E',
+          500: '#ED8876',
+          600: '#E06B58',
+          700: '#C4503D',
+          800: '#9F3B2C',
+          900: '#7A2B1E',
+        },
+        sage: {
+          50: '#F4F6F3',
+          100: '#E4E9E2',
+          200: '#C8D3C5',
+          300: '#ACBDA8',
+          400: '#9DAE97',
+          500: '#8A9E84',
+          600: '#748D6E',
+          700: '#5E7358',
+          800: '#485843',
+          900: '#343F30',
+        },
+        cream: {
+          50: '#FDFAF8',
+          100: '#FAF0EC',
+          200: '#F5E4DC',
+          300: '#EFD5C9',
+          400: '#E8C4B5',
+          500: '#DEB3A0',
+          600: '#D09E88',
+          700: '#B8856D',
+          800: '#9A6B55',
+          900: '#7A503E',
+        },
+      },
+      backgroundImage: {
+        'hero-gradient': 'linear-gradient(135deg, #FDF5F2 0%, #FAD9D5 40%, #E4E9E2 100%)',
+        'coral-gradient': 'linear-gradient(135deg, #F2A08E 0%, #D4756A 100%)',
+        'sage-gradient': 'linear-gradient(135deg, #C8D3C5 0%, #8A9E84 100%)',
+        'warm-gradient': 'linear-gradient(135deg, #FAF0EC 0%, #FDE8E2 50%, #E4E9E2 100%)',
+      },
+      animation: {
+        'float': 'float 6s ease-in-out infinite',
+        'float-slow': 'float 9s ease-in-out infinite',
+        'float-delayed': 'float 7s ease-in-out 2s infinite',
+        'pulse-soft': 'pulseSoft 4s ease-in-out infinite',
+      },
+      keyframes: {
+        float: {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-20px)' },
+        },
+        pulseSoft: {
+          '0%, 100%': { opacity: '0.6', transform: 'scale(1)' },
+          '50%': { opacity: '1', transform: 'scale(1.05)' },
+        },
+      },
+    },
+  },
+  plugins: [],
+};
