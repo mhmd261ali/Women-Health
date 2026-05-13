@@ -4,14 +4,14 @@ import { Menu, X } from "lucide-react";
 import logo from "../images/Logo.png";
 
 const navLinks = [
-  { label: "حول", href: "#about" },
-  { label: "الخدمات", href: "#services" },
-  { label: "لماذا أنا", href: "#why-me" },
-  { label: "الشهادات", href: "#certificates" },
-  { label: "المعرض", href: "#gallery" },
-  { label: "التقييمات", href: "#testimonials" },
-  { label: "المدونة", href: "/blog" },
-  { label: "اتصل", href: "#contact" },
+  { label: "About", href: "#about" },
+  { label: "Services", href: "#services" },
+  { label: "Why Me", href: "#why-me" },
+  { label: "Certificates", href: "#certificates" },
+  { label: "Gallery", href: "#gallery" },
+  { label: "Testimonials", href: "#testimonials" },
+  { label: "Blog", href: "/blog" },
+  { label: "Contact", href: "#contact" },
 ];
 
 export default function Navbar() {
@@ -44,7 +44,6 @@ export default function Navbar() {
             ? "bg-white/90 backdrop-blur-md shadow-[0_4px_24px_rgba(212,117,106,0.12)]"
             : "bg-transparent"
         }`}
-        dir="rtl"
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8 h-16 flex items-center justify-between">
           {/* Logo */}
@@ -72,7 +71,7 @@ export default function Navbar() {
               onClick={() => handleNav("#contact")}
               className="px-5 py-2 rounded-full bg-coral-gradient text-white text-sm font-medium shadow-md hover:shadow-[0_4px_20px_rgba(212,117,106,0.4)] hover:scale-105 transition-all duration-200"
             >
-              احجز الآن
+              Book Now
             </button>
           </div>
 
@@ -104,15 +103,12 @@ export default function Navbar() {
               className="absolute inset-0 bg-black/30 backdrop-blur-sm"
               onClick={() => setMobileOpen(false)}
             />
-            <div
-              className="absolute right-0 top-0 bottom-0 w-72 bg-white shadow-2xl flex flex-col pt-20 px-8 gap-2"
-              dir="rtl"
-            >
+            <div className="absolute right-0 top-0 bottom-0 w-72 bg-white shadow-2xl flex flex-col pt-20 px-8 gap-2">
               {navLinks.map((link) => (
                 <button
                   key={link.href}
                   onClick={() => handleNav(link.href)}
-                  className="text-right py-3 text-sage-700 font-medium border-b border-cream-200 hover:text-coral-500 transition-colors"
+                  className="text-left py-3 text-sage-700 font-medium border-b border-cream-200 hover:text-coral-500 transition-colors"
                 >
                   {link.label}
                 </button>
@@ -121,7 +117,7 @@ export default function Navbar() {
                 onClick={() => handleNav("#contact")}
                 className="mt-6 px-5 py-3 rounded-full bg-coral-gradient text-white font-medium text-center shadow-md"
               >
-                احجز استشارة
+                Book a Consultation
               </button>
             </div>
           </motion.div>

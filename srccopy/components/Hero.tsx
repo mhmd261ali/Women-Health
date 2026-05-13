@@ -38,7 +38,6 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      dir="rtl"
       className="relative min-h-screen flex items-center overflow-hidden"
       style={{
         background:
@@ -47,54 +46,54 @@ export default function Hero() {
     >
       {/* Background blobs */}
       <FloatingBlob
-        className="w-96 h-96 bg-coral-200 top-[-8rem] right-[-6rem]"
+        className="w-96 h-96 bg-coral-200 top-[-8rem] left-[-6rem]"
         delay={0}
         duration={8}
       />
       <FloatingBlob
-        className="w-80 h-80 bg-sage-200 bottom-[-4rem] left-[-4rem]"
+        className="w-80 h-80 bg-sage-200 bottom-[-4rem] right-[-4rem]"
         delay={2}
         duration={9}
       />
       <FloatingBlob
-        className="w-64 h-64 bg-peach-200 bottom-16 right-1/4"
+        className="w-64 h-64 bg-peach-200 bottom-16 left-1/4"
         delay={1}
         duration={7}
       />
 
       {/* Decorative orbs */}
       <FloatingOrb
-        className="w-12 h-12 bg-coral-300/60 top-32 right-[15%] shadow-lg"
+        className="w-12 h-12 bg-coral-300/60 top-32 left-[15%] shadow-lg"
         delay={0}
       />
       <FloatingOrb
-        className="w-8 h-8 bg-sage-300/70 top-48 left-[18%] shadow-md"
+        className="w-8 h-8 bg-sage-300/70 top-48 right-[18%] shadow-md"
         delay={1.5}
       />
       <FloatingOrb
-        className="w-16 h-16 bg-peach-300/50 bottom-40 left-[25%] shadow-xl"
+        className="w-16 h-16 bg-peach-300/50 bottom-40 right-[25%] shadow-xl"
         delay={0.8}
       />
       <FloatingOrb
-        className="w-6 h-6 bg-coral-400/60 bottom-56 right-[30%]"
+        className="w-6 h-6 bg-coral-400/60 bottom-56 left-[30%]"
         delay={2.2}
       />
 
       {/* Ring shapes */}
       <motion.div
-        className="absolute top-24 left-[12%] w-32 h-32 rounded-full border-4 border-sage-300/40"
+        className="absolute top-24 right-[12%] w-32 h-32 rounded-full border-4 border-sage-300/40"
         animate={{ rotate: 360 }}
         transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
       />
       <motion.div
-        className="absolute bottom-32 right-[10%] w-24 h-24 rounded-full border-2 border-coral-300/40"
+        className="absolute bottom-32 left-[10%] w-24 h-24 rounded-full border-2 border-coral-300/40"
         animate={{ rotate: -360 }}
         transition={{ duration: 16, repeat: Infinity, ease: "linear" }}
       />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 pt-20 grid lg:grid-cols-2 gap-12 items-center">
         {/* Text content */}
-        <div className="text-right lg:order-1">
+        <div>
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -103,18 +102,18 @@ export default function Hero() {
           >
             <span className="w-2 h-2 rounded-full bg-coral-400 animate-pulse" />
             {/* Replace with your tagline badge */}
-            أخصائية معتمدة في الصحة والرفاهية
+            Certified Health & Wellness Professional
           </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-4xl lg:text-6xl font-bold leading-tight mb-4"
+            className="text-5xl lg:text-7xl font-bold leading-tight mb-4"
             style={{ fontFamily: "Georgia, serif", color: "#4A3530" }}
           >
             {/* Replace with your name */}
-            م. مريم ترمس
+            Dr. Maryam
             <br />
             <span
               style={{
@@ -122,9 +121,8 @@ export default function Hero() {
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
               }}
-              className="text-5xl lg:text-7xl mt-8"
             >
-              صحة المرأة والطفل
+              Termos
             </span>
           </motion.h1>
 
@@ -134,24 +132,25 @@ export default function Hero() {
             transition={{ duration: 0.7, delay: 0.35 }}
             className="text-sage-600 font-medium text-lg mb-3 tracking-wide"
           >
-            &nbsp; أخصائية علاج فيزيائي &nbsp;|&nbsp; أخصائية الرضاعة الطبيعية
+            Personal Trainer &nbsp;|&nbsp; Physiotherapist &nbsp;|&nbsp;
+            Breastfeeding Specialist
           </motion.p>
 
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.45 }}
-            className="text-sage-700/80 text-lg leading-relaxed mb-10 max-w-lg mr-0"
+            className="text-sage-700/80 text-lg leading-relaxed mb-10 max-w-lg"
           >
-            أساعد النساء على الشعور بالقوة والصحة والثقة في كل مرحلة من مراحل
-            الحياة — من تحسين الأداء البدني إلى التعافي بعد الولادة.
+            Helping women feel stronger, healthier, and more confident through
+            every stage of life — from peak performance to postpartum recovery.
           </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.55 }}
-            className="flex flex-wrap gap-4 justify-start lg:justify-end"
+            className="flex flex-wrap gap-4"
           >
             <button
               onClick={() => scrollTo("#contact")}
@@ -160,14 +159,13 @@ export default function Hero() {
                 background: "linear-gradient(135deg, #E8776F 0%, #D4756A 100%)",
               }}
             >
-              احجزي استشارة
+              Book a Consultation
             </button>
-
             <button
               onClick={() => scrollTo("#services")}
               className="px-8 py-4 rounded-full font-semibold text-base border-2 border-sage-400 text-sage-700 bg-white/60 backdrop-blur-sm hover:bg-sage-50 hover:border-sage-500 hover:scale-105 transition-all duration-300"
             >
-              عرض الخدمات
+              View Services
             </button>
           </motion.div>
 
@@ -176,21 +174,20 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.7 }}
-            className="flex gap-8 mt-12 justify-start lg:justify-end"
+            className="flex gap-8 mt-12"
           >
             {[
-              { value: "8+", label: "سنوات خبرة" },
-              { value: "500+", label: "عميلة سعيدة" },
-              { value: "5", label: "شهادات" },
+              { value: "8+", label: "Years Experience" },
+              { value: "500+", label: "Happy Clients" },
+              { value: "5", label: "Certifications" },
             ].map((stat) => (
-              <div key={stat.label} className="text-center">
+              <div key={stat.label}>
                 <div
                   className="text-2xl font-bold"
                   style={{ color: "#D4756A", fontFamily: "Georgia, serif" }}
                 >
                   {stat.value}
                 </div>
-
                 <div className="text-xs text-sage-600 font-medium mt-0.5">
                   {stat.label}
                 </div>
@@ -201,10 +198,10 @@ export default function Hero() {
 
         {/* Hero image */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9, x: -40 }}
+          initial={{ opacity: 0, scale: 0.9, x: 40 }}
           animate={{ opacity: 1, scale: 1, x: 0 }}
           transition={{ duration: 0.9, delay: 0.3, ease: "easeOut" }}
-          className="relative flex justify-center lg:order-2"
+          className="relative flex justify-center"
         >
           {/* Glow ring */}
           <div
@@ -220,10 +217,9 @@ export default function Hero() {
             {/* Replace src with your professional photo */}
             <img
               src="https://images.pexels.com/photos/6740057/pexels-photo-6740057.jpeg?auto=compress&cs=tinysrgb&w=800"
-              alt="د. مريم — مدربة شخصية وأخصائية علاج طبيعي"
+              alt="Dr. Sarah — Personal Trainer & Physiotherapist"
               className="w-full h-full object-cover"
             />
-
             <div
               className="absolute inset-0"
               style={{
@@ -237,10 +233,14 @@ export default function Hero() {
           <motion.div
             animate={{ y: [0, -8, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-8 -right-6 bg-white/80 backdrop-blur-md rounded-2xl px-4 py-3 shadow-lg border border-coral-100 text-right"
+            className="absolute top-8 -left-6 bg-white/80 backdrop-blur-md rounded-2xl px-4 py-3 shadow-lg border border-coral-100"
           >
-            <div className="text-xs text-sage-600 font-medium">متخصصة في</div>
-            <div className="text-sm font-bold text-coral-600">صحة المرأة</div>
+            <div className="text-xs text-sage-600 font-medium">
+              Specialized in
+            </div>
+            <div className="text-sm font-bold text-coral-600">
+              Women's Health
+            </div>
           </motion.div>
 
           <motion.div
@@ -251,13 +251,11 @@ export default function Hero() {
               repeat: Infinity,
               ease: "easeInOut",
             }}
-            className="absolute bottom-16 -left-6 bg-white/80 backdrop-blur-md rounded-2xl px-4 py-3 shadow-lg border border-sage-100 text-right"
+            className="absolute bottom-16 -right-6 bg-white/80 backdrop-blur-md rounded-2xl px-4 py-3 shadow-lg border border-sage-100"
           >
-            <div className="text-xs text-sage-600 font-medium">
-              ما بعد الولادة
-            </div>
+            <div className="text-xs text-sage-600 font-medium">Postpartum</div>
             <div className="text-sm font-bold text-sage-700">
-              خبيرة في التعافي
+              Recovery Expert
             </div>
           </motion.div>
         </motion.div>
@@ -272,9 +270,8 @@ export default function Hero() {
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-sage-500 hover:text-coral-500 transition-colors"
       >
         <span className="text-xs font-medium tracking-widest uppercase">
-          مرّري
+          Scroll
         </span>
-
         <motion.div
           animate={{ y: [0, 6, 0] }}
           transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}

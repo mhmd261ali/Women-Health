@@ -4,54 +4,54 @@ import { Dumbbell, Activity, Baby, Heart, Users, Zap } from "lucide-react";
 const services = [
   {
     icon: Dumbbell,
-    title: "التدريب الشخصي",
+    title: "Personal Training",
     description:
-      "برامج لياقة مخصّصة حسب أهدافكِ، تساعدكِ على بناء القوة والتحمّل والثقة بطريقة آمنة ومستدامة.",
+      "Custom fitness programs designed for your goals — building strength, endurance, and confidence safely and sustainably.",
     color: "from-coral-100 to-peach-100",
     accent: "#D4756A",
     border: "rgba(212,117,106,0.2)",
   },
   {
     icon: Activity,
-    title: "العلاج الطبيعي وإعادة التأهيل",
+    title: "Physiotherapy & Rehabilitation",
     description:
-      "إعادة تأهيل مبنية على الأدلة العلمية للتعافي من الإصابات، وإدارة الألم، واستعادة أنماط الحركة السليمة.",
+      "Evidence-based rehabilitation for injury recovery, pain management, and restoring optimal movement patterns.",
     color: "from-sage-100 to-sage-50",
     accent: "#8A9E84",
     border: "rgba(138,158,132,0.2)",
   },
   {
     icon: Baby,
-    title: "التعافي بعد الولادة",
+    title: "Postpartum Recovery",
     description:
-      "برامج لطيفة وتدريجية تساعد الأمهات الجدد على استعادة القوة، والتعافي من انفصال عضلات البطن، واسترجاع الحيوية.",
+      "Gentle, progressive recovery programs that help new mothers rebuild strength, heal diastasis recti, and regain vitality.",
     color: "from-cream-100 to-peach-50",
     accent: "#C4605A",
     border: "rgba(196,96,90,0.2)",
   },
   {
     icon: Heart,
-    title: "استشارة الرضاعة الطبيعية",
+    title: "Breastfeeding Consultation",
     description:
-      "دعم متخصص ومتعاطف في مشاكل الالتقام، وإدرار الحليب، ووضعيات الرضاعة، والتعامل مع تحديات الرضاعة الطبيعية.",
+      "Compassionate specialist support for latching, milk supply, positioning, and navigating breastfeeding challenges.",
     color: "from-peach-100 to-coral-50",
     accent: "#D4756A",
     border: "rgba(212,117,106,0.2)",
   },
   {
     icon: Users,
-    title: "إرشاد صحة المرأة",
+    title: "Women's Health Coaching",
     description:
-      "إرشاد شامل يراعي الهرمونات، وصحة الدورة الشهرية، والعلاقة مع التغذية، والتوتر، وصحة المرأة في مختلف مراحل الحياة.",
+      "Holistic coaching that addresses hormones, cycle wellness, nutrition mindset, stress, and lifelong female health.",
     color: "from-sage-100 to-cream-100",
     accent: "#8A9E84",
     border: "rgba(138,158,132,0.2)",
   },
   {
     icon: Zap,
-    title: "تحسين الحركة وإدارة الألم",
+    title: "Mobility & Pain Management",
     description:
-      "تمارين حركية موجّهة، وعلاج يدوي، وتمارين تصحيحية للمساعدة على تخفيف الألم المزمن وتحسين الأداء اليومي.",
+      "Targeted mobility work, manual therapy, and corrective exercise to eliminate chronic pain and improve daily function.",
     color: "from-cream-100 to-sage-50",
     accent: "#748D6E",
     border: "rgba(116,141,110,0.2)",
@@ -62,7 +62,6 @@ export default function Services() {
   return (
     <section
       id="services"
-      dir="rtl"
       className="py-24 relative overflow-hidden"
       style={{
         background: "linear-gradient(180deg, #F4F6F3 0%, #FFF5F2 100%)",
@@ -89,20 +88,18 @@ export default function Services() {
               border: "1px solid rgba(212,117,106,0.25)",
             }}
           >
-            خدماتي
+            What I Offer
           </div>
-
           <h2
             className="text-4xl lg:text-5xl font-bold mb-5"
             style={{ fontFamily: "Georgia, serif", color: "#4A3530" }}
           >
-            خدمات مصمّمة
-            <span style={{ color: "#D4756A" }}> خصيصًا لكِ</span>
+            Services Tailored
+            <span style={{ color: "#D4756A" }}> for You</span>
           </h2>
-
           <p className="text-sage-600 text-lg max-w-2xl mx-auto leading-relaxed">
-            تُقدَّم كل خدمة بخبرة مهنية، ورعاية صادقة، ونهج شخصي يراعي رحلتكِ
-            واحتياجاتكِ الخاصة.
+            Every service is delivered with expert knowledge, genuine care, and
+            a deeply personal approach to your unique journey.
           </p>
         </motion.div>
 
@@ -117,7 +114,7 @@ export default function Services() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.08 }}
                 whileHover={{ y: -6, scale: 1.02 }}
-                className={`group relative bg-gradient-to-br ${color} rounded-3xl p-7 cursor-pointer transition-shadow duration-300 text-right`}
+                className={`group relative bg-gradient-to-br ${color} rounded-3xl p-7 cursor-pointer transition-shadow duration-300`}
                 style={{
                   border: `1.5px solid ${border}`,
                   boxShadow: "0 4px 20px rgba(0,0,0,0.05)",
@@ -147,29 +144,11 @@ export default function Services() {
                 >
                   {title}
                 </h3>
-
                 <p className="text-sage-700/75 text-sm leading-relaxed mb-5">
                   {description}
                 </p>
 
                 {/* CTA link */}
-                <div
-                  className="inline-flex items-center gap-1.5 text-sm font-semibold transition-gap duration-200 flex-row-reverse"
-                  style={{ color: accent }}
-                >
-                  اعرفي المزيد
-                  <motion.span
-                    className="inline-block"
-                    animate={{ x: [0, -4, 0] }}
-                    transition={{
-                      duration: 1.5,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                  >
-                    ←
-                  </motion.span>
-                </div>
 
                 {/* Hover glow */}
                 <div
@@ -202,7 +181,7 @@ export default function Services() {
               background: "linear-gradient(135deg, #E8776F 0%, #D4756A 100%)",
             }}
           >
-            احجزي جلستكِ الأولى
+            Book Your First Session
           </button>
         </motion.div>
       </div>
