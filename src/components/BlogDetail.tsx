@@ -1,296 +1,251 @@
-import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import { PortableText } from '@portabletext/react';
-import { getPostBySlug, getRelatedPosts, BlogPost } from '../lib/sanity';
-import { Calendar, User, Tag, ArrowLeft, Share2 } from 'lucide-react';
+import { useEffect, useRef, useState } from "react";
+import { motion, useInView } from "framer-motion";
+import { Award, Heart, Users, BookOpen } from "lucide-react";
 
-const portableTextComponents = {
-  block: {
-    h1: ({ children }: any) => (
-      <h1 className="text-3xl font-bold my-6" style={{ fontFamily: 'Georgia, serif', color: '#4A3530' }}>
-        {children}
-      </h1>
-    ),
-    h2: ({ children }: any) => (
-      <h2 className="text-2xl font-bold my-5" style={{ fontFamily: 'Georgia, serif', color: '#4A3530' }}>
-        {children}
-      </h2>
-    ),
-    h3: ({ children }: any) => (
-      <h3 className="text-xl font-bold my-4" style={{ fontFamily: 'Georgia, serif', color: '#4A3530' }}>
-        {children}
-      </h3>
-    ),
-    normal: ({ children }: any) => <p className="text-sage-700 leading-7 my-4">{children}</p>,
-    blockquote: ({ children }: any) => (
-      <blockquote
-        className="border-l-4 pl-6 py-4 my-6 italic text-sage-600"
-        style={{ borderLeftColor: '#D4756A' }}
-      >
-        {children}
-      </blockquote>
-    ),
-  },
-  list: {
-    bullet: ({ children }: any) => <ul className="list-disc list-inside space-y-2 my-4">{children}</ul>,
-    number: ({ children }: any) => <ol className="list-decimal list-inside space-y-2 my-4">{children}</ol>,
-  },
-  listItem: {
-    bullet: ({ children }: any) => <li className="text-sage-700">{children}</li>,
-    number: ({ children }: any) => <li className="text-sage-700">{children}</li>,
-  },
-};
-
-interface BlogDetailProps {
-  slug: string;
-}
-
-export default function BlogDetail({ slug }: BlogDetailProps) {
-  const [post, setPost] = useState<BlogPost | null>(null);
-  const [relatedPosts, setRelatedPosts] = useState<BlogPost[]>([]);
-  const [loading, setLoading] = useState(true);
+function AnimatedCounter({
+  target,
+  suffix = "",
+  duration = 2000,
+}: {
+  target: number;
+  suffix?: string;
+  duration?: number;
+}) {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true });
 
   useEffect(() => {
-    const fetchPost = async () => {
-      setLoading(true);
-      try {
-        const postData = await getPostBySlug(slug);
-        setPost(postData);
+    if (!inView) return;
 
-        if (postData?.categories?.[0]?._id) {
-          const related = await getRelatedPosts(postData._id, postData.categories[0]._id);
-          setRelatedPosts(related);
-        }
-      } catch (error) {
-        console.error('Error fetching post:', error);
-      } finally {
-        setLoading(false);
+    let start = 0;
+    const step = target / (duration / 16);
+
+    const timer = setInterval(() => {
+      start += step;
+
+      if (start >= target) {
+        setCount(target);
+        clearInterval(timer);
+      } else {
+        setCount(Math.floor(start));
       }
-    };
+    }, 16);
 
-    fetchPost();
-  }, [slug]);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(180deg, #FAF0EC 0%, #F4F6F3 100%)' }}>
-        <div className="w-8 h-8 border-4 border-coral-200 border-t-coral-500 rounded-full animate-spin" />
-      </div>
-    );
-  }
-
-  if (!post) {
-    return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(180deg, #FAF0EC 0%, #F4F6F3 100%)' }}>
-        <div className="text-center">
-          <h1 className="text-3xl font-bold text-sage-700 mb-4">Article Not Found</h1>
-          <a href="/blog" className="text-coral-500 hover:text-coral-600 font-semibold">
-            Back to Blog
-          </a>
-        </div>
-      </div>
-    );
-  }
+    return () => clearInterval(timer);
+  }, [inView, target, duration]);
 
   return (
-    <article style={{ background: 'linear-gradient(180deg, #FAF0EC 0%, #F4F6F3 100%)' }}>
-      {/* Header with back button */}
-      <div className="pt-32 pb-8 max-w-3xl mx-auto px-6 lg:px-8">
-        <motion.a
-          href="/blog"
-          initial={{ opacity: 0, x: -10 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="inline-flex items-center gap-2 text-coral-600 hover:text-coral-700 font-semibold text-sm mb-8 transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Back to Blog
-        </motion.a>
+    <span ref={ref}>
+      {count}
+      {suffix}
+    </span>
+  );
+}
 
-        {/* Categories */}
-        {post.categories && post.categories.length > 0 && (
+const stats = [
+  { icon: BookOpen, value: 8, suffix: "+", label: "سنوات من الخبرة" },
+  { icon: Users, value: 500, suffix: "+", label: "عميلة سعيدة" },
+  { icon: Award, value: 5, suffix: "", label: "شهادات معتمدة" },
+  { icon: Heart, value: 12, suffix: "+", label: "برامج صحية" },
+];
+
+export default function About() {
+  return (
+    <section
+      id="about"
+      dir="rtl"
+      className="py-24 relative overflow-hidden"
+      style={{
+        background: "linear-gradient(180deg, #FAF0EC 0%, #F4F6F3 100%)",
+      }}
+    >
+      {/* Decorative shape */}
+      <div
+        className="absolute top-0 left-0 w-96 h-96 rounded-full blur-3xl opacity-20"
+        style={{ background: "radial-gradient(circle, #E8776F, transparent)" }}
+      />
+      <div
+        className="absolute bottom-0 right-0 w-72 h-72 rounded-full blur-3xl opacity-15"
+        style={{ background: "radial-gradient(circle, #8A9E84, transparent)" }}
+      />
+
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          {/* Image side */}
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="flex flex-wrap gap-2 mb-6"
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="relative lg:order-2"
           >
-            {post.categories.map((cat) => (
-              <span
-                key={cat._id}
-                className="px-3 py-1 rounded-full text-xs font-semibold text-white"
-                style={{ background: '#D4756A' }}
-              >
-                {cat.title}
-              </span>
-            ))}
-          </motion.div>
-        )}
-
-        {/* Title */}
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.15 }}
-          className="text-4xl lg:text-5xl font-bold leading-tight mb-6"
-          style={{ fontFamily: 'Georgia, serif', color: '#4A3530' }}
-        >
-          {post.title}
-        </motion.h1>
-
-        {/* Meta info */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="flex flex-wrap items-center gap-6 text-sage-600 text-sm"
-        >
-          {post.author && (
-            <div className="flex items-center gap-2">
-              {post.author.image?.asset?.url && (
-                <img
-                  src={post.author.image.asset.url}
-                  alt={post.author.name}
-                  className="w-8 h-8 rounded-full object-cover"
-                />
-              )}
-              <span>{post.author.name}</span>
-            </div>
-          )}
-          <div className="flex items-center gap-2">
-            <Calendar className="w-4 h-4" />
-            {new Date(post.publishedAt || post._createdAt).toLocaleDateString('en-US', {
-              month: 'long',
-              day: 'numeric',
-              year: 'numeric',
-            })}
-          </div>
-          <button className="flex items-center gap-2 hover:text-coral-600 transition-colors">
-            <Share2 className="w-4 h-4" />
-            Share
-          </button>
-        </motion.div>
-      </div>
-
-      {/* Featured image */}
-      {post.mainImage?.asset?.url && (
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.25 }}
-          className="max-w-4xl mx-auto px-6 lg:px-8 mb-12"
-        >
-          <div className="rounded-3xl overflow-hidden shadow-2xl aspect-[16/9]">
-            <img
-              src={post.mainImage.asset.url}
-              alt={post.mainImage.alt || post.title}
-              className="w-full h-full object-cover"
+            <div
+              className="absolute -top-6 -right-6 w-full h-full rounded-[2rem] opacity-20"
+              style={{
+                background: "linear-gradient(135deg, #D4756A, #8A9E84)",
+              }}
             />
-          </div>
-        </motion.div>
-      )}
 
-      {/* Content */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.3 }}
-        className="max-w-3xl mx-auto px-6 lg:px-8 py-12"
-      >
-        {post.excerpt && (
-          <div
-            className="text-xl leading-relaxed mb-8 p-6 rounded-2xl italic"
-            style={{ background: 'rgba(212,117,106,0.08)', color: '#8A6660' }}
-          >
-            {post.excerpt}
-          </div>
-        )}
+            <div className="relative rounded-[2rem] overflow-hidden shadow-2xl aspect-[4/5]">
+              {/* Replace src with your about photo */}
+              <img
+                src="https://images.pexels.com/photos/3757376/pexels-photo-3757376.jpeg?auto=compress&cs=tinysrgb&w=800"
+                alt="نبذة عن الدكتورة سارة"
+                className="w-full h-full object-cover"
+              />
 
-        {post.body && (
-          <div className="prose prose-sm max-w-none">
-            <PortableText value={post.body} components={portableTextComponents} />
-          </div>
-        )}
-      </motion.div>
+              <div
+                className="absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(to top, rgba(138,158,132,0.3) 0%, transparent 60%)",
+                }}
+              />
+            </div>
 
-      {/* Related posts */}
-      {relatedPosts.length > 0 && (
-        <motion.section
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="max-w-6xl mx-auto px-6 lg:px-8 py-16 border-t border-cream-300"
-        >
-          <h2
-            className="text-3xl font-bold mb-8"
-            style={{ fontFamily: 'Georgia, serif', color: '#4A3530' }}
-          >
-            Related Articles
-          </h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {relatedPosts.map((relPost) => (
-              <a
-                key={relPost._id}
-                href={`/blog/${relPost.slug.current}`}
-                className="group rounded-2xl overflow-hidden bg-white/70 backdrop-blur-sm border border-cream-200 hover:border-coral-300 transition-all duration-300 hover:shadow-lg"
-              >
-                {relPost.mainImage?.asset?.url && (
-                  <div className="h-40 overflow-hidden bg-sage-100">
-                    <img
-                      src={relPost.mainImage.asset.url}
-                      alt={relPost.mainImage.alt || relPost.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                    />
-                  </div>
-                )}
-                <div className="p-5">
-                  <h3
-                    className="font-bold text-base mb-2 line-clamp-2"
-                    style={{ fontFamily: 'Georgia, serif', color: '#4A3530' }}
-                  >
-                    {relPost.title}
-                  </h3>
-                  <p className="text-xs text-sage-500">
-                    {new Date(relPost.publishedAt || relPost._createdAt).toLocaleDateString(
-                      'en-US',
-                      { month: 'short', day: 'numeric', year: 'numeric' }
-                    )}
-                  </p>
+            {/* Floating card on image */}
+            <motion.div
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute -bottom-6 -left-6 bg-white rounded-2xl p-5 shadow-xl border border-coral-100 max-w-[220px]"
+            >
+              <div className="flex items-center gap-3 mb-2">
+                <div
+                  className="w-10 h-10 rounded-full flex items-center justify-center"
+                  style={{
+                    background: "linear-gradient(135deg, #F2A08E, #D4756A)",
+                  }}
+                >
+                  <Heart className="w-5 h-5 text-white fill-white" />
                 </div>
-              </a>
-            ))}
-          </div>
-        </motion.section>
-      )}
 
-      {/* CTA section */}
-      <motion.section
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="max-w-3xl mx-auto px-6 lg:px-8 py-16"
-      >
-        <div
-          className="rounded-3xl p-10 text-center"
-          style={{ background: 'linear-gradient(135deg, #D4756A 0%, #8A9E84 100%)' }}
-        >
-          <h3
-            className="text-2xl font-bold text-white mb-4"
-            style={{ fontFamily: 'Georgia, serif' }}
+                <div>
+                  <div className="text-xs text-sage-500 font-medium">
+                    فلسفتي
+                  </div>
+                  <div className="text-sm font-bold text-coral-700">
+                    رعاية شاملة
+                  </div>
+                </div>
+              </div>
+
+              <p className="text-xs text-sage-600 leading-relaxed">
+                العقل والجسد والروح — دعم وتعافٍ في كل مرحلة من مراحل حياة
+                المرأة.
+              </p>
+            </motion.div>
+          </motion.div>
+
+          {/* Text side */}
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+            className="text-right lg:order-1"
           >
-            Ready to Transform Your Wellness?
-          </h3>
-          <p className="text-white/80 mb-6">
-            Connect with me to discuss how these insights apply to your unique journey.
-          </p>
-          <button
-            onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}
-            className="px-8 py-3 rounded-full bg-white font-semibold text-base hover:shadow-lg hover:scale-105 transition-all duration-300"
-            style={{ color: '#D4756A' }}
-          >
-            Book a Consultation
-          </button>
+            <div
+              className="inline-block px-4 py-1.5 rounded-full text-sm font-medium text-coral-600 mb-6"
+              style={{
+                background: "rgba(212,117,106,0.1)",
+                border: "1px solid rgba(212,117,106,0.25)",
+              }}
+            >
+              من أنا
+            </div>
+
+            <h2
+              className="text-4xl lg:text-5xl font-bold mb-6 leading-tight"
+              style={{ fontFamily: "Georgia, serif", color: "#4A3530" }}
+            >
+              شغف حقيقي
+              <br />
+              <span style={{ color: "#D4756A" }}>بصحة ورفاهية المرأة</span>
+            </h2>
+
+            <div className="space-y-4 text-sage-700/80 text-base leading-relaxed mb-8">
+              <p>
+                {/* Replace with your personal story */}
+                أنا مدربة شخصية معتمدة، وأخصائية علاج طبيعي مرخّصة، ومتخصصة في
+                دعم الرضاعة الطبيعية، أمتلك شغفًا عميقًا بمرافقة النساء في كل
+                مرحلة من رحلتهن الصحية، من تحسين الأداء البدني وبناء القوة إلى
+                دعم الأمومة الجديدة بكل ما تحمله من حساسية وتحديات.
+              </p>
+
+              <p>
+                يرتكز أسلوبي على الجمع بين التأهيل العلاجي المبني على الأدلة
+                العلمية والتدريب الشخصي المتعاطف والمصمم حسب احتياجات كل امرأة.
+                سواء كنتِ تتعافين من إصابة، أو تمرين بتحديات ما بعد الولادة، أو
+                تسعين إلى بناء القوة والثقة، أضع لكِ برنامجًا مناسبًا لطبيعة
+                جسمك وهدفك.
+              </p>
+
+              <p>
+                تشمل خبرتي التدريب الرياضي، التأهيل الحركي، علاج عضلات قاع
+                الحوض، التعافي بعد الولادة، ودعم الرضاعة الطبيعية، لتقديم رعاية
+                متكاملة لصحة المرأة في مكان واحد.
+              </p>
+            </div>
+
+            {/* Feature pills */}
+            <div className="flex flex-wrap gap-3 mb-10 justify-start lg:justify-end">
+              {[
+                "التعافي بعد الولادة",
+                "علاج قاع الحوض",
+                "التأهيل الرياضي",
+                "دعم الرضاعة الطبيعية",
+                "لياقة المرأة",
+              ].map((tag) => (
+                <span
+                  key={tag}
+                  className="px-4 py-1.5 rounded-full text-sm font-medium text-sage-700"
+                  style={{
+                    background: "rgba(138,158,132,0.12)",
+                    border: "1px solid rgba(138,158,132,0.3)",
+                  }}
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+
+            {/* Stats row */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              {stats.map(({ icon: Icon, value, suffix, label }, i) => (
+                <motion.div
+                  key={label}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2 + i * 0.1 }}
+                  className="bg-white/70 backdrop-blur-sm rounded-2xl p-4 text-center shadow-sm border border-cream-200"
+                >
+                  <div
+                    className="w-9 h-9 rounded-full mx-auto mb-2 flex items-center justify-center"
+                    style={{
+                      background: "linear-gradient(135deg, #FAD9D5, #E4E9E2)",
+                    }}
+                  >
+                    <Icon className="w-4 h-4 text-coral-500" />
+                  </div>
+
+                  <div
+                    className="text-2xl font-bold"
+                    style={{ fontFamily: "Georgia, serif", color: "#D4756A" }}
+                  >
+                    <AnimatedCounter target={value} suffix={suffix} />
+                  </div>
+
+                  <div className="text-xs text-sage-600 font-medium mt-0.5 leading-tight">
+                    {label}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
         </div>
-      </motion.section>
-    </article>
+      </div>
+    </section>
   );
 }

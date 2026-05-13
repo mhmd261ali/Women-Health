@@ -11,7 +11,7 @@ import Footer from './components/Footer';
 
 export default function App() {
   return (
-    <div className="antialiased" style={{ fontFamily: 'system-ui, sans-serif' }}>
+    <div className="antialiased" style={{ fontFamily: 'system-ui, sans-serif' }} dir="rtl">
       <Navbar />
       <Hero />
       <About />
