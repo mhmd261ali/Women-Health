@@ -7,8 +7,6 @@ const navLinks = [
   { label: "الخدمات", href: "#services" },
   { label: "لماذا أنا", href: "#why-me" },
   { label: "الشهادات", href: "#certificates" },
-  { label: "المعرض", href: "#gallery" },
-  { label: "التقييمات", href: "#testimonials" },
   { label: "اتصل", href: "#contact" },
 ];
 

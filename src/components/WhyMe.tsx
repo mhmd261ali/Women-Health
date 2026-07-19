@@ -1,45 +1,22 @@
 import { motion } from "framer-motion";
-import {
-  Shield,
-  Microscope,
-  HeartHandshake,
-  Leaf,
-  Baby,
-  GraduationCap,
-} from "lucide-react";
+import { Microscope, HeartHandshake, Baby } from "lucide-react";
 
 const reasons = [
   {
-    icon: Shield,
-    title: "رعاية شخصية",
-    description:
-      "كل برنامج يُصمَّم خصيصًا حسب جسمكِ وأهدافكِ ومرحلتكِ الحياتية، بعيدًا عن الحلول العامة الجاهزة.",
-    gradient: "linear-gradient(135deg, #FAD9D5 0%, #F5B8B2 100%)",
-    iconColor: "#D4756A",
-  },
-  {
     icon: Microscope,
-    title: "نهج مبني على الأدلة العلمية",
+    title: "نهج مبني على الأدلة العلمية وخبرة طبية ورياضية مزدوجة",
     description:
-      "تستند جميع التوصيات إلى أحدث الأبحاث السريرية في علوم الرياضة، والعلاج الطبيعي، وصحة المرأة.",
+      "تستند جميع التوصيات إلى أحدث الأبحاث السريرية في علوم الرياضة، والعلاج الطبيعي، وصحة المرأة، مع الجمع بين شهادات العلاج الطبيعي واللياقة البدنية ليمنحكِ أفضل ما في التأهيل الطبي والتدريب الرياضي.",
     gradient: "linear-gradient(135deg, #E4E9E2 0%, #C8D3C5 100%)",
     iconColor: "#8A9E84",
   },
   {
     icon: HeartHandshake,
-    title: "إرشاد داعم ومتعاطف",
+    title: "إرشاد داعم ومتعاطف ورعاية شخصية",
     description:
-      "بيئة دافئة وخالية من الأحكام، تشعرين فيها بأنكِ مسموعة ومحترمة ومدعومة بصدق في كل خطوة.",
+      "بيئة دافئة وخالية من الأحكام، تشعرين فيها بأنكِ مسموعة ومحترمة ومدعومة بصدق في كل خطوة، حيث يُصمَّم كل برنامج خصيصًا حسب جسمكِ وأهدافكِ ومرحلتكِ الحياتية، بعيدًا عن الحلول العامة الجاهزة.",
     gradient: "linear-gradient(135deg, #FAD9D5 0%, #F2D4C8 100%)",
     iconColor: "#C4605A",
-  },
-  {
-    icon: Leaf,
-    title: "صحة شاملة ومتوازنة",
-    description:
-      "أتعامل معكِ ككل متكامل، من التعافي الجسدي إلى المرونة النفسية، والتوازن الهرموني، والعادات الصحية المستدامة.",
-    gradient: "linear-gradient(135deg, #E4E9E2 0%, #D8E4D5 100%)",
-    iconColor: "#748D6E",
   },
   {
     icon: Baby,
@@ -48,14 +25,6 @@ const reasons = [
       "معرفة متخصصة بفسيولوجيا الحمل وما بعد الولادة لضمان جلسات آمنة، تدريجية، وفعّالة.",
     gradient: "linear-gradient(135deg, #FDE8E2 0%, #FAD1C6 100%)",
     iconColor: "#D4756A",
-  },
-  {
-    icon: GraduationCap,
-    title: "خبرة طبية ورياضية مزدوجة",
-    description:
-      "الجمع بين شهادات العلاج الطبيعي واللياقة البدنية يمنحكِ أفضل ما في التأهيل الطبي والتدريب الرياضي.",
-    gradient: "linear-gradient(135deg, #E4E9E2 0%, #C8D3C5 100%)",
-    iconColor: "#5E7358",
   },
 ];
 

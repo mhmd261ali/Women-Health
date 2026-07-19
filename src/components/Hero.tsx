@@ -114,7 +114,7 @@ export default function Hero() {
             style={{ fontFamily: "Georgia, serif", color: "#4A3530" }}
           >
             {/* Replace with your name */}
-            م. مريم ترمس
+           مريم ترمس
             <br />
             <span
               style={{
@@ -134,7 +134,7 @@ export default function Hero() {
             transition={{ duration: 0.7, delay: 0.35 }}
             className="text-sage-600 font-medium text-lg mb-3 tracking-wide"
           >
-            &nbsp; أخصائية علاج فيزيائي &nbsp;|&nbsp; أخصائية الرضاعة الطبيعية
+            &nbsp; أخصائية علاج فيزيائي &nbsp;|&nbsp; أخصائية رضاعة طبيعية
           </motion.p>
 
           <motion.p
@@ -143,9 +143,8 @@ export default function Hero() {
             transition={{ duration: 0.7, delay: 0.45 }}
             className="text-sage-700/80 text-lg leading-relaxed mb-10 max-w-lg mr-0"
           >
-            أساعد النساء على الشعور بالقوة والصحة والثقة في كل مرحلة من مراحل
-            الحياة — من تحسين الأداء البدني إلى التعافي بعد الولادة.
-          </motion.p>
+            أؤمن بأن كل رحلة نحو صحة أفضل تبدأ بخطوة، وأن المعرفة الصحيحة، والحركة الهادفة، والدعم المبني على الأدلة العلمية هي أساس بناء حياة أكثر صحة وقوة للمرأة والطفل
+            </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -172,7 +171,7 @@ export default function Hero() {
           </motion.div>
 
           {/* Quick stats */}
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.7 }}
@@ -196,7 +195,7 @@ export default function Hero() {
                 </div>
               </div>
             ))}
-          </motion.div>
+          </motion.div> */}
         </div>
 
         {/* Hero image */}
@@ -272,7 +271,7 @@ export default function Hero() {
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-sage-500 hover:text-coral-500 transition-colors"
       >
         <span className="text-xs font-medium tracking-widest uppercase">
-          مرّري
+          المزيد
         </span>
 
         <motion.div
