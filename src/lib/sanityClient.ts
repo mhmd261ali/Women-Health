@@ -1,9 +1,14 @@
 import { createClient } from "@sanity/client";
 
+/**
+ * Browser-only client for public reads.
+ * Do not put API tokens here — tokens belong on a server, never in frontend code.
+ * Add your deploy origin under Sanity → API → CORS origins
+ * (e.g. https://women-health-nu.vercel.app).
+ */
 export const client = createClient({
   projectId: "w8a3f9tu",
   dataset: "data",
-  token:
-    "sksKCBparJDsBol55kowjEZVbBWBCY1b0gCfPuohHPD8c34r3Z42LsKy2yPClvVghHiyBC2l0B9i7yqH9DX9mxImg4DdMmlcINpEslevmH435WE1CKG94eYgvXsykr5FMunKcPFVlSb71Xn7oRaJoc6uLklZXL59358euVZjYWtD5hUujswi",
+  apiVersion: "2024-01-01",
   useCdn: true,
 });
