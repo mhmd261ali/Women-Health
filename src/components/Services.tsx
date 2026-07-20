@@ -1,5 +1,14 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import {
+  Activity,
+  Baby,
+  PersonStanding,
+  HeartPulse,
+  Dumbbell,
+  HeartHandshake,
+  type LucideIcon,
+} from "lucide-react";
 
 type ServiceDetail = {
   intro: string;
@@ -7,7 +16,7 @@ type ServiceDetail = {
 };
 
 type Service = {
-  emoji: string;
+  icon: LucideIcon;
   title: string;
   description: string;
   more?: ServiceDetail;
@@ -18,7 +27,7 @@ type Service = {
 
 const services: Service[] = [
   {
-    emoji: "🧘‍♀️",
+    icon: Activity,
     title: "العلاج الفيزيائي وإعادة التأهيل للنساء",
     description:
       "أساعد النساء في مختلف مراحل حياتهن على تخفيف الألم، تحسين الحركة، واستعادة القوة والوظيفة الجسدية من خلال برامج علاجية وتمارين مخصصة.",
@@ -37,7 +46,7 @@ const services: Service[] = [
     border: "rgba(138,158,132,0.2)",
   },
   {
-    emoji: "👶",
+    icon: Baby,
     title: "العلاج الفيزيائي وإعادة التأهيل للأطفال",
     description:
       "أدعم نمو الطفل الحركي من خلال تقييم وتطوير المهارات الحركية، تحسين التوازن والتناسق، ومساندة الأطفال الذين يحتاجون إلى تأهيل متخصص.",
@@ -57,7 +66,7 @@ const services: Service[] = [
     border: "rgba(196,96,90,0.2)",
   },
   {
-    emoji: "🧍‍♀️",
+    icon: PersonStanding,
     title: "تصحيح القوام لمختلف الأعمار",
     description:
       "أساعد على تحسين وضعية الجسم وتقليل المشاكل الناتجة عن سوء القوام من خلال التقييم والتمارين التصحيحية المناسبة لكل عمر.",
@@ -66,7 +75,7 @@ const services: Service[] = [
     border: "rgba(212,117,106,0.2)",
   },
   {
-    emoji: "🤰",
+    icon: HeartPulse,
     title: "تدريب الحوامل والتعافي بعد الولادة",
     description:
       "برامج حركية آمنة ومخصصة تساعد المرأة خلال الحمل على الحفاظ على قوتها، تخفيف الآلام، والاستعداد الجسدي للولادة، ثم أرافقها في رحلة استعادة قوتها بعد الولادة من خلال تمارين تدريجية لتحسين الحركة، دعم قاع الحوض، والعودة للنشاط بأمان.",
@@ -75,7 +84,7 @@ const services: Service[] = [
     border: "rgba(212,117,106,0.2)",
   },
   {
-    emoji: "💪",
+    icon: Dumbbell,
     title: "التدريب الشخصي",
     description:
       "تدريب فردي يهدف إلى بناء القوة، تحسين اللياقة والحركة، والوصول إلى أهدافك الصحية بطريقة آمنة ومدروسة.",
@@ -84,7 +93,7 @@ const services: Service[] = [
     border: "rgba(138,158,132,0.2)",
   },
   {
-    emoji: "🤱",
+    icon: HeartHandshake,
     title: "التحضير للرضاعة الطبيعية",
     description:
       "أساعد الأمهات على بدء رحلة الرضاعة بثقة من خلال التعرف على أساسيات الرضاعة، الوضعيات الصحيحة، وكيفية التعامل مع التحديات المبكرة.",
@@ -180,7 +189,7 @@ export default function Services() {
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map(
-            ({ emoji, title, description, more, color, accent, border }, i) => {
+            ({ icon: Icon, title, description, more, color, accent, border }, i) => {
               const isOpen = expanded === title;
 
               return (
@@ -206,12 +215,12 @@ export default function Services() {
                   }}
                 >
                   <div
-                    className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5 shadow-md transition-transform duration-300 group-hover:scale-110 text-2xl"
+                    className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5 shadow-md transition-transform duration-300 group-hover:scale-110"
                     style={{
                       background: `linear-gradient(135deg, ${accent}22, ${accent}44)`,
                     }}
                   >
-                    {emoji}
+                    <Icon className="w-7 h-7" style={{ color: accent }} />
                   </div>
 
                   <h3

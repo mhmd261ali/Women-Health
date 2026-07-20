@@ -115,8 +115,8 @@ export default function Contact() {
                 icon: Mail,
                 label: "البريد الإلكتروني",
                 // Replace with your email
-                value: "hello@drsarah.com",
-                href: "mailto:hello@drsarah.com",
+                value: "khotwa2khotwa@gmail.com",
+                href: "mailto:khotwa2khotwa@gmail.com",
                 color: "#D4756A",
                 bg: "rgba(212,117,106,0.1)",
               },
@@ -124,8 +124,8 @@ export default function Contact() {
                 icon: Phone,
                 label: "رقم الهاتف",
                 // Replace with your phone number
-                value: "+1 (555) 234-5678",
-                href: "tel:+15552345678",
+                value: "620 598 76 961+",
+                href: "tel:+96176598620",
                 color: "#8A9E84",
                 bg: "rgba(138,158,132,0.1)",
               },
@@ -133,7 +133,7 @@ export default function Contact() {
                 icon: MapPin,
                 label: "الموقع",
                 // Replace with your city/location
-                value: "دبي، الإمارات العربية المتحدة",
+                value: "لبنان، جنوب لبنان",
                 href: "#",
                 color: "#C4605A",
                 bg: "rgba(196,96,90,0.1)",
@@ -142,8 +142,8 @@ export default function Contact() {
                 icon: Instagram,
                 label: "إنستغرام",
                 // Replace with your Instagram handle
-                value: "@drsarah.wellness",
-                href: "https://instagram.com",
+                value: "khotwa_with_maryam@",
+                href: "https://www.instagram.com/khotwa_with_maryam?igsh=bno2dmZwNDhuaXpy",
                 color: "#D4756A",
                 bg: "rgba(212,117,106,0.1)",
               },
@@ -182,7 +182,7 @@ export default function Contact() {
 
             {/* WhatsApp CTA */}
             <a
-              href="https://wa.me/15552345678" // Replace with your WhatsApp number
+              href="https://wa.me/96176598620" // Replace with your WhatsApp number
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-3 w-full py-4 rounded-2xl text-white font-semibold text-sm shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"

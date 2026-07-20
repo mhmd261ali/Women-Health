@@ -103,7 +103,7 @@ export default function Hero() {
           >
             <span className="w-2 h-2 rounded-full bg-coral-400 animate-pulse" />
             {/* Replace with your tagline badge */}
-            أخصائية معتمدة في الصحة والرفاهية
+          أخصائية معتمدة
           </motion.div>
 
           <motion.h1

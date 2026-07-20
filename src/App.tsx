@@ -15,7 +15,7 @@ export default function App() {
       <About />
       <Services />
       <WhyMe />
-      <Certificates />
+      {/* <Certificates /> */}
       <Contact />
       <Footer />
     </div>

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { Award, Heart, Users, BookOpen } from "lucide-react";
+import logo from "../images/Logo.png";
 
 function AnimatedCounter({
   target,
@@ -85,7 +86,7 @@ export default function About() {
             <div className="relative rounded-[2rem] overflow-hidden shadow-2xl aspect-[4/5]">
               {/* Replace src with your about photo */}
               <img
-                src="https://images.pexels.com/photos/3757376/pexels-photo-3757376.jpeg?auto=compress&cs=tinysrgb&w=800"
+                src={logo}
                 alt="نبذة عن الدكتورة سارة"
                 className="w-full h-full object-cover"
               />

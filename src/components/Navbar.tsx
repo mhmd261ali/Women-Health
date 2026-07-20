@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import logo from "../images/Logo.png";
@@ -7,12 +8,13 @@ const navLinks = [
   { label: "حول", href: "#about" },
   { label: "الخدمات", href: "#services" },
   { label: "لماذا أنا", href: "#why-me" },
-  { label: "الشهادات", href: "#certificates" },
+  // { label: "الشهادات", href: "#certificates" },
   { label: "المدونة", href: "/blog" },
   { label: "اتصل", href: "#contact" },
 ];
 
 export default function Navbar() {
+  const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -25,7 +27,7 @@ export default function Navbar() {
   const handleNav = (href: string) => {
     setMobileOpen(false);
     if (href.startsWith("/")) {
-      window.location.href = href;
+      navigate(href);
     } else {
       document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
     }

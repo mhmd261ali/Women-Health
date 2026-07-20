@@ -6,14 +6,13 @@ const navLinks = [
   { label: "حول", href: "#about" },
   { label: "الخدمات", href: "#services" },
   { label: "لماذا أنا", href: "#why-me" },
-  { label: "الشهادات", href: "#certificates" },
+  // { label: "الشهادات", href: "#certificates" },
   { label: "اتصل", href: "#contact" },
 ];
 
 const socials = [
-  { icon: Instagram, href: "https://instagram.com", label: "Instagram" },
-  { icon: Facebook, href: "https://facebook.com", label: "Facebook" },
-  { icon: Youtube, href: "https://youtube.com", label: "YouTube" },
+  { icon: Instagram, href: "https://www.instagram.com/khotwa_with_maryam?igsh=bno2dmZwNDhuaXpy", label: "Instagram" },
+  // { icon: Youtube, href: "https://youtube.com", label: "YouTube" },
 ];
 
 export default function Footer() {
@@ -55,15 +54,11 @@ export default function Footer() {
                 className="text-xl font-bold text-white"
                 style={{ fontFamily: "Georgia, serif" }}
               >
-                د. سارة الصحة والعافية
+               مريم ترمس
               </span>
-              <div className="w-9 h-9 flex items-center justify-center">
-                <LogoIcon className="w-9 h-9" />
-              </div>
             </div>
             <p className="text-white/60 text-sm leading-relaxed max-w-xs mb-6">
-              ملتزمة بمساعدة النساء على الشعور بقوة أكبر وصحة أفضل وثقة أعمق من
-              خلال التدريب الشخصي والعلاج الفيزيائي والرعاية الشاملة.
+            معًا نحو حركة أقوى، حياة أكثر توازنًا، ونمو أكثر صحة
             </p>
             <div className="flex gap-3">
               {socials.map(({ icon: Icon, href, label }) => (
@@ -116,7 +111,7 @@ export default function Footer() {
                   <Mail className="w-3.5 h-3.5 text-coral-400" />
                 </div>
                 {/* Replace with your email */}
-                <span className="text-white/60 text-sm">hello@drsarah.com</span>
+                <span className="text-white/60 text-sm">khotwa2khotwa@gmail.com</span>
               </li>
               <li className="flex items-center gap-3">
                 <div
@@ -126,7 +121,7 @@ export default function Footer() {
                   <Phone className="w-3.5 h-3.5 text-sage-400" />
                 </div>
                 {/* Replace with your phone */}
-                <span className="text-white/60 text-sm">+1 (555) 234-5678</span>
+                <span className="text-white/60 text-sm ">620 598 76 961+</span>
               </li>
             </ul>
 
@@ -148,14 +143,9 @@ export default function Footer() {
           className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-white/40 text-xs"
           style={{ borderTop: "1px solid rgba(255,255,255,0.1)" }}
         >
-          <span>
-            {/* Replace with your name and year */}© {new Date().getFullYear()}{" "}
-            Dr. Sarah Wellness. All rights reserved.
-          </span>
           <span className="flex items-center gap-1">
-            Made with{" "}
-            <Heart className="w-3 h-3 text-coral-400 fill-coral-400 inline mx-0.5" />{" "}
-            for women's health
+          لصحّة المرأة و الطّفل، صمّم بكل حب
+          <Heart className="w-3 h-3 text-coral-400 fill-coral-400 inline mx-0.5" />{" "}
           </span>
         </div>
       </div>

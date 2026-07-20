@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import logo from "../images/Logo.png";
 
@@ -23,20 +24,18 @@ export default function BlogNavbar() {
       dir="rtl"
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8 h-16 flex items-center justify-between">
-        {/* Logo and Home */}
         <div className="flex items-center gap-2 group">
-          <a href="/" className="flex items-center gap-2 group">
+          <Link to="/" className="flex items-center gap-2 group">
             <img src={logo} alt="Logo" className="w-20 h-20 object-contain" />
-          </a>
+          </Link>
         </div>
 
-        {/* Home Link */}
-        <a
-          href="/"
+        <Link
+          to="/"
           className="text-gray-700 hover:text-coral-600 transition-colors font-medium text-sm"
         >
           الصفحة الرئيسية
-        </a>
+        </Link>
       </div>
     </motion.nav>
   );
