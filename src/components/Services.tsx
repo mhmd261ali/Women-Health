@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import {
   Activity,
   Baby,
@@ -11,18 +10,12 @@ import {
 import { cn } from "../lib/utils";
 import motherBabyIcon from "../images/mother-baby-icon.png";
 
-type ServiceDetail = {
-  intro: string;
-  items: string[];
-};
-
 type Service = {
   id: string;
   icon?: LucideIcon;
   iconImage?: string;
   title: string;
   description: string;
-  more?: ServiceDetail;
   color: string;
   accent: string;
   border: string;
@@ -47,16 +40,6 @@ const services: Service[] = [
     title: "العلاج الفيزيائي وإعادة التأهيل للنساء",
     description:
       "أساعد النساء في مختلف مراحل حياتهن على تخفيف الألم، تحسين الحركة، واستعادة القوة والوظيفة الجسدية من خلال برامج علاجية وتمارين مخصصة.",
-    more: {
-      intro:
-        "يهدف العلاج الفيزيائي إلى تحسين قدرة الجسم على الحركة، تخفيف الألم، واستعادة الوظيفة الجسدية من خلال تقييم شامل وبرامج علاجية مخصصة حسب احتياجات كل شخص.",
-      items: [
-        "تقييم وعلاج مختلف الآلام العضلية الهيكلية والمفصلية، مثل آلام الرقبة، الظهر، الكتف، والحوض وغيرها.",
-        "إعادة التأهيل بعد العمليات الجراحية أو الإصابات التي تؤثر على الحركة والقدرة الوظيفية.",
-        "تحسين القوة والمرونة، ودعم صحة العضلات والمفاصل.",
-        "الوقاية من الإصابات والأوجاع وتحسين جودة الحياة من خلال الحركة والتمارين العلاجية المبنية على الأدلة العلمية.",
-      ],
-    },
     ...GREEN,
   },
   {
@@ -65,17 +48,6 @@ const services: Service[] = [
     title: "العلاج الفيزيائي وإعادة التأهيل للأطفال",
     description:
       "أدعم نمو الطفل الحركي من خلال تقييم وتطوير المهارات الحركية، تحسين التوازن والتناسق، ومساندة الأطفال الذين يحتاجون إلى تأهيل متخصص.",
-    more: {
-      intro:
-        "يهدف العلاج الفيزيائي للأطفال إلى دعم نمو الطفل الحركي ومساعدته على اكتساب المهارات المناسبة لعمره، وتحسين قدرته على الحركة والمشاركة في أنشطته اليومية من خلال تقييم شامل وبرامج علاجية مخصصة.",
-      items: [
-        "تقييم التطور الحركي للطفل ومتابعة اكتساب المهارات مثل التحكم بالرأس، التقلب، الجلوس، الحبو، الوقوف والمشي.",
-        "دعم الأطفال الذين يواجهون تأخرًا في التطور الحركي أو صعوبات في التوازن والتناسق الحركي.",
-        "تحسين القوة العضلية، التحكم بالجسم، والقدرات الحركية من خلال تمارين وأنشطة علاجية مناسبة لعمر الطفل.",
-        "إعادة التأهيل للأطفال الذين يحتاجون إلى دعم حركي بسبب حالات مثل الشلل الدماغي، متلازمة داون، الصعر الخِلقي (Torticollis)، اضطرابات التوتر العضلي، التأخر في التطور الحركي، أو أي حالة تؤثر على الحركة والاستقلالية.",
-        "مساعدة الأهل من خلال التوجيه حول وضعيات الحمل، اللعب، والأنشطة المناسبة لدعم تطور الطفل الحركي في المنزل.",
-      ],
-    },
     ...PINK,
   },
   {
@@ -116,16 +88,12 @@ const wrap = (n: number, max: number) => ((n % max) + max) % max;
 
 function ServiceCardBody({
   service,
-  expanded,
-  onToggleMore,
   featured,
 }: {
   service: Service;
-  expanded: boolean;
-  onToggleMore?: () => void;
   featured: boolean;
 }) {
-  const { icon: Icon, iconImage, title, description, more, accent } = service;
+  const { icon: Icon, iconImage, title, description, accent } = service;
 
   return (
     <div className="flex h-full flex-col text-right" dir="rtl">
@@ -168,61 +136,11 @@ function ServiceCardBody({
       <p
         className={cn(
           "leading-relaxed text-sage-700/75",
-          featured ? "mb-4 text-sm sm:text-base" : "line-clamp-4 text-xs sm:text-sm",
+          featured ? "text-sm sm:text-base" : "line-clamp-4 text-xs sm:text-sm",
         )}
       >
         {description}
       </p>
-
-      {featured && more && (
-        <>
-          <AnimatePresence initial={false}>
-            {expanded && (
-              <motion.div
-                key="more"
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.3 }}
-                className="mb-4 overflow-hidden"
-              >
-                <p className="mb-3 text-sm leading-relaxed text-sage-700/85">
-                  {more.intro}
-                </p>
-                <p
-                  className="mb-2 text-sm font-semibold"
-                  style={{ color: accent }}
-                >
-                  تشمل الخدمة:
-                </p>
-                <ul className="list-none space-y-2 text-sm leading-relaxed text-sage-700/80">
-                  {more.items.map((item) => (
-                    <li key={item} className="flex gap-2">
-                      <span style={{ color: accent }} aria-hidden>
-                        •
-                      </span>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              onToggleMore?.();
-            }}
-            className="mt-auto inline-flex flex-row-reverse items-center gap-1.5 self-start text-sm font-semibold"
-            style={{ color: accent }}
-          >
-            {expanded ? "إخفاء التفاصيل" : "اعرفي المزيد"}
-            <span aria-hidden>{expanded ? "↓" : "←"}</span>
-          </button>
-        </>
-      )}
     </div>
   );
 }
@@ -231,7 +149,6 @@ export default function Services() {
   const sectionRef = useRef<HTMLElement>(null);
   const [active, setActive] = useState(0);
   const activeRef = useRef(0);
-  const [expanded, setExpanded] = useState(false);
 
   useEffect(() => {
     let raf = 0;
@@ -248,7 +165,6 @@ export default function Services() {
         if (nextIndex !== activeRef.current) {
           activeRef.current = nextIndex;
           setActive(nextIndex);
-          setExpanded(false);
         }
         section.style.setProperty("--svc-p", String(progress));
       }
@@ -341,12 +257,6 @@ export default function Services() {
                     <ServiceCardBody
                       service={service}
                       featured={featured}
-                      expanded={featured ? expanded : false}
-                      onToggleMore={
-                        featured && service.more
-                          ? () => setExpanded((v) => !v)
-                          : undefined
-                      }
                     />
                   </div>
                 </div>
