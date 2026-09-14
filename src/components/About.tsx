@@ -17,25 +17,35 @@ const SCALE_EFFECT = 0.1;
 const storyCards = [
   {
     icon: Footprints,
-    label: "الاسم",
-    title: 'لماذا "خطوة"؟',
-    text: 'وعندما بدأت رحلة اختيار اسم لهذا المشروع، فكرت في العديد من الكلمات، لكنني لم أجد كلمة تعبّر عنه بصدق مثل "خطوة". لأنني أنا أيضًا بدأت بخطوة... ولأن كل خطوة صغيرة، مهما بدت بسيطة، هي بداية لمشوار أكبر. خطوة نحو فهم أجسامنا، نحو استعادة قوتنا، نحو صحة أفضل، ونحو نمو أكثر دعمًا ووعيًا لأطفالنا. أتمنى أن تتذكري دائمًا أن التغيير لا يحتاج إلى أن يحدث دفعة واحدة؛ ففي صحتك، وحركتك، ورحلة نمو طفلك، قد تكون الخطوة الأولى هي كل ما تحتاجينه للبدء.',
+    label: "خطوة",
+    title: "لماذا خطوة؟",
+    paragraphs: [
+      "عندما بدأت أبحث عن اسم لهذا المشروع، لم أجد كلمة تعبّر عنه بصدق أكثر من «خطوة». لأنني أنا أيضًا بدأت بخطوة، ولأن كل خطوة صغيرة قد تكون بداية لمشوار أكبر.",
+      "خطوة نحو فهم أجسامنا، استعادة قوتنا، وصحة أفضل، ونحو نمو أكثر دعمًا ووعيًا لأطفالنا.",
+      "تذكّري دائمًا: التغيير لا يحتاج أن يحدث دفعة واحدة… أحيانًا، كل ما نحتاجه هو أن نبدأ بالخطوة الأولى.",
+    ],
     gradient: "linear-gradient(160deg, #FDE8E2 0%, #FAD1C6 45%, #E4E9E2 100%)",
     accent: "#C4605A",
   },
   {
     icon: Heart,
     label: "البداية",
-    title: "قوة الحركة من الداخل",
-    text: "أنا مريم ترمس، أخصائية علاج فيزيائي، بدأت رحلتي في هذا المجال لأنني أؤمن بقوة الحركة والتمارين وتأثيرها العميق على صحتنا وجودة حياتنا. أؤمن أن الوقاية والعلاج لا يبدآن دائمًا من الخارج، بل من داخل أجسامنا، من خلال فهمها، ودعمها، واستخدام قدراتها الطبيعية بطريقة علمية ومدروسة.",
+    title: "إيماني بالحركة",
+    paragraphs: [
+      "بدأت رحلتي في هذا المجال لأنني أؤمن بقوة الحركة والتمارين وتأثيرها العميق على صحتنا وجودة حياتنا. أؤمن أن الوقاية والعلاج لا يبدآن دائمًا من الخارج، بل من داخل أجسامنا، من خلال فهمها، ودعمها، واستخدام قدراتها الطبيعية بطريقة علمية ومدروسة.",
+    ],
     gradient: "linear-gradient(160deg, #FAD9D5 0%, #F5E6E0 55%, #E4E9E2 100%)",
     accent: "#D4756A",
   },
   {
     icon: Sparkles,
-    label: "الشغف",
-    title: "الأطفال، النساء، والرضاعة",
-    text: "خلال دراستي للعلاج الفيزيائي، اكتشفت شغفي الكبير بالعمل مع الأطفال والنساء. جذبني عالم الطفل بما يحمله من مراحل نمو وتطور مميزة، كما ألهمتني قوة المرأة وقدرتها على التكيف والتغير خلال مختلف مراحل حياتها. ومن هذا الشغف، بدأ اهتمامي بصحة المرأة والرضاعة الطبيعية. وجدت في هذا المجال امتدادًا لقيمي ورغبتي في فهم جسم الإنسان ودعم الأم والطفل خلال واحدة من أجمل المراحل وأكثرها تأثيرًا. لذلك اخترت أن أضيف تخصص الرضاعة الطبيعية إلى مسيرتي، لأجمع بين العلاج الفيزيائي، المعرفة العلمية، والدعم المتكامل.",
+    label: "الشّغف",
+    title: "عالم الأنثى، الأطفال، الأمومة",
+    paragraphs: [
+      "خلال دراستي للعلاج الفيزيائي، اكتشفت شغفًا خاصًا بالعمل مع الأطفال والنساء. أحببت أن أكون جزءًا من رحلة نمو الطفل، وأن أرافق المرأة خلال مراحل وتغيّرات مختلفة من حياتها.",
+      "ومن هنا بدأ اهتمامي بصحة المرأة والرضاعة الطبيعية، واخترت أن أضيف تخصص الرضاعة إلى مسيرتي لأجمع بين العلاج الفيزيائي، العلم، والدعم الإنساني للأم والطفل.",
+      "ومن هذا الشغف وُلدت «خطوة»؛ مساحة أؤمن فيها أن الدعم الحقيقي يبدأ بالفهم، وأن كل تغيير كبير يمكن أن يبدأ بخطوة صغيرة نحو صحة أفضل، وحركة أكثر وعيًا، ورعاية أكثر دعمًا للأم والطفل.",
+    ],
     gradient: "linear-gradient(160deg, #E4E9E2 0%, #F4F6F3 50%, #FAD9D5 100%)",
     accent: "#8A9E84",
   },
@@ -49,8 +59,8 @@ function useLayoutMetrics() {
     const viewport = window.innerWidth;
     const itemWidth = Math.min(720, Math.max(280, viewport < 640 ? viewport * 0.86 : viewport * 0.72));
     const itemHeight = Math.min(
-      340,
-      Math.max(viewport < 640 ? 280 : 240, itemWidth * (viewport < 640 ? 0.72 : 0.48)),
+      460,
+      Math.max(viewport < 640 ? 360 : 300, itemWidth * (viewport < 640 ? 0.95 : 0.58)),
     );
     return { viewport, itemWidth, itemHeight };
   });
@@ -58,16 +68,16 @@ function useLayoutMetrics() {
   useEffect(() => {
     const update = () => {
       const viewport = window.innerWidth;
-      // Landscape cards: wide horizontal panels; taller on phones for Arabic text
+      // Landscape cards: wide horizontal panels; taller for longer Arabic story text
       const itemWidth = Math.min(
         720,
         Math.max(280, viewport < 640 ? viewport * 0.86 : viewport * 0.72),
       );
       const itemHeight = Math.min(
-        340,
+        460,
         Math.max(
-          viewport < 640 ? 280 : 240,
-          itemWidth * (viewport < 640 ? 0.72 : 0.48),
+          viewport < 640 ? 360 : 300,
+          itemWidth * (viewport < 640 ? 0.95 : 0.58),
         ),
       );
       setMetrics({ viewport, itemWidth, itemHeight });
@@ -114,7 +124,7 @@ function StoryCard({
       }}
     >
       <div
-        className="mb-3 inline-flex w-fit items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold"
+        className="mb-2 inline-flex w-fit items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold sm:mb-3"
         style={{
           background: `${card.accent}18`,
           color: card.accent,
@@ -126,15 +136,17 @@ function StoryCard({
       </div>
 
       <h3
-        className="mb-3 text-xl font-bold leading-snug sm:text-2xl"
+        className="mb-2 text-lg font-bold leading-snug sm:mb-3 sm:text-2xl"
         style={{ fontFamily: "Georgia, serif", color: "#4A3530" }}
       >
         {card.title}
       </h3>
 
-      <p className="line-clamp-6 text-sm leading-[1.85] text-sage-700/85 sm:text-[15px] sm:leading-[1.9]">
-        {card.text}
-      </p>
+      <div className="min-h-0 flex-1 space-y-2.5 overflow-y-auto overscroll-contain pr-1 text-sm leading-[1.85] text-sage-700/85 sm:space-y-3 sm:text-[15px] sm:leading-[1.9]">
+        {card.paragraphs.map((paragraph) => (
+          <p key={paragraph.slice(0, 24)}>{paragraph}</p>
+        ))}
+      </div>
 
       <div
         className="pointer-events-none absolute inset-y-0 left-0 w-28"

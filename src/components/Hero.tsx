@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ChevronDown } from "lucide-react";
+import { BookOpenCheck, ChevronDown, HeartHandshake } from "lucide-react";
 import heroImage from "../images/hero.jpg";
 
 const FloatingBlob = ({
@@ -232,14 +232,23 @@ export default function Hero() {
             />
           </div>
 
-          {/* Floating badge */}
+          {/* Floating badges */}
           <motion.div
             animate={{ y: [0, -8, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-6 right-2 rounded-2xl border border-coral-100 bg-white/80 px-3 py-2 text-right shadow-lg backdrop-blur-md sm:top-8 sm:-right-6 sm:px-4 sm:py-3"
+            className="absolute top-6 right-2 flex items-center gap-2 rounded-2xl border border-coral-100 bg-white/80 px-3 py-2 text-right shadow-lg backdrop-blur-md sm:top-8 sm:-right-6 sm:gap-2.5 sm:px-4 sm:py-3"
           >
-            <div className="text-xs text-sage-600 font-medium">متخصصة في</div>
-            <div className="text-sm font-bold text-coral-600">صحة المرأة</div>
+            <div
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl sm:h-10 sm:w-10"
+              style={{
+                background: "linear-gradient(135deg, #FAD9D5, #F2A08E)",
+              }}
+            >
+              <BookOpenCheck className="h-4 w-4 text-white sm:h-5 sm:w-5" />
+            </div>
+            <div className="text-sm font-bold text-coral-600 sm:text-base">
+              معلومات علميّة
+            </div>
           </motion.div>
 
           <motion.div
@@ -250,13 +259,18 @@ export default function Hero() {
               repeat: Infinity,
               ease: "easeInOut",
             }}
-            className="absolute bottom-12 left-2 rounded-2xl border border-sage-100 bg-white/80 px-3 py-2 text-right shadow-lg backdrop-blur-md sm:bottom-16 sm:-left-6 sm:px-4 sm:py-3"
+            className="absolute bottom-12 left-2 flex items-center gap-2 rounded-2xl border border-sage-100 bg-white/80 px-3 py-2 text-right shadow-lg backdrop-blur-md sm:bottom-16 sm:-left-6 sm:gap-2.5 sm:px-4 sm:py-3"
           >
-            <div className="text-xs text-sage-600 font-medium">
-              ما بعد الولادة
+            <div
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl sm:h-10 sm:w-10"
+              style={{
+                background: "linear-gradient(135deg, #E4E9E2, #8A9E84)",
+              }}
+            >
+              <HeartHandshake className="h-4 w-4 text-white sm:h-5 sm:w-5" />
             </div>
-            <div className="text-sm font-bold text-sage-700">
-              خبيرة في التعافي
+            <div className="text-sm font-bold text-sage-700 sm:text-base">
+              دعم، ثقة، وعي
             </div>
           </motion.div>
         </motion.div>

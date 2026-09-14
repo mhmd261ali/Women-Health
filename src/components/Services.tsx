@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type SVGProps } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   Activity,
@@ -6,7 +6,6 @@ import {
   PersonStanding,
   HeartPulse,
   Dumbbell,
-  HeartHandshake,
   type LucideIcon,
 } from "lucide-react";
 import { cn } from "../lib/utils";
@@ -16,9 +15,11 @@ type ServiceDetail = {
   items: string[];
 };
 
+type ServiceIcon = LucideIcon | ((props: SVGProps<SVGSVGElement>) => JSX.Element);
+
 type Service = {
   id: string;
-  icon: LucideIcon;
+  icon: ServiceIcon;
   title: string;
   description: string;
   more?: ServiceDetail;
@@ -26,6 +27,42 @@ type Service = {
   accent: string;
   border: string;
 };
+
+/** Mother holding her baby — custom icon (not available in Lucide) */
+function MotherHoldingBaby({
+  className,
+  style,
+  ...props
+}: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.75"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      style={style}
+      aria-hidden
+      {...props}
+    >
+      {/* Mother head */}
+      <circle cx="8.5" cy="4.8" r="2.3" />
+      {/* Mother torso */}
+      <path d="M5 21.5v-6.2c0-2.4 1.5-4.3 3.5-4.8" />
+      <path d="M8.5 10.5c1.6.3 2.8 1.2 3.5 2.6" />
+      {/* Mother arm cradling baby */}
+      <path d="M5.2 14.8c2.2-.4 4.2.4 5.8 2" />
+      <path d="M11 16.8c1.2 1.4 2.2 3.2 2.6 4.7" />
+      {/* Baby head against chest */}
+      <circle cx="15.2" cy="12.2" r="2.15" />
+      {/* Baby body */}
+      <path d="M13.4 14.2c.5 1.6 1.6 2.9 3.2 3.6" />
+      <path d="M16.6 14.2c1 .9 1.7 2.2 2 3.6" />
+    </svg>
+  );
+}
 
 const PINK = {
   color: "from-coral-100 to-peach-100",
@@ -82,31 +119,31 @@ const services: Service[] = [
     icon: PersonStanding,
     title: "تصحيح القوام لمختلف الأعمار",
     description:
-      "أساعد على تحسين وضعية الجسم وتقليل المشاكل الناتجة عن سوء القوام من خلال التقييم والتمارين التصحيحية المناسبة لكل عمر.",
+      "أعمل على تقييم وضعية الجسم وتحديد المشكلات المرتبطة بسوء القوام، ووضع برامج من التمارين التصحيحية المناسبة لكل عمر واحتياج، بهدف تحسين القوام وتقليل الأعراض والمشكلات الحركية المرتبطة بها.",
     ...GREEN,
   },
   {
     id: "pregnancy",
     icon: HeartPulse,
-    title: "تدريب الحوامل والتعافي بعد الولادة",
+    title: "التّدريب خلال الحمل والتعافي بعد الولادة",
     description:
-      "برامج حركية آمنة ومخصصة تساعد المرأة خلال الحمل على الحفاظ على قوتها، تخفيف الآلام، والاستعداد الجسدي للولادة، ثم أرافقها في رحلة استعادة قوتها بعد الولادة من خلال تمارين تدريجية لتحسين الحركة، دعم قاع الحوض، والعودة للنشاط بأمان.",
+      "أقدّم برامج تدريبية آمنة ومخصصة ترافق المرأة خلال الحمل، للحفاظ على قوتها ولياقتها، دعم الحركة، والتخفيف من الآلام المرتبطة بالتغيرات الجسدية، مع الاستعداد البدني للولادة. وبعد الولادة، أرافقها تدريجيًا في استعادة قوتها وحركتها، من خلال تمارين مخصصة لدعم قاع الحوض، استعادة اللياقة، والعودة الآمنة إلى النشاط والتمارين.",
     ...PINK,
   },
   {
     id: "personal",
     icon: Dumbbell,
-    title: "التدريب الشخصي",
+    title: "التدريب الرّياضي",
     description:
-      "تدريب فردي يهدف إلى بناء القوة، تحسين اللياقة والحركة، والوصول إلى أهدافك الصحية بطريقة آمنة ومدروسة.",
+      "أقدّم تدريبًا فرديًا مخصصًا يهدف إلى بناء القوة، تحسين اللياقة والحركة، وتحقيق أهدافك الصحية من خلال برامج آمنة ومدروسة تتناسب مع احتياجاتك وقدراتك.",
     ...GREEN,
   },
   {
     id: "breastfeeding",
-    icon: HeartHandshake,
-    title: "التحضير للرضاعة الطبيعية",
+    icon: MotherHoldingBaby,
+    title: "التحضير للرّضاعة الطّبيعيّة",
     description:
-      "أساعد الأمهات على بدء رحلة الرضاعة بثقة من خلال التعرف على أساسيات الرضاعة، الوضعيات الصحيحة، وكيفية التعامل مع التحديات المبكرة.",
+      "أساعد الأمهات على بدء رحلة الرضاعة الطبيعية بثقة ووعي، من خلال فهم أساسيات الرضاعة، تعلّم الوضعيات والالتقام المناسبين، والتعرّف على أكثر التحديات شيوعًا في الأيام والأسابيع الأولى وكيفية التعامل معها بهدوء وواقعية.",
     ...PINK,
   },
 ];
