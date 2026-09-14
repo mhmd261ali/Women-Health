@@ -14,27 +14,33 @@ const sanityClient = createClient({
   useCdn: true,
 });
 
-const TIPS_QUERY = `*[
-  _type == "Blog" &&
-  (
-    $search == "" ||
-    tip match $search ||
-    tip_description match $search ||
-    tip_category match $search
-  ) &&
-  (
-    $selectedCategory == "" ||
-    tip_category == $selectedCategory
-  )
-]{
+const TIP_FIELDS = `{
   _id,
   _type,
   tip,
   tip_date,
   tip_category,
+  hook,
   tip_description,
   instagram_url,
-} | order(tip_date desc)`;
+}`;
+
+const TIPS_LIST_QUERY = `*[
+  _type == "Blog" &&
+  (
+    $search == "" ||
+    tip match $search ||
+    tip_description match $search ||
+    tip_category match $search ||
+    hook match $search
+  ) &&
+  (
+    $selectedCategory == "" ||
+    tip_category == $selectedCategory
+  )
+]${TIP_FIELDS} | order(tip_date desc)`;
+
+const TIP_BY_ID_QUERY = `*[_type == "Blog" && _id == $id][0]${TIP_FIELDS}`;
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -56,11 +62,25 @@ export default defineConfig({
 
           try {
             const url = new URL(req.url || '', 'http://localhost');
+            const id = url.searchParams.get('id') || '';
+
+            if (id) {
+              const tip = await sanityClient.fetch(TIP_BY_ID_QUERY, { id });
+              res.setHeader('Content-Type', 'application/json');
+              if (!tip) {
+                res.statusCode = 404;
+                res.end(JSON.stringify({ error: 'Tip not found' }));
+                return;
+              }
+              res.end(JSON.stringify(tip));
+              return;
+            }
+
             const search = url.searchParams.get('search') || '';
             const selectedCategory =
               url.searchParams.get('selectedCategory') || '';
 
-            const data = await sanityClient.fetch(TIPS_QUERY, {
+            const data = await sanityClient.fetch(TIPS_LIST_QUERY, {
               search: search ? `*${search}*` : '',
               selectedCategory,
             });

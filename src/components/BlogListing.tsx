@@ -1,29 +1,19 @@
 import { useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Calendar, Tag, Instagram, Search } from "lucide-react";
+import { ArrowLeft, Calendar, Instagram, Search, Tag } from "lucide-react";
 import useGetAllTips from "../api-hooks/useGetAllTips";
 
 export default function BlogListing() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
 
-  /**
-   * This fetches the filtered tips according to:
-   * - searchTerm
-   * - selectedCategory
-   */
   const { tipList, loading, error } = useGetAllTips(
     searchTerm.trim(),
     selectedCategory,
   );
 
-  /**
-   * This fetches all tips only to build the category buttons.
-   * We keep it separate so categories do not disappear when filtering.
-   */
   const { tipList: allTips } = useGetAllTips("", "");
-
-  console.log(tipList);
 
   const categories = useMemo(() => {
     const uniqueCategories = Array.from(
@@ -37,14 +27,7 @@ export default function BlogListing() {
     return uniqueCategories;
   }, [allTips]);
 
-  /**
-   * Recent tips based on the filtered list.
-   * Because your hook already orders by tip_date desc,
-   * this will show the latest 5 matching tips.
-   */
   const recentTips = useMemo(() => tipList.slice(0, 30), [tipList]);
-
-  console.log(recentTips);
 
   const getCategoryColor = (category?: string): string => {
     const normalizedCategory = category?.toLowerCase().trim();
@@ -86,27 +69,26 @@ export default function BlogListing() {
 
   return (
     <section
-      className="py-40 relative overflow-hidden"
+      className="relative overflow-hidden py-40"
       style={{
         background: "linear-gradient(180deg, #FAF0EC 0%, #F4F6F3 100%)",
       }}
       dir="rtl"
     >
       <div
-        className="absolute top-0 right-0 w-96 h-96 rounded-full blur-3xl opacity-15"
+        className="absolute right-0 top-0 h-96 w-96 rounded-full opacity-15 blur-3xl"
         style={{ background: "radial-gradient(circle, #D4756A, transparent)" }}
       />
 
-      <div className="max-w-6xl mx-auto px-6 lg:px-8 relative z-10">
-        {/* Header */}
+      <div className="relative z-10 mx-auto max-w-6xl px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
-          className="text-center mb-12"
+          className="mb-12 text-center"
         >
           <div
-            className="inline-block px-4 py-1.5 rounded-full text-sm font-medium mb-6"
+            className="mb-6 inline-block rounded-full px-4 py-1.5 text-sm font-medium"
             style={{
               color: "#D4756A",
               background: "rgba(212,117,106,0.1)",
@@ -117,48 +99,45 @@ export default function BlogListing() {
           </div>
 
           <h1
-            className="text-5xl lg:text-6xl font-bold mb-5"
+            className="mb-5 text-4xl font-bold sm:text-5xl lg:text-6xl"
             style={{ fontFamily: "Georgia, serif", color: "#4A3530" }}
           >
             نصائح وأفكار لصحة
             <span style={{ color: "#D4756A" }}> المرأة</span>
           </h1>
 
-          <p className="text-sage-600 text-lg max-w-2xl mx-auto leading-relaxed">
+          <p className="mx-auto max-w-2xl text-lg leading-relaxed text-sage-600">
             نصائح متخصصة حول اللياقة البدنية، العلاج الطبيعي، التعافي بعد
             الولادة، الرضاعة والصحة الشاملة لمساعدتك على اتخاذ قرارات أفضل لصحتك
             وعافيتك.
           </p>
         </motion.div>
 
-        {/* Search and filters */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
           className="mb-12 space-y-6"
         >
-          {/* Search bar */}
           <div className="relative">
-            <Search className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-sage-400" />
+            <Search className="absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 text-sage-400" />
 
             <input
               type="text"
               placeholder="ابحث عن النصائح..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pr-12 pl-5 py-4 rounded-2xl bg-white/70 backdrop-blur-sm border border-cream-300 text-sage-800 placeholder-sage-400 focus:outline-none focus:border-coral-400 focus:ring-2 focus:ring-coral-200 transition-all"
+              className="w-full rounded-2xl border border-cream-300 bg-white/70 py-4 pl-5 pr-12 text-sage-800 placeholder-sage-400 backdrop-blur-sm transition-all focus:border-coral-400 focus:outline-none focus:ring-2 focus:ring-coral-200"
             />
           </div>
 
-          {/* Category filter */}
-          <div className="flex flex-wrap gap-3 justify-start">
+          <div className="flex flex-wrap justify-start gap-3">
             <button
               onClick={() => setSelectedCategory("")}
-              className={`px-5 py-2.5 rounded-full font-medium text-sm transition-all duration-200 ${
+              className={`rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-200 ${
                 !selectedCategory
                   ? "text-white shadow-md"
-                  : "bg-white/70 text-sage-700 hover:bg-white border border-cream-300"
+                  : "border border-cream-300 bg-white/70 text-sage-700 hover:bg-white"
               }`}
               style={
                 !selectedCategory
@@ -173,10 +152,10 @@ export default function BlogListing() {
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-5 py-2.5 rounded-full font-medium text-sm transition-all duration-200 ${
+                className={`rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-200 ${
                   selectedCategory === category
                     ? "text-white shadow-md"
-                    : "bg-white/70 text-sage-700 hover:bg-white border border-cream-300"
+                    : "border border-cream-300 bg-white/70 text-sage-700 hover:bg-white"
                 }`}
                 style={
                   selectedCategory === category
@@ -194,97 +173,116 @@ export default function BlogListing() {
           </div>
         </motion.div>
 
-        {/* Loading */}
         {loading ? (
           <div className="flex items-center justify-center py-20">
-            <div className="w-8 h-8 border-4 border-coral-200 border-t-coral-500 rounded-full animate-spin" />
+            <div className="h-8 w-8 animate-spin rounded-full border-4 border-coral-200 border-t-coral-500" />
           </div>
         ) : error ? (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-center py-16"
+            className="py-16 text-center"
           >
-            <p className="text-red-500 text-lg">{error}</p>
+            <p className="text-lg text-red-500">{error}</p>
           </motion.div>
         ) : recentTips.length > 0 ? (
-          <div className="grid lg:grid-cols-2 gap-8">
-            {recentTips.map((tip, i) => (
-              <motion.article
-                key={tip._id}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: i * 0.08 }}
-                whileHover={{ y: -6 }}
-                className="group relative rounded-3xl overflow-hidden bg-white/70 backdrop-blur-sm"
-                style={{
-                  border: "1.5px solid rgba(212,117,106,0.12)",
-                  boxShadow: "0 4px 24px rgba(0,0,0,0.06)",
-                }}
-              >
-                <div className="p-6 lg:p-7">
-                  {/* Category */}
-                  {tip.tip_category && (
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      <span
-                        className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold text-white"
-                        style={{
-                          background: getCategoryColor(tip.tip_category),
-                        }}
-                      >
-                        <Tag className="w-3.5 h-3.5" />
-                        {tip.tip_category}
-                      </span>
-                    </div>
-                  )}
+          <div className="grid gap-8 lg:grid-cols-2">
+            {recentTips.map((tip, i) => {
+              const hasInstagram = Boolean(tip.instagram_url);
+              const cardText = hasInstagram
+                ? tip.tip_description
+                : tip.hook || tip.tip_description;
 
-                  {/* Title */}
-                  <h3
-                    className="text-2xl font-bold mb-3 leading-tight line-clamp-2"
-                    style={{ fontFamily: "Georgia, serif", color: "#4A3530" }}
-                  >
-                    {tip.tip}
-                  </h3>
+              return (
+                <motion.article
+                  key={tip._id}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: i * 0.08 }}
+                  whileHover={{ y: -6 }}
+                  className="group relative overflow-hidden rounded-3xl bg-white/70 backdrop-blur-sm"
+                  style={{
+                    border: "1.5px solid rgba(212,117,106,0.12)",
+                    boxShadow: "0 4px 24px rgba(0,0,0,0.06)",
+                  }}
+                >
+                  <div className="p-6 lg:p-7">
+                    {tip.tip_category && (
+                      <div className="mb-4 flex flex-wrap gap-2">
+                        <span
+                          className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold text-white"
+                          style={{
+                            background: getCategoryColor(tip.tip_category),
+                          }}
+                        >
+                          <Tag className="h-3.5 w-3.5" />
+                          {tip.tip_category}
+                        </span>
+                      </div>
+                    )}
 
-                  {/* Description */}
-                  <p className="text-sage-800 text-sm leading-relaxed mb-5 line-clamp-4">
-                    {tip.tip_description}
-                  </p>
-
-                  {/* Meta */}
-                  {tip.tip_date && (
-                    <div className="flex items-center gap-2 text-xs text-sage-500 mb-6">
-                      <Calendar className="w-3.5 h-3.5" />
-                      <span>{formatDate(tip.tip_date)}</span>
-                    </div>
-                  )}
-
-                  {tip.instagram_url && (
-                    <a
-                      href={tip.instagram_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                    <h3
+                      className="mb-3 line-clamp-2 text-2xl font-bold leading-tight"
                       style={{
-                        background:
-                          "linear-gradient(135deg, #E8776F 0%, #D4756A 55%, #C4605A 100%)",
+                        fontFamily: "Georgia, serif",
+                        color: "#4A3530",
                       }}
                     >
-                      <Instagram className="h-4 w-4" />
-                      شاهدي على إنستغرام
-                    </a>
-                  )}
-                </div>
-              </motion.article>
-            ))}
+                      {tip.tip}
+                    </h3>
+
+                    {cardText && (
+                      <p className="mb-5 line-clamp-4 text-sm leading-relaxed text-sage-800">
+                        {cardText}
+                      </p>
+                    )}
+
+                    {tip.tip_date && (
+                      <div className="mb-6 flex items-center gap-2 text-xs text-sage-500">
+                        <Calendar className="h-3.5 w-3.5" />
+                        <span>{formatDate(tip.tip_date)}</span>
+                      </div>
+                    )}
+
+                    {hasInstagram ? (
+                      <a
+                        href={tip.instagram_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                        style={{
+                          background:
+                            "linear-gradient(135deg, #E8776F 0%, #D4756A 55%, #C4605A 100%)",
+                        }}
+                      >
+                        <Instagram className="h-4 w-4" />
+                        شاهدي على إنستغرام
+                      </a>
+                    ) : (
+                      <Link
+                        to={`/blog/${tip._id}`}
+                        className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                        style={{
+                          background:
+                            "linear-gradient(135deg, #9DAE97 0%, #8A9E84 55%, #748D6E 100%)",
+                        }}
+                      >
+                        اقرئي المزيد
+                        <ArrowLeft className="h-4 w-4" />
+                      </Link>
+                    )}
+                  </div>
+                </motion.article>
+              );
+            })}
           </div>
         ) : (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-center py-16"
+            className="py-16 text-center"
           >
-            <p className="text-sage-600 text-lg">
+            <p className="text-lg text-sage-600">
               {searchTerm || selectedCategory
                 ? "لم يتم العثور على نصائح تطابق البحث أو التصنيف."
                 : "لا توجد نصائح متاحة حتى الآن."}

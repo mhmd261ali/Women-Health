@@ -1,250 +1,153 @@
-import { useEffect, useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
-import { Award, Heart, Users, BookOpen } from "lucide-react";
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { ArrowRight, Calendar, Tag } from "lucide-react";
+import { useGetTipById } from "../api-hooks/useGetAllTips";
 
-function AnimatedCounter({
-  target,
-  suffix = "",
-  duration = 2000,
-}: {
-  target: number;
-  suffix?: string;
-  duration?: number;
-}) {
-  const [count, setCount] = useState(0);
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true });
+const categoryColors: Record<string, string> = {
+  breastfeeding: "#D4756A",
+  sports: "#8A9E84",
+  health: "#E8776F",
+  physiotherapy: "#748D6E",
+  nutrition: "#D4756A",
+  fitness: "#8A9E84",
+  recovery: "#C4605A",
+  wellness: "#9DAE97",
+  الرضاعة: "#D4756A",
+  الرياضة: "#8A9E84",
+  الصحة: "#E8776F",
+  "العلاج الفيزيائي": "#748D6E",
+  التغذية: "#D4756A",
+  اللياقة: "#8A9E84",
+  التعافي: "#C4605A",
+  العافية: "#9DAE97",
+};
 
-  useEffect(() => {
-    if (!inView) return;
-
-    let start = 0;
-    const step = target / (duration / 16);
-
-    const timer = setInterval(() => {
-      start += step;
-
-      if (start >= target) {
-        setCount(target);
-        clearInterval(timer);
-      } else {
-        setCount(Math.floor(start));
-      }
-    }, 16);
-
-    return () => clearInterval(timer);
-  }, [inView, target, duration]);
-
-  return (
-    <span ref={ref}>
-      {count}
-      {suffix}
-    </span>
-  );
+function getCategoryColor(category?: string): string {
+  const key = category?.toLowerCase().trim();
+  return key ? categoryColors[key] || "#D4756A" : "#D4756A";
 }
 
-const stats = [
-  { icon: BookOpen, value: 8, suffix: "+", label: "سنوات من الخبرة" },
-  { icon: Users, value: 500, suffix: "+", label: "عميلة سعيدة" },
-  { icon: Award, value: 5, suffix: "", label: "شهادات معتمدة" },
-  { icon: Heart, value: 12, suffix: "+", label: "برامج صحية" },
-];
+function formatDate(date?: string) {
+  if (!date) return "";
+  return new Date(date).toLocaleDateString("ar", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
 
-export default function About() {
+export default function BlogDetail({ slug }: { slug: string }) {
+  const { tip, loading, error } = useGetTipById(slug);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [slug]);
+
   return (
     <section
-      id="about"
-      dir="rtl"
-      className="py-24 relative overflow-hidden"
+      className="relative min-h-screen overflow-hidden py-28 sm:py-36"
       style={{
         background: "linear-gradient(180deg, #FAF0EC 0%, #F4F6F3 100%)",
       }}
+      dir="rtl"
     >
-      {/* Decorative shape */}
       <div
-        className="absolute top-0 left-0 w-96 h-96 rounded-full blur-3xl opacity-20"
-        style={{ background: "radial-gradient(circle, #E8776F, transparent)" }}
-      />
-      <div
-        className="absolute bottom-0 right-0 w-72 h-72 rounded-full blur-3xl opacity-15"
+        className="absolute left-0 top-0 h-96 w-96 rounded-full opacity-15 blur-3xl"
         style={{ background: "radial-gradient(circle, #8A9E84, transparent)" }}
       />
+      <div
+        className="absolute bottom-0 right-0 h-72 w-72 rounded-full opacity-15 blur-3xl"
+        style={{ background: "radial-gradient(circle, #D4756A, transparent)" }}
+      />
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Image side */}
+      <div className="relative z-10 mx-auto max-w-3xl px-6 lg:px-8">
+        <Link
+          to="/blog"
+          className="mb-8 inline-flex items-center gap-2 text-sm font-medium text-sage-600 transition-colors hover:text-coral-600"
+        >
+          <ArrowRight className="h-4 w-4" />
+          العودة إلى المدونة
+        </Link>
+
+        {loading ? (
+          <div className="flex items-center justify-center py-24">
+            <div className="h-8 w-8 animate-spin rounded-full border-4 border-coral-200 border-t-coral-500" />
+          </div>
+        ) : error || !tip ? (
           <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="relative lg:order-2"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="rounded-3xl bg-white/70 p-10 text-center backdrop-blur-sm"
+            style={{ border: "1.5px solid rgba(212,117,106,0.12)" }}
           >
-            <div
-              className="absolute -top-6 -right-6 w-full h-full rounded-[2rem] opacity-20"
+            <p className="mb-6 text-lg text-sage-700">
+              {error || "لم يتم العثور على هذه النصيحة."}
+            </p>
+            <Link
+              to="/blog"
+              className="inline-flex rounded-full px-5 py-2.5 text-sm font-semibold text-white"
               style={{
-                background: "linear-gradient(135deg, #D4756A, #8A9E84)",
+                background: "linear-gradient(135deg, #E8776F, #D4756A)",
               }}
-            />
-
-            <div className="relative rounded-[2rem] overflow-hidden shadow-2xl aspect-[4/5]">
-              {/* Replace src with your about photo */}
-              <img
-                src="https://images.pexels.com/photos/3757376/pexels-photo-3757376.jpeg?auto=compress&cs=tinysrgb&w=800"
-                alt="نبذة عن الدكتورة سارة"
-                className="w-full h-full object-cover"
-              />
-
-              <div
-                className="absolute inset-0"
-                style={{
-                  background:
-                    "linear-gradient(to top, rgba(138,158,132,0.3) 0%, transparent 60%)",
-                }}
-              />
-            </div>
-
-            {/* Floating card on image */}
-            <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -bottom-6 -left-6 bg-white rounded-2xl p-5 shadow-xl border border-coral-100 max-w-[220px]"
             >
-              <div className="flex items-center gap-3 mb-2">
-                <div
-                  className="w-10 h-10 rounded-full flex items-center justify-center"
-                  style={{
-                    background: "linear-gradient(135deg, #F2A08E, #D4756A)",
-                  }}
-                >
-                  <Heart className="w-5 h-5 text-white fill-white" />
-                </div>
-
-                <div>
-                  <div className="text-xs text-sage-500 font-medium">
-                    فلسفتي
-                  </div>
-                  <div className="text-sm font-bold text-coral-700">
-                    رعاية شاملة
-                  </div>
-                </div>
-              </div>
-
-              <p className="text-xs text-sage-600 leading-relaxed">
-                العقل والجسد والروح — دعم وتعافٍ في كل مرحلة من مراحل حياة
-                المرأة.
-              </p>
-            </motion.div>
+              العودة إلى المدونة
+            </Link>
           </motion.div>
-
-          {/* Text side */}
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-right lg:order-1"
+        ) : (
+          <motion.article
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55 }}
+            className="rounded-[2rem] bg-white/75 p-6 backdrop-blur-sm sm:p-10"
+            style={{
+              border: "1.5px solid rgba(212,117,106,0.12)",
+              boxShadow: "0 8px 40px rgba(74,53,48,0.08)",
+            }}
           >
-            <div
-              className="inline-block px-4 py-1.5 rounded-full text-sm font-medium text-coral-600 mb-6"
-              style={{
-                background: "rgba(212,117,106,0.1)",
-                border: "1px solid rgba(212,117,106,0.25)",
-              }}
-            >
-              من أنا
+            <div className="mb-6 flex flex-wrap items-center gap-3">
+              {tip.tip_category && (
+                <span
+                  className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold text-white"
+                  style={{ background: getCategoryColor(tip.tip_category) }}
+                >
+                  <Tag className="h-3.5 w-3.5" />
+                  {tip.tip_category}
+                </span>
+              )}
+              {tip.tip_date && (
+                <span className="inline-flex items-center gap-1.5 text-xs text-sage-500">
+                  <Calendar className="h-3.5 w-3.5" />
+                  {formatDate(tip.tip_date)}
+                </span>
+              )}
             </div>
 
-            <h2
-              className="text-4xl lg:text-5xl font-bold mb-6 leading-tight"
+            <h1
+              className="mb-6 text-3xl font-bold leading-tight sm:text-4xl"
               style={{ fontFamily: "Georgia, serif", color: "#4A3530" }}
             >
-              شغف حقيقي
-              <br />
-              <span style={{ color: "#D4756A" }}>بصحة ورفاهية المرأة</span>
-            </h2>
+              {tip.tip}
+            </h1>
 
-            <div className="space-y-4 text-sage-700/80 text-base leading-relaxed mb-8">
-              <p>
-                {/* Replace with your personal story */}
-                أنا مدربة شخصية معتمدة، وأخصائية علاج طبيعي مرخّصة، ومتخصصة في
-                دعم الرضاعة الطبيعية، أمتلك شغفًا عميقًا بمرافقة النساء في كل
-                مرحلة من رحلتهن الصحية، من تحسين الأداء البدني وبناء القوة إلى
-                دعم الأمومة الجديدة بكل ما تحمله من حساسية وتحديات.
+            {tip.hook && (
+              <p
+                className="mb-8 border-r-4 pr-4 text-base leading-relaxed text-sage-700 sm:text-lg"
+                style={{ borderColor: "#D4756A" }}
+              >
+                {tip.hook}
               </p>
+            )}
 
-              <p>
-                يرتكز أسلوبي على الجمع بين التأهيل العلاجي المبني على الأدلة
-                العلمية والتدريب الشخصي المتعاطف والمصمم حسب احتياجات كل امرأة.
-                سواء كنتِ تتعافين من إصابة، أو تمرين بتحديات ما بعد الولادة، أو
-                تسعين إلى بناء القوة والثقة، أضع لكِ برنامجًا مناسبًا لطبيعة
-                جسمك وهدفك.
-              </p>
-
-              <p>
-                تشمل خبرتي التدريب الرياضي، التأهيل الحركي، علاج عضلات قاع
-                الحوض، التعافي بعد الولادة، ودعم الرضاعة الطبيعية، لتقديم رعاية
-                متكاملة لصحة المرأة في مكان واحد.
-              </p>
-            </div>
-
-            {/* Feature pills */}
-            <div className="flex flex-wrap gap-3 mb-10 justify-start lg:justify-end">
-              {[
-                "التعافي بعد الولادة",
-                "علاج قاع الحوض",
-                "التأهيل الرياضي",
-                "دعم الرضاعة الطبيعية",
-                "لياقة المرأة",
-              ].map((tag) => (
-                <span
-                  key={tag}
-                  className="px-4 py-1.5 rounded-full text-sm font-medium text-sage-700"
-                  style={{
-                    background: "rgba(138,158,132,0.12)",
-                    border: "1px solid rgba(138,158,132,0.3)",
-                  }}
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-
-            {/* Stats row */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              {stats.map(({ icon: Icon, value, suffix, label }, i) => (
-                <motion.div
-                  key={label}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.2 + i * 0.1 }}
-                  className="bg-white/70 backdrop-blur-sm rounded-2xl p-4 text-center shadow-sm border border-cream-200"
-                >
-                  <div
-                    className="w-9 h-9 rounded-full mx-auto mb-2 flex items-center justify-center"
-                    style={{
-                      background: "linear-gradient(135deg, #FAD9D5, #E4E9E2)",
-                    }}
-                  >
-                    <Icon className="w-4 h-4 text-coral-500" />
-                  </div>
-
-                  <div
-                    className="text-2xl font-bold"
-                    style={{ fontFamily: "Georgia, serif", color: "#D4756A" }}
-                  >
-                    <AnimatedCounter target={value} suffix={suffix} />
-                  </div>
-
-                  <div className="text-xs text-sage-600 font-medium mt-0.5 leading-tight">
-                    {label}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
+            {tip.tip_description ? (
+              <div className="space-y-4 whitespace-pre-line text-base leading-[1.9] text-sage-800 sm:text-lg">
+                {tip.tip_description}
+              </div>
+            ) : (
+              <p className="text-sage-600">لا يوجد محتوى إضافي لهذه النصيحة.</p>
+            )}
+          </motion.article>
+        )}
       </div>
     </section>
   );

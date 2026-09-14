@@ -21,16 +21,26 @@ export default defineType({
       title: 'tip Category',
     }),
     defineField({
+      name: 'hook',
+      type: 'text',
+      title: 'Hook',
+      description:
+        'Short teaser shown on the blog card when there is no Instagram link. Full tip Description is shown on the detail page.',
+      rows: 3,
+    }),
+    defineField({
       name: 'tip_description',
-      type: 'string',
+      type: 'text',
       title: 'tip Description',
+      description: 'Full article content shown on the Read more detail page.',
+      rows: 8,
     }),
     defineField({
       name: 'instagram_url',
       type: 'url',
       title: 'Instagram Post URL',
       description:
-        'Optional link to a related Instagram post. Leave empty to hide the button on the blog page.',
+        'Optional link to a related Instagram post. When set, the card shows Instagram button and description. When empty, the card shows the Hook and a Read more button.',
       validation: (Rule) =>
         Rule.uri({
           allowRelative: false,

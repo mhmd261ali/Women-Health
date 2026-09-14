@@ -13,31 +13,36 @@ const client = createClient({
   dataset: process.env.SANITY_DATASET || "data",
   apiVersion: "2024-01-01",
   useCdn: true,
-  // Optional: set SANITY_API_TOKEN in Vercel if the dataset is private
   token: process.env.SANITY_API_TOKEN || undefined,
 });
 
-const TIPS_QUERY = `*[
-  _type == "Blog" &&
-  (
-    $search == "" ||
-    tip match $search ||
-    tip_description match $search ||
-    tip_category match $search
-  ) &&
-  (
-    $selectedCategory == "" ||
-    tip_category == $selectedCategory
-  )
-]{
+const TIP_FIELDS = `{
   _id,
   _type,
   tip,
   tip_date,
   tip_category,
+  hook,
   tip_description,
   instagram_url,
-} | order(tip_date desc)`;
+}`;
+
+const TIPS_LIST_QUERY = `*[
+  _type == "Blog" &&
+  (
+    $search == "" ||
+    tip match $search ||
+    tip_description match $search ||
+    tip_category match $search ||
+    hook match $search
+  ) &&
+  (
+    $selectedCategory == "" ||
+    tip_category == $selectedCategory
+  )
+]${TIP_FIELDS} | order(tip_date desc)`;
+
+const TIP_BY_ID_QUERY = `*[_type == "Blog" && _id == $id][0]${TIP_FIELDS}`;
 
 function corsOrigin(req: VercelRequest): string {
   const origin = req.headers.origin;
@@ -56,7 +61,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const origin = corsOrigin(req);
   setCors(res, origin);
 
-  // Preflight — see https://vercel.com/kb/guide/how-to-enable-cors
   if (req.method === "OPTIONS") {
     return res.status(200).end();
   }
@@ -66,6 +70,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
+    const id = typeof req.query.id === "string" ? req.query.id : "";
+
+    if (id) {
+      const tip = await client.fetch(TIP_BY_ID_QUERY, { id });
+      if (!tip) {
+        return res.status(404).json({ error: "Tip not found" });
+      }
+      res.setHeader("Cache-Control", "s-maxage=60, stale-while-revalidate=300");
+      return res.status(200).json(tip);
+    }
+
     const searchParam =
       typeof req.query.search === "string" ? req.query.search : "";
     const selectedCategory =
@@ -73,7 +88,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         ? req.query.selectedCategory
         : "";
 
-    const data = await client.fetch(TIPS_QUERY, {
+    const data = await client.fetch(TIPS_LIST_QUERY, {
       search: searchParam ? `*${searchParam}*` : "",
       selectedCategory: selectedCategory || "",
     });
