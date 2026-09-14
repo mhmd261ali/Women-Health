@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   motion,
   useReducedMotion,
@@ -20,20 +20,20 @@ type Reason = {
 
 const reasons: Reason[] = [
   {
-    icon: Microscope,
-    title: "نهج مبني على الأدلة العلمية وخبرة طبية ورياضية مزدوجة",
-    description:
-      "تستند جميع التوصيات إلى أحدث الأبحاث السريرية في علوم الرياضة، والعلاج الفيزيائي، وصحة المرأة، مع الجمع بين شهادات العلاج الفيزيائي واللياقة البدنية ليمنحكِ أفضل ما في التأهيل الطبي والتدريب الرياضي.",
-    gradient: "linear-gradient(135deg, #E4E9E2 0%, #C8D3C5 100%)",
-    iconColor: "#8A9E84",
-  },
-  {
     icon: HandHeart,
     title: "إرشاد داعم ومتعاطف ورعاية شخصية",
     description:
       "بيئة دافئة وخالية من الأحكام، تشعرين فيها بأنكِ مسموعة ومحترمة ومدعومة بصدق في كل خطوة، حيث تصمّم كل خطّة خصيصًا حسب جسمكِ وأهدافكِ ومرحلتكِ الحياتية، بعيدًا عن الحلول العامة الجاهزة.",
     gradient: "linear-gradient(135deg, #FAD9D5 0%, #F2D4C8 100%)",
     iconColor: "#C4605A",
+  },
+  {
+    icon: Microscope,
+    title: "نهج مبني على الأدلة العلمية وخبرة طبية ورياضية مزدوجة",
+    description:
+      "تستند جميع التوصيات إلى أحدث الأبحاث السريرية في علوم الرياضة، والعلاج الفيزيائي، وصحة المرأة، مع الجمع بين شهادات العلاج الفيزيائي واللياقة البدنية ليمنحكِ أفضل ما في التأهيل الطبي والتدريب الرياضي.",
+    gradient: "linear-gradient(135deg, #E4E9E2 0%, #C8D3C5 100%)",
+    iconColor: "#8A9E84",
   },
   {
     icon: Handshake,
@@ -48,20 +48,41 @@ const reasons: Reason[] = [
 const CARD_TILTS = [-5, 4, -3] as const;
 const STACK_Y = [72, 0, -72] as const;
 
+function useIsNarrow(breakpoint = 640) {
+  const [narrow, setNarrow] = useState(() =>
+    typeof window !== "undefined"
+      ? window.matchMedia(`(max-width: ${breakpoint - 1}px)`).matches
+      : true,
+  );
+
+  useEffect(() => {
+    const mq = window.matchMedia(`(max-width: ${breakpoint - 1}px)`);
+    const update = () => setNarrow(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, [breakpoint]);
+
+  return narrow;
+}
+
 function CardCopy({ reason }: { reason: Reason }) {
   const Icon = reason.icon;
 
   return (
     <>
       <div
-        className="relative mb-5 flex h-14 w-14 items-center justify-center rounded-2xl shadow-sm"
+        className="relative mb-4 flex h-12 w-12 items-center justify-center rounded-2xl shadow-sm sm:mb-5 sm:h-14 sm:w-14"
         style={{ background: "rgba(255,255,255,0.7)" }}
       >
-        <Icon className="h-7 w-7" style={{ color: reason.iconColor }} />
+        <Icon
+          className="h-6 w-6 sm:h-7 sm:w-7"
+          style={{ color: reason.iconColor }}
+        />
       </div>
 
       <h3
-        className="relative mb-3 text-xl font-bold leading-snug"
+        className="relative mb-2 text-lg font-bold leading-snug sm:mb-3 sm:text-xl"
         style={{ color: "#4A3530", fontFamily: "Georgia, serif" }}
       >
         {reason.title}
@@ -78,26 +99,37 @@ function FloatingCard({
   reason,
   index,
   progress,
+  stacked,
 }: {
   reason: Reason;
   index: number;
   progress: MotionValue<number>;
+  stacked: boolean;
 }) {
   const shift = 0.08 * index;
+  const tilt = CARD_TILTS[index];
+
+  // Desktop: scroll-linked vertical stack. Phone: stay in flow (no overlap).
   const scrollY = useTransform(progress, (value) => {
+    if (!stacked) return 0;
     const t = Math.min(1, Math.max(0, (value - shift) / (1 - 0.16)));
     if (t < 0.22) return STACK_Y[index] + (1 - t / 0.22) * 72;
     if (t > 0.78) return STACK_Y[index] - ((t - 0.78) / 0.22) * 72;
     return STACK_Y[index];
   });
+
+  // Desktop: scroll-linked tilt. Phone: hold the little rotation.
   const rotate = useTransform(progress, (value) => {
+    if (!stacked) return tilt;
     const t = Math.min(1, Math.max(0, (value - shift) / (1 - 0.16)));
-    if (t < 0.22) return CARD_TILTS[index] * (t / 0.22);
-    if (t > 0.78) return CARD_TILTS[index] * (1 - (t - 0.78) / 0.22);
-    return CARD_TILTS[index];
+    if (t < 0.22) return tilt * (t / 0.22);
+    if (t > 0.78) return tilt * (1 - (t - 0.78) / 0.22);
+    return tilt;
   });
 
-  const floatAmplitudes = [14, 18, 12] as const;
+  const floatAmplitudes = stacked
+    ? ([14, 18, 12] as const)
+    : ([10, 12, 9] as const);
   const floatDurations = [3.8, 4.6, 4.1] as const;
 
   return (
@@ -129,6 +161,7 @@ function FloatingCard({
 
 export default function WhyMe() {
   const reduced = useReducedMotion();
+  const isPhone = useIsNarrow();
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -141,7 +174,7 @@ export default function WhyMe() {
       ref={sectionRef}
       id="why-me"
       dir="rtl"
-      className="relative flex min-h-svh flex-col overflow-hidden py-24"
+      className="relative flex min-h-svh flex-col overflow-x-hidden py-16 sm:overflow-hidden sm:py-24"
       style={{
         background: "linear-gradient(180deg, #FFF5F2 0%, #F4F6F3 100%)",
       }}
@@ -155,16 +188,16 @@ export default function WhyMe() {
         />
       </div>
 
-      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-6 lg:px-8">
+      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, amount: 0.3 }}
           transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-10 text-center md:mb-14"
+          className="mb-8 text-center md:mb-14"
         >
           <div
-            className="mb-6 inline-block rounded-full px-4 py-1.5 text-sm font-medium text-sage-600"
+            className="mb-4 inline-block rounded-full px-3 py-1 text-xs font-medium text-sage-600 sm:mb-6 sm:px-4 sm:py-1.5 sm:text-sm"
             style={{
               background: "rgba(138,158,132,0.1)",
               border: "1px solid rgba(138,158,132,0.25)",
@@ -174,14 +207,14 @@ export default function WhyMe() {
           </div>
 
           <h2
-            className="mb-5 text-4xl font-bold lg:text-5xl"
+            className="mb-3 text-2xl font-bold sm:mb-5 sm:text-4xl lg:text-5xl"
             style={{ fontFamily: "Georgia, serif", color: "#4A3530" }}
           >
             صحتكِ ورفاهيتكِ تستحقان
             <span style={{ color: "#8A9E84" }}> الأفضل</span>
           </h2>
 
-          <p className="mx-auto max-w-2xl text-lg leading-relaxed text-sage-600">
+          <p className="mx-auto max-w-2xl text-sm leading-relaxed text-sage-600 sm:text-lg">
             إليكِ ما يجعل العمل معي تجربة داعمة ومؤثرة لكل امرأة في مختلف مراحل
             حياتها.
           </p>
@@ -189,7 +222,7 @@ export default function WhyMe() {
 
         <div
           className={cn(
-            "grid grid-cols-1 items-start gap-4 py-2 sm:grid-cols-3 sm:gap-5 sm:py-16",
+            "grid grid-cols-1 items-start gap-6 py-2 sm:grid-cols-3 sm:gap-5 sm:py-16",
           )}
         >
           {reasons.map((reason, index) =>
@@ -201,7 +234,9 @@ export default function WhyMe() {
                   background: reason.gradient,
                   border: "1.5px solid rgba(255,255,255,0.7)",
                   boxShadow: "0 4px 24px rgba(0,0,0,0.06)",
-                  transform: `translateY(${STACK_Y[index]}px)`,
+                  transform: isPhone
+                    ? `rotate(${CARD_TILTS[index]}deg)`
+                    : `translateY(${STACK_Y[index]}px) rotate(${CARD_TILTS[index]}deg)`,
                 }}
               >
                 <CardCopy reason={reason} />
@@ -212,6 +247,7 @@ export default function WhyMe() {
                 reason={reason}
                 index={index}
                 progress={scrollYProgress}
+                stacked={!isPhone}
               />
             ),
           )}

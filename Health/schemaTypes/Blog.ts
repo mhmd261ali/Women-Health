@@ -25,5 +25,17 @@ export default defineType({
       type: 'string',
       title: 'tip Description',
     }),
+    defineField({
+      name: 'instagram_url',
+      type: 'url',
+      title: 'Instagram Post URL',
+      description:
+        'Optional link to a related Instagram post. Leave empty to hide the button on the blog page.',
+      validation: (Rule) =>
+        Rule.uri({
+          allowRelative: false,
+          scheme: ['http', 'https'],
+        }),
+    }),
   ],
 })

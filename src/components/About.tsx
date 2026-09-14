@@ -47,17 +47,29 @@ function useLayoutMetrics() {
       return { viewport: 1200, itemWidth: 640, itemHeight: 300 };
     }
     const viewport = window.innerWidth;
-    const itemWidth = Math.min(720, Math.max(320, viewport * 0.72));
-    const itemHeight = Math.min(340, Math.max(240, itemWidth * 0.48));
+    const itemWidth = Math.min(720, Math.max(280, viewport < 640 ? viewport * 0.86 : viewport * 0.72));
+    const itemHeight = Math.min(
+      340,
+      Math.max(viewport < 640 ? 280 : 240, itemWidth * (viewport < 640 ? 0.72 : 0.48)),
+    );
     return { viewport, itemWidth, itemHeight };
   });
 
   useEffect(() => {
     const update = () => {
       const viewport = window.innerWidth;
-      // Landscape cards: wide horizontal panels
-      const itemWidth = Math.min(720, Math.max(320, viewport * 0.72));
-      const itemHeight = Math.min(340, Math.max(240, itemWidth * 0.48));
+      // Landscape cards: wide horizontal panels; taller on phones for Arabic text
+      const itemWidth = Math.min(
+        720,
+        Math.max(280, viewport < 640 ? viewport * 0.86 : viewport * 0.72),
+      );
+      const itemHeight = Math.min(
+        340,
+        Math.max(
+          viewport < 640 ? 280 : 240,
+          itemWidth * (viewport < 640 ? 0.72 : 0.48),
+        ),
+      );
       setMetrics({ viewport, itemWidth, itemHeight });
     };
     update();
@@ -91,7 +103,7 @@ function StoryCard({
 
   return (
     <article
-      className="relative flex shrink-0 flex-col justify-center overflow-hidden rounded-[1.75rem] border border-white/60 p-6 text-right shadow-[0_24px_60px_-28px_rgba(74,53,48,0.45)] sm:rounded-[2rem] sm:p-8"
+      className="relative flex shrink-0 flex-col justify-center overflow-hidden rounded-[1.75rem] border border-white/60 p-4 text-right shadow-[0_24px_60px_-28px_rgba(74,53,48,0.45)] sm:rounded-[2rem] sm:p-8"
       style={{
         width,
         height,
@@ -193,14 +205,14 @@ export default function About() {
         />
 
         <motion.div
-          className="relative z-10 mx-auto mb-6 w-full max-w-7xl px-6 text-center lg:mb-8 lg:px-8"
+          className="relative z-10 mx-auto mb-4 w-full max-w-7xl px-4 text-center sm:mb-6 sm:px-6 lg:mb-8 lg:px-8"
           initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, amount: 0.5 }}
           transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
         >
           <div
-            className="mb-5 inline-block rounded-full px-4 py-1.5 text-sm font-medium text-coral-600"
+            className="mb-3 inline-block rounded-full px-3 py-1 text-xs font-medium text-coral-600 sm:mb-5 sm:px-4 sm:py-1.5 sm:text-sm"
             style={{
               background: "rgba(212,117,106,0.1)",
               border: "1px solid rgba(212,117,106,0.25)",
@@ -209,7 +221,7 @@ export default function About() {
             من أنا
           </div>
           <h2
-            className="text-4xl font-bold leading-tight lg:text-5xl"
+            className="text-2xl font-bold leading-tight sm:text-4xl lg:text-5xl"
             style={{ fontFamily: "Georgia, serif", color: "#4A3530" }}
           >
             شغفٌ حقيقي
@@ -218,7 +230,7 @@ export default function About() {
               بصحة ورفاهية المرأة والطفل
             </span>
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-sage-600">
+          <p className="mx-auto mt-2 max-w-xl text-sm text-sage-600 sm:mt-4 sm:text-base">
             مرّري للأسفل لاكتشاف رحلتي — بطاقة بعد بطاقة
           </p>
         </motion.div>
@@ -254,7 +266,7 @@ export default function About() {
         </motion.div>
 
         {/* Scroll progress bar */}
-        <div className="relative z-10 mx-auto mt-8 h-1 w-40 overflow-hidden rounded-full bg-[#4A3530]/10">
+        <div className="relative z-10 mx-auto mt-5 h-1 w-32 overflow-hidden rounded-full bg-[#4A3530]/10 sm:mt-8 sm:w-40">
           <motion.div
             className="h-full rounded-full bg-[#D4756A]"
             style={{ scaleX: scrollYProgress, transformOrigin: "left" }}

@@ -8,6 +8,7 @@ export type Tip = {
   tip_date?: string;
   tip_category?: string;
   tip_description?: string;
+  instagram_url?: string;
 };
 
 export default function useGetAllTips(
@@ -45,6 +46,7 @@ export default function useGetAllTips(
           tip_date: d.tip_date,
           tip_category: d.tip_category,
           tip_description: d.tip_description,
+          instagram_url: d.instagram_url || undefined,
         }));
 
         setTipList(mapped);

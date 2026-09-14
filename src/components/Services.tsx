@@ -269,9 +269,9 @@ export default function Services() {
       aria-label="الخدمات"
     >
       <div className="svc-carousel-sticky">
-        <header className="relative z-20 mx-auto w-full max-w-7xl px-6 pt-10 text-center lg:px-8">
+        <header className="relative z-20 mx-auto w-full max-w-7xl shrink-0 px-4 pt-6 text-center sm:px-6 sm:pt-10 lg:px-8">
           <div
-            className="mb-4 inline-block rounded-full px-4 py-1.5 text-sm font-medium text-coral-600"
+            className="mb-3 inline-block rounded-full px-3 py-1 text-xs font-medium text-coral-600 sm:mb-4 sm:px-4 sm:py-1.5 sm:text-sm"
             style={{
               background: "rgba(212,117,106,0.1)",
               border: "1px solid rgba(212,117,106,0.25)",
@@ -280,13 +280,13 @@ export default function Services() {
             خدماتي
           </div>
           <h2
-            className="text-4xl font-bold lg:text-5xl"
+            className="text-2xl font-bold sm:text-4xl lg:text-5xl"
             style={{ fontFamily: "Georgia, serif", color: "#4A3530" }}
           >
             خدمات مصمّمة
             <span style={{ color: "#D4756A" }}> خصيصًا لكِ</span>
           </h2>
-          <p className="mx-auto mt-3 max-w-xl text-sage-600">
+          <p className="mx-auto mt-2 max-w-xl text-sm text-sage-600 sm:mt-3 sm:text-base">
             مرّري للأسفل لاستكشاف الخدمات
           </p>
         </header>

@@ -62,7 +62,7 @@ export default function LoadingScreen({
       {visible && (
         <motion.div
           key="loader"
-          className="fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden"
+          className="fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden px-4"
           style={{
             background:
               "linear-gradient(145deg, #FDFAF8 0%, #FAD9D5 40%, #E4E9E2 100%)",
@@ -72,7 +72,7 @@ export default function LoadingScreen({
           transition={{ duration: 0.8, ease }}
         >
           <motion.div
-            className="pointer-events-none absolute left-1/2 top-1/2 h-[480px] w-[480px] -translate-x-1/2 -translate-y-1/2 rounded-full"
+            className="pointer-events-none absolute left-1/2 top-1/2 h-[min(70vw,420px)] w-[min(70vw,420px)] -translate-x-1/2 -translate-y-1/2 rounded-full"
             style={{
               background:
                 "radial-gradient(circle, rgba(212,117,106,0.22), transparent 65%)",
@@ -80,21 +80,9 @@ export default function LoadingScreen({
             animate={{ scale: [1, 1.08, 1], opacity: [0.45, 0.75, 0.45] }}
             transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
           />
-          <motion.div
-            className="pointer-events-none absolute -left-16 top-20 h-64 w-64 rounded-full opacity-30 blur-3xl"
-            style={{ background: "radial-gradient(circle, #D4756A, transparent)" }}
-            animate={{ scale: [1, 1.15, 1], opacity: [0.2, 0.35, 0.2] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.div
-            className="pointer-events-none absolute -right-12 bottom-16 h-56 w-56 rounded-full opacity-25 blur-3xl"
-            style={{ background: "radial-gradient(circle, #8A9E84, transparent)" }}
-            animate={{ scale: [1, 1.2, 1], opacity: [0.18, 0.3, 0.18] }}
-            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-          />
 
           <motion.div
-            className="relative z-10 flex items-center justify-center gap-5 px-6 sm:gap-8 md:gap-10"
+            className="relative z-10 flex w-full max-w-5xl flex-col items-center justify-center gap-5 sm:flex-row sm:gap-8 md:gap-10"
             dir="ltr"
             layout
             transition={{ layout: { duration: 0.95, ease } }}
@@ -113,7 +101,7 @@ export default function LoadingScreen({
               <motion.img
                 src={logo}
                 alt="خطوة"
-                className="h-80 w-80 object-contain sm:h-96 sm:w-96 md:h-[28rem] md:w-[28rem]"
+                className="h-[min(58vw,20rem)] w-[min(58vw,20rem)] object-contain sm:h-80 sm:w-80 md:h-96 md:w-96 lg:h-[28rem] lg:w-[28rem]"
                 animate={{
                   scale: [1, 1.03, 1],
                   filter: [
@@ -134,22 +122,28 @@ export default function LoadingScreen({
               {showText && (
                 <motion.div
                   key="tagline"
-                  className="max-w-[16rem] text-right sm:max-w-md md:max-w-lg"
+                  className="w-full max-w-[18rem] px-2 text-center sm:max-w-md sm:px-0 sm:text-right md:max-w-lg"
                   dir="rtl"
-                  initial={{ opacity: 0, x: 56, filter: "blur(10px)" }}
-                  animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+                  initial={{ opacity: 0, y: 24, filter: "blur(10px)" }}
+                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 1, ease }}
                 >
                   <p
-                    className="text-xl leading-relaxed sm:text-2xl md:text-[1.85rem] font-medium tracking-wide text-sage-600"
+                    className="text-base font-medium leading-relaxed tracking-wide text-sage-600 sm:text-xl md:text-[1.85rem]"
                     style={{ fontFamily: "system-ui, sans-serif" }}
                   >
-                    كل <span className="font-semibold" style={{ color: "#D4756A" }}>خطوة</span> صغيرة، هي
-                    بداية
+                    كل{" "}
+                    <span
+                      className="font-semibold"
+                      style={{ color: "#D4756A" }}
+                    >
+                      خطوة
+                    </span>{" "}
+                    صغيرة، هي بداية
                   </p>
                   <p
-                    className="mt-1 text-xl leading-relaxed sm:text-2xl md:text-[1.85rem] font-medium tracking-wide text-sage-600"
+                    className="mt-1 text-base font-medium leading-relaxed tracking-wide text-sage-600 sm:text-xl md:text-[1.85rem]"
                     style={{ fontFamily: "system-ui, sans-serif" }}
                   >
                     لمشوار أكبر

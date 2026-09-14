@@ -48,52 +48,52 @@ export default function Hero() {
     >
       {/* Background blobs */}
       <FloatingBlob
-        className="w-96 h-96 bg-coral-200 top-[-8rem] right-[-6rem]"
+        className="hidden w-96 h-96 bg-coral-200 top-[-8rem] right-[-6rem] sm:block"
         delay={0}
         duration={8}
       />
       <FloatingBlob
-        className="w-80 h-80 bg-sage-200 bottom-[-4rem] left-[-4rem]"
+        className="hidden w-80 h-80 bg-sage-200 bottom-[-4rem] left-[-4rem] sm:block"
         delay={2}
         duration={9}
       />
       <FloatingBlob
-        className="w-64 h-64 bg-peach-200 bottom-16 right-1/4"
+        className="hidden w-64 h-64 bg-peach-200 bottom-16 right-1/4 sm:block"
         delay={1}
         duration={7}
       />
 
       {/* Decorative orbs */}
       <FloatingOrb
-        className="w-12 h-12 bg-coral-300/60 top-32 right-[15%] shadow-lg"
+        className="hidden w-12 h-12 bg-coral-300/60 top-32 right-[15%] shadow-lg sm:block"
         delay={0}
       />
       <FloatingOrb
-        className="w-8 h-8 bg-sage-300/70 top-48 left-[18%] shadow-md"
+        className="hidden w-8 h-8 bg-sage-300/70 top-48 left-[18%] shadow-md sm:block"
         delay={1.5}
       />
       <FloatingOrb
-        className="w-16 h-16 bg-peach-300/50 bottom-40 left-[25%] shadow-xl"
+        className="hidden w-16 h-16 bg-peach-300/50 bottom-40 left-[25%] shadow-xl sm:block"
         delay={0.8}
       />
       <FloatingOrb
-        className="w-6 h-6 bg-coral-400/60 bottom-56 right-[30%]"
+        className="hidden w-6 h-6 bg-coral-400/60 bottom-56 right-[30%] sm:block"
         delay={2.2}
       />
 
       {/* Ring shapes */}
       <motion.div
-        className="absolute top-24 left-[12%] w-32 h-32 rounded-full border-4 border-sage-300/40"
+        className="absolute top-24 left-[12%] hidden h-32 w-32 rounded-full border-4 border-sage-300/40 sm:block"
         animate={{ rotate: 360 }}
         transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
       />
       <motion.div
-        className="absolute bottom-32 right-[10%] w-24 h-24 rounded-full border-2 border-coral-300/40"
+        className="absolute bottom-32 right-[10%] hidden h-24 w-24 rounded-full border-2 border-coral-300/40 sm:block"
         animate={{ rotate: -360 }}
         transition={{ duration: 16, repeat: Infinity, ease: "linear" }}
       />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 pt-20 grid lg:grid-cols-2 gap-12 items-center">
+      <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-8 px-4 pt-20 sm:gap-12 sm:px-6 lg:grid-cols-2 lg:px-8">
         {/* Text content */}
         <div className="text-right lg:order-1">
           <motion.div
@@ -111,7 +111,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="text-4xl lg:text-6xl font-bold leading-tight mb-4"
+            className="text-3xl sm:text-4xl lg:text-6xl font-bold leading-tight mb-4"
             style={{ fontFamily: "Georgia, serif", color: "#4A3530" }}
           >
             {/* Replace with your name */}
@@ -123,7 +123,7 @@ export default function Hero() {
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
               }}
-              className="text-5xl lg:text-7xl mt-8"
+              className="mt-4 block text-4xl sm:text-5xl lg:text-7xl"
             >
               صحة المرأة والطفل
             </span>
@@ -133,7 +133,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.75, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="text-sage-600 font-medium text-lg mb-3 tracking-wide"
+            className="mb-3 text-sm font-medium tracking-wide text-sage-600 sm:text-lg"
           >
             &nbsp; أخصائية علاج فيزيائي &nbsp;|&nbsp; أخصائية رضاعة طبيعية
           </motion.p>
@@ -142,7 +142,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.75, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            className="text-sage-700/80 text-lg leading-relaxed mb-10 max-w-lg mr-0"
+            className="mb-8 mr-0 max-w-lg text-base leading-relaxed text-sage-700/80 sm:mb-10 sm:text-lg"
           >
             أؤمن بأن كل رحلة نحو صحة أفضل تبدأ بخطوة، وأن المعرفة الصحيحة، والحركة الهادفة، والدعم المبني على الأدلة العلمية هي أساس بناء حياة أكثر صحة وقوة للمرأة والطفل
             </motion.p>
@@ -151,11 +151,11 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
-            className="flex flex-wrap gap-4 justify-start lg:justify-end"
+            className="flex flex-wrap gap-3 justify-start sm:gap-4 lg:justify-end"
           >
             <button
               onClick={() => scrollTo("#contact")}
-              className="px-8 py-4 rounded-full text-white font-semibold text-base shadow-lg hover:shadow-[0_8px_30px_rgba(212,117,106,0.45)] hover:scale-105 transition-all duration-300"
+              className="rounded-full px-6 py-3 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-[0_8px_30px_rgba(212,117,106,0.45)] sm:px-8 sm:py-4 sm:text-base"
               style={{
                 background: "linear-gradient(135deg, #E8776F 0%, #D4756A 100%)",
               }}
@@ -165,7 +165,7 @@ export default function Hero() {
 
             <button
               onClick={() => scrollTo("#services")}
-              className="px-8 py-4 rounded-full font-semibold text-base border-2 border-sage-400 text-sage-700 bg-white/60 backdrop-blur-sm hover:bg-sage-50 hover:border-sage-500 hover:scale-105 transition-all duration-300"
+              className="rounded-full border-2 border-sage-400 bg-white/60 px-6 py-3 text-sm font-semibold text-sage-700 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-sage-500 hover:bg-sage-50 sm:px-8 sm:py-4 sm:text-base"
             >
               عرض الخدمات
             </button>
@@ -214,7 +214,7 @@ export default function Hero() {
 
           {/* Image card */}
           <div
-            className="relative w-full max-w-sm lg:max-w-md aspect-[3/4] rounded-[2.5rem] overflow-hidden shadow-2xl"
+            className="relative aspect-[3/4] w-full max-w-[min(100%,20rem)] overflow-hidden rounded-[2rem] shadow-2xl sm:max-w-sm sm:rounded-[2.5rem] lg:max-w-md"
             style={{ border: "3px solid rgba(255,255,255,0.6)" }}
           >
             <img
@@ -236,7 +236,7 @@ export default function Hero() {
           <motion.div
             animate={{ y: [0, -8, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-8 -right-6 bg-white/80 backdrop-blur-md rounded-2xl px-4 py-3 shadow-lg border border-coral-100 text-right"
+            className="absolute top-6 right-2 rounded-2xl border border-coral-100 bg-white/80 px-3 py-2 text-right shadow-lg backdrop-blur-md sm:top-8 sm:-right-6 sm:px-4 sm:py-3"
           >
             <div className="text-xs text-sage-600 font-medium">متخصصة في</div>
             <div className="text-sm font-bold text-coral-600">صحة المرأة</div>
@@ -250,7 +250,7 @@ export default function Hero() {
               repeat: Infinity,
               ease: "easeInOut",
             }}
-            className="absolute bottom-16 -left-6 bg-white/80 backdrop-blur-md rounded-2xl px-4 py-3 shadow-lg border border-sage-100 text-right"
+            className="absolute bottom-12 left-2 rounded-2xl border border-sage-100 bg-white/80 px-3 py-2 text-right shadow-lg backdrop-blur-md sm:bottom-16 sm:-left-6 sm:px-4 sm:py-3"
           >
             <div className="text-xs text-sage-600 font-medium">
               ما بعد الولادة

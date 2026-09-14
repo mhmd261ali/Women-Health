@@ -49,32 +49,32 @@ export default function Contact() {
     <section
       id="contact"
       dir="rtl"
-      className="py-24 relative overflow-hidden"
+      className="relative overflow-hidden py-16 sm:py-24"
       style={{
         background: "linear-gradient(180deg, #FFF5F2 0%, #F4F6F3 100%)",
       }}
     >
       {/* Background decoration */}
       <div
-        className="absolute bottom-0 left-0 w-96 h-96 rounded-full blur-3xl opacity-20"
+        className="absolute bottom-0 left-0 h-96 w-96 rounded-full opacity-20 blur-3xl"
         style={{ background: "radial-gradient(circle, #D4756A, transparent)" }}
       />
       <div
-        className="absolute top-0 right-0 w-72 h-72 rounded-full blur-3xl opacity-15"
+        className="absolute top-0 right-0 h-72 w-72 rounded-full opacity-15 blur-3xl"
         style={{ background: "radial-gradient(circle, #8A9E84, transparent)" }}
       />
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, amount: 0.25 }}
           transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
-          className="text-center mb-16"
+          className="mb-10 text-center sm:mb-16"
         >
           <div
-            className="inline-block px-4 py-1.5 rounded-full text-sm font-medium text-coral-600 mb-6"
+            className="mb-4 inline-block rounded-full px-3 py-1 text-xs font-medium text-coral-600 sm:mb-6 sm:px-4 sm:py-1.5 sm:text-sm"
             style={{
               background: "rgba(212,117,106,0.1)",
               border: "1px solid rgba(212,117,106,0.25)",
@@ -84,7 +84,7 @@ export default function Contact() {
           </div>
 
           <h2
-            className="text-4xl lg:text-5xl font-bold mb-5"
+            className="mb-3 text-2xl font-bold sm:mb-5 sm:text-4xl lg:text-5xl"
             style={{ fontFamily: "Georgia, serif", color: "#4A3530" }}
           >
             هل أنتِ مستعدة لبدء
@@ -94,7 +94,7 @@ export default function Contact() {
             </span>
           </h2>
 
-          <p className="text-sage-600 text-lg max-w-2xl mx-auto leading-relaxed">
+          <p className="mx-auto max-w-2xl text-sm leading-relaxed text-sage-600 sm:text-lg">
             تواصلي معي اليوم لحجز استشارة أو لمعرفة المزيد حول كيفية دعم أهدافكِ
             الصحية بطريقة تناسب احتياجاتكِ الخاصة.
           </p>

@@ -33,6 +33,7 @@ const TIPS_QUERY = `*[
   tip_date,
   tip_category,
   tip_description,
+  instagram_url,
 } | order(tip_date desc)`;
 
 // https://vitejs.dev/config/

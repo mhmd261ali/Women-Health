@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { Calendar, Tag, ArrowRight, Search } from "lucide-react";
+import { Calendar, Tag, Instagram, Search } from "lucide-react";
 import useGetAllTips from "../api-hooks/useGetAllTips";
 
 export default function BlogListing() {
@@ -257,6 +257,22 @@ export default function BlogListing() {
                       <Calendar className="w-3.5 h-3.5" />
                       <span>{formatDate(tip.tip_date)}</span>
                     </div>
+                  )}
+
+                  {tip.instagram_url && (
+                    <a
+                      href={tip.instagram_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                      style={{
+                        background:
+                          "linear-gradient(135deg, #E8776F 0%, #D4756A 55%, #C4605A 100%)",
+                      }}
+                    >
+                      <Instagram className="h-4 w-4" />
+                      شاهدي على إنستغرام
+                    </a>
                   )}
                 </div>
               </motion.article>
