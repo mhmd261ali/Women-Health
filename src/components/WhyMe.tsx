@@ -210,13 +210,12 @@ export default function WhyMe() {
             className="mb-3 text-2xl font-bold sm:mb-5 sm:text-4xl lg:text-5xl"
             style={{ fontFamily: "Georgia, serif", color: "#4A3530" }}
           >
-            صحتكِ ورفاهيتكِ تستحقان
+            أنتِ و طفلكِ تستحقّان
             <span style={{ color: "#8A9E84" }}> الأفضل</span>
           </h2>
 
           <p className="mx-auto max-w-2xl text-sm leading-relaxed text-sage-600 sm:text-lg">
-            إليكِ ما يجعل العمل معي تجربة داعمة ومؤثرة لكل امرأة في مختلف مراحل
-            حياتها.
+            إليكِ ما يجعل تجربتكِ معي مختلفة وهادفة
           </p>
         </motion.div>
 

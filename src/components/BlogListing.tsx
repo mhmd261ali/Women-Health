@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, Calendar, Instagram, Search, Tag } from "lucide-react";
 import useGetAllTips from "../api-hooks/useGetAllTips";
+import {
+  BLOG_CATEGORIES,
+  getBlogCategoryColor,
+} from "../lib/blogCategories";
 
 export default function BlogListing() {
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -13,49 +17,7 @@ export default function BlogListing() {
     selectedCategory,
   );
 
-  const { tipList: allTips } = useGetAllTips("", "");
-
-  const categories = useMemo(() => {
-    const uniqueCategories = Array.from(
-      new Set(
-        allTips
-          .map((tip) => tip.tip_category)
-          .filter((category): category is string => Boolean(category)),
-      ),
-    );
-
-    return uniqueCategories;
-  }, [allTips]);
-
   const recentTips = useMemo(() => tipList.slice(0, 30), [tipList]);
-
-  const getCategoryColor = (category?: string): string => {
-    const normalizedCategory = category?.toLowerCase().trim();
-
-    const colorMap: Record<string, string> = {
-      breastfeeding: "#D4756A",
-      sports: "#8A9E84",
-      health: "#E8776F",
-      physiotherapy: "#748D6E",
-      nutrition: "#D4756A",
-      fitness: "#8A9E84",
-      recovery: "#C4605A",
-      wellness: "#9DAE97",
-
-      الرضاعة: "#D4756A",
-      الرياضة: "#8A9E84",
-      الصحة: "#E8776F",
-      "العلاج الفيزيائي": "#748D6E",
-      التغذية: "#D4756A",
-      اللياقة: "#8A9E84",
-      التعافي: "#C4605A",
-      العافية: "#9DAE97",
-    };
-
-    return normalizedCategory
-      ? colorMap[normalizedCategory] || "#D4756A"
-      : "#D4756A";
-  };
 
   const formatDate = (date?: string) => {
     if (!date) return "";
@@ -95,7 +57,7 @@ export default function BlogListing() {
               border: "1px solid rgba(212,117,106,0.25)",
             }}
           >
-            مدونة الصحة والعافية
+            خطوة نحو المعرفة
           </div>
 
           <h1
@@ -107,9 +69,8 @@ export default function BlogListing() {
           </h1>
 
           <p className="mx-auto max-w-2xl text-lg leading-relaxed text-sage-600">
-            نصائح متخصصة حول اللياقة البدنية، العلاج الطبيعي، التعافي بعد
-            الولادة، الرضاعة والصحة الشاملة لمساعدتك على اتخاذ قرارات أفضل لصحتك
-            وعافيتك.
+            معلومات علمية موثوقة، بلغة بسيطة، تساعدكِ على فهم المواضيع الصحية
+            التي تهمّكِ بشكل أفضل.
           </p>
         </motion.div>
 
@@ -148,7 +109,7 @@ export default function BlogListing() {
               جميع النصائح
             </button>
 
-            {categories.map((category) => (
+            {BLOG_CATEGORIES.map((category) => (
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
@@ -160,9 +121,9 @@ export default function BlogListing() {
                 style={
                   selectedCategory === category
                     ? {
-                        background: `linear-gradient(135deg, ${getCategoryColor(
+                        background: `linear-gradient(135deg, ${getBlogCategoryColor(
                           category,
-                        )}, ${getCategoryColor(category)}dd)`,
+                        )}, ${getBlogCategoryColor(category)}dd)`,
                       }
                     : {}
                 }
@@ -212,7 +173,7 @@ export default function BlogListing() {
                         <span
                           className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold text-white"
                           style={{
-                            background: getCategoryColor(tip.tip_category),
+                            background: getBlogCategoryColor(tip.tip_category),
                           }}
                         >
                           <Tag className="h-3.5 w-3.5" />

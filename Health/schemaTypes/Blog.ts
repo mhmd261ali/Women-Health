@@ -1,5 +1,14 @@
 import {defineField, defineType} from 'sanity'
 
+const BLOG_CATEGORIES = [
+  {title: 'الحركة والتمارين', value: 'الحركة والتمارين'},
+  {title: 'الحمل', value: 'الحمل'},
+  {title: 'ما بعد الولادة', value: 'ما بعد الولادة'},
+  {title: 'الأطفال', value: 'الأطفال'},
+  {title: 'الرضاعة الطبيعية', value: 'الرضاعة الطبيعية'},
+  {title: 'العلاج الفيزيائي', value: 'العلاج الفيزيائي'},
+]
+
 export default defineType({
   name: 'Blog',
   title: 'Blog',
@@ -19,6 +28,11 @@ export default defineType({
       name: 'tip_category',
       type: 'string',
       title: 'tip Category',
+      options: {
+        list: BLOG_CATEGORIES,
+        layout: 'dropdown',
+      },
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'hook',

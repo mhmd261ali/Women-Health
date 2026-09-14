@@ -3,30 +3,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, Calendar, Tag } from "lucide-react";
 import { useGetTipById } from "../api-hooks/useGetAllTips";
-
-const categoryColors: Record<string, string> = {
-  breastfeeding: "#D4756A",
-  sports: "#8A9E84",
-  health: "#E8776F",
-  physiotherapy: "#748D6E",
-  nutrition: "#D4756A",
-  fitness: "#8A9E84",
-  recovery: "#C4605A",
-  wellness: "#9DAE97",
-  الرضاعة: "#D4756A",
-  الرياضة: "#8A9E84",
-  الصحة: "#E8776F",
-  "العلاج الفيزيائي": "#748D6E",
-  التغذية: "#D4756A",
-  اللياقة: "#8A9E84",
-  التعافي: "#C4605A",
-  العافية: "#9DAE97",
-};
-
-function getCategoryColor(category?: string): string {
-  const key = category?.toLowerCase().trim();
-  return key ? categoryColors[key] || "#D4756A" : "#D4756A";
-}
+import { getBlogCategoryColor } from "../lib/blogCategories";
 
 function formatDate(date?: string) {
   if (!date) return "";
@@ -109,7 +86,7 @@ export default function BlogDetail({ slug }: { slug: string }) {
               {tip.tip_category && (
                 <span
                   className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold text-white"
-                  style={{ background: getCategoryColor(tip.tip_category) }}
+                  style={{ background: getBlogCategoryColor(tip.tip_category) }}
                 >
                   <Tag className="h-3.5 w-3.5" />
                   {tip.tip_category}
