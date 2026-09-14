@@ -1,7 +1,23 @@
-import { motion } from "framer-motion";
-import { Microscope, HandHeart, Handshake } from "lucide-react";
+import { useRef } from "react";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+  type MotionValue,
+} from "framer-motion";
+import { Microscope, HandHeart, Handshake, type LucideIcon } from "lucide-react";
+import { cn } from "../lib/utils";
 
-const reasons = [
+type Reason = {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+  gradient: string;
+  iconColor: string;
+};
+
+const reasons: Reason[] = [
   {
     icon: Microscope,
     title: "نهج مبني على الأدلة العلمية وخبرة طبية ورياضية مزدوجة",
@@ -28,42 +44,138 @@ const reasons = [
   },
 ];
 
+const CARD_TILTS = [-5, 4, -3] as const;
+const STACK_Y = [72, 0, -72] as const;
+
+function CardCopy({ reason }: { reason: Reason }) {
+  const Icon = reason.icon;
+
+  return (
+    <>
+      <div
+        className="relative mb-5 flex h-14 w-14 items-center justify-center rounded-2xl shadow-sm"
+        style={{ background: "rgba(255,255,255,0.7)" }}
+      >
+        <Icon className="h-7 w-7" style={{ color: reason.iconColor }} />
+      </div>
+
+      <h3
+        className="relative mb-3 text-xl font-bold leading-snug"
+        style={{ color: "#4A3530", fontFamily: "Georgia, serif" }}
+      >
+        {reason.title}
+      </h3>
+
+      <p className="relative text-sm leading-relaxed text-sage-700/75 sm:text-[15px] sm:leading-[1.9]">
+        {reason.description}
+      </p>
+    </>
+  );
+}
+
+function FloatingCard({
+  reason,
+  index,
+  progress,
+}: {
+  reason: Reason;
+  index: number;
+  progress: MotionValue<number>;
+}) {
+  const shift = 0.08 * index;
+  const scrollY = useTransform(progress, (value) => {
+    const t = Math.min(1, Math.max(0, (value - shift) / (1 - 0.16)));
+    if (t < 0.22) return STACK_Y[index] + (1 - t / 0.22) * 72;
+    if (t > 0.78) return STACK_Y[index] - ((t - 0.78) / 0.22) * 72;
+    return STACK_Y[index];
+  });
+  const rotate = useTransform(progress, (value) => {
+    const t = Math.min(1, Math.max(0, (value - shift) / (1 - 0.16)));
+    if (t < 0.22) return CARD_TILTS[index] * (t / 0.22);
+    if (t > 0.78) return CARD_TILTS[index] * (1 - (t - 0.78) / 0.22);
+    return CARD_TILTS[index];
+  });
+
+  const floatAmplitudes = [14, 18, 12] as const;
+  const floatDurations = [3.8, 4.6, 4.1] as const;
+
+  return (
+    <motion.div
+      style={{ y: scrollY, rotate, zIndex: index + 1 }}
+      className="will-change-transform"
+    >
+      <motion.article
+        animate={{ y: [0, -floatAmplitudes[index], 0] }}
+        transition={{
+          duration: floatDurations[index],
+          delay: index * 0.35,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        style={{
+          background: reason.gradient,
+          border: "1.5px solid rgba(255,255,255,0.7)",
+          boxShadow: "0 18px 40px -22px rgba(74,53,48,0.35)",
+        }}
+        className="group relative overflow-hidden rounded-[28px] p-5 text-right sm:rounded-[32px] sm:p-7"
+      >
+        <div className="absolute inset-0 rounded-[28px] bg-white/0 transition-all duration-300 group-hover:bg-white/20 sm:rounded-[32px]" />
+        <CardCopy reason={reason} />
+      </motion.article>
+    </motion.div>
+  );
+}
+
 export default function WhyMe() {
+  const reduced = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start 0.85", "end 0.15"],
+  });
+
   return (
     <section
+      ref={sectionRef}
       id="why-me"
       dir="rtl"
-      className="py-24 relative overflow-hidden"
+      className="relative flex min-h-svh flex-col overflow-hidden py-24"
       style={{
         background: "linear-gradient(180deg, #FFF5F2 0%, #F4F6F3 100%)",
       }}
     >
-      {/* Background decoration */}
       <motion.div
-        className="absolute top-20 left-[-80px] w-64 h-64 rounded-full blur-3xl opacity-25"
+        className="absolute left-[-80px] top-20 h-64 w-64 rounded-full opacity-25 blur-3xl"
         style={{ background: "radial-gradient(circle, #D4756A, transparent)" }}
-        animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.3, 0.2] }}
+        animate={
+          reduced
+            ? undefined
+            : { scale: [1, 1.1, 1], opacity: [0.2, 0.3, 0.2] }
+        }
         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
       />
 
       <motion.div
-        className="absolute bottom-20 right-[-60px] w-56 h-56 rounded-full blur-3xl opacity-20"
+        className="absolute bottom-20 right-[-60px] h-56 w-56 rounded-full opacity-20 blur-3xl"
         style={{ background: "radial-gradient(circle, #8A9E84, transparent)" }}
-        animate={{ scale: [1, 1.15, 1], opacity: [0.15, 0.25, 0.15] }}
+        animate={
+          reduced
+            ? undefined
+            : { scale: [1, 1.15, 1], opacity: [0.15, 0.25, 0.15] }
+        }
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
       />
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-        {/* Header */}
+      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="text-center mb-16"
+          className="mb-10 text-center md:mb-14"
         >
           <div
-            className="inline-block px-4 py-1.5 rounded-full text-sm font-medium text-sage-600 mb-6"
+            className="mb-6 inline-block rounded-full px-4 py-1.5 text-sm font-medium text-sage-600"
             style={{
               background: "rgba(138,158,132,0.1)",
               border: "1px solid rgba(138,158,132,0.25)",
@@ -73,105 +185,48 @@ export default function WhyMe() {
           </div>
 
           <h2
-            className="text-4xl lg:text-5xl font-bold mb-5"
+            className="mb-5 text-4xl font-bold lg:text-5xl"
             style={{ fontFamily: "Georgia, serif", color: "#4A3530" }}
           >
             صحتكِ ورفاهيتكِ تستحقان
             <span style={{ color: "#8A9E84" }}> الأفضل</span>
           </h2>
 
-          <p className="text-sage-600 text-lg max-w-2xl mx-auto leading-relaxed">
+          <p className="mx-auto max-w-2xl text-lg leading-relaxed text-sage-600">
             إليكِ ما يجعل العمل معي تجربة داعمة ومؤثرة لكل امرأة في مختلف مراحل
             حياتها.
           </p>
         </motion.div>
 
-        {/* Cards */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {reasons.map(
-            ({ icon: Icon, title, description, gradient, iconColor }, i) => (
-              <motion.div
-                key={title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.08 }}
-                whileHover={{ y: -5 }}
-                className="group relative rounded-3xl p-7 overflow-hidden text-right"
+        <div
+          className={cn(
+            "grid grid-cols-1 items-start gap-4 py-2 sm:grid-cols-3 sm:gap-5 sm:py-16",
+          )}
+        >
+          {reasons.map((reason, index) =>
+            reduced ? (
+              <article
+                key={reason.title}
+                className="relative overflow-hidden rounded-[28px] p-5 text-right sm:rounded-[32px] sm:p-7"
                 style={{
-                  background: gradient,
-                  border: `1.5px solid rgba(255,255,255,0.7)`,
+                  background: reason.gradient,
+                  border: "1.5px solid rgba(255,255,255,0.7)",
                   boxShadow: "0 4px 24px rgba(0,0,0,0.06)",
+                  transform: `translateY(${STACK_Y[index]}px)`,
                 }}
               >
-                {/* Glass overlay on hover */}
-                <div className="absolute inset-0 bg-white/0 group-hover:bg-white/20 transition-all duration-300 rounded-3xl" />
-
-                <div
-                  className="relative w-14 h-14 rounded-2xl flex items-center justify-center mb-5 shadow-sm"
-                  style={{ background: "rgba(255,255,255,0.7)" }}
-                >
-                  <Icon className="w-7 h-7" style={{ color: iconColor }} />
-                </div>
-
-                <h3
-                  className="relative text-xl font-bold mb-3"
-                  style={{ color: "#4A3530", fontFamily: "Georgia, serif" }}
-                >
-                  {title}
-                </h3>
-
-                <p className="relative text-sage-700/75 text-sm leading-relaxed">
-                  {description}
-                </p>
-              </motion.div>
+                <CardCopy reason={reason} />
+              </article>
+            ) : (
+              <FloatingCard
+                key={reason.title}
+                reason={reason}
+                index={index}
+                progress={scrollYProgress}
+              />
             ),
           )}
         </div>
-
-        {/* Centered call-to-action strip */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.5 }}
-          className="mt-16 rounded-3xl p-10 text-center relative overflow-hidden"
-          style={{
-            background: "linear-gradient(135deg, #D4756A 0%, #8A9E84 100%)",
-          }}
-        >
-          <div
-            className="absolute inset-0 opacity-10"
-            style={{
-              backgroundImage:
-                "radial-gradient(circle at 20% 50%, white 1px, transparent 1px), radial-gradient(circle at 80% 50%, white 1px, transparent 1px)",
-              backgroundSize: "60px 60px",
-            }}
-          />
-
-          <h3
-            className="relative text-3xl font-bold text-white mb-4"
-            style={{ fontFamily: "Georgia, serif" }}
-          >
-            هل أنتِ مستعدة لبدء رحلة التحوّل؟
-          </h3>
-
-          <p className="relative text-white/80 text-lg mb-8 max-w-xl mx-auto">
-            لنعمل معًا على بناء نسخة أكثر صحة وقوة وثقة منكِ.
-          </p>
-
-          <button
-            onClick={() =>
-              document
-                .querySelector("#contact")
-                ?.scrollIntoView({ behavior: "smooth" })
-            }
-            className="px-10 py-4 rounded-full bg-white font-semibold text-base hover:shadow-lg hover:scale-105 transition-all duration-300"
-            style={{ color: "#D4756A" }}
-          >
-            ابدئي رحلتكِ اليوم
-          </button>
-        </motion.div>
       </div>
     </section>
   );

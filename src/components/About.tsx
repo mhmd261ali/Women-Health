@@ -1,210 +1,252 @@
-import { useEffect, useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
-import { Award, Heart, Users, BookOpen } from "lucide-react";
-import logo from "../images/Logo.png";
+import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  motion,
+  useMotionValueEvent,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from "framer-motion";
+import { Heart, Footprints, Sparkles } from "lucide-react";
 
-function AnimatedCounter({
-  target,
-  suffix = "",
-  duration = 2000,
-}: {
-  target: number;
-  suffix?: string;
-  duration?: number;
-}) {
-  const [count, setCount] = useState(0);
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true });
+const GAP = 28;
+const SCROLL_LENGTH_VH = 320;
+const MAX_BLUR = 12;
+const MIN_BRIGHTNESS = 0.42;
+const SCALE_EFFECT = 0.1;
+
+const storyCards = [
+  {
+    icon: Footprints,
+    label: "الاسم",
+    title: 'لماذا "خطوة"؟',
+    text: 'وعندما بدأت رحلة اختيار اسم لهذا المشروع، فكرت في العديد من الكلمات، لكنني لم أجد كلمة تعبّر عنه بصدق مثل "خطوة". لأنني أنا أيضًا بدأت بخطوة... ولأن كل خطوة صغيرة، مهما بدت بسيطة، هي بداية لمشوار أكبر. خطوة نحو فهم أجسامنا، نحو استعادة قوتنا، نحو صحة أفضل، ونحو نمو أكثر دعمًا ووعيًا لأطفالنا. أتمنى أن تتذكري دائمًا أن التغيير لا يحتاج إلى أن يحدث دفعة واحدة؛ ففي صحتك، وحركتك، ورحلة نمو طفلك، قد تكون الخطوة الأولى هي كل ما تحتاجينه للبدء.',
+    gradient: "linear-gradient(160deg, #FDE8E2 0%, #FAD1C6 45%, #E4E9E2 100%)",
+    accent: "#C4605A",
+  },
+  {
+    icon: Heart,
+    label: "البداية",
+    title: "قوة الحركة من الداخل",
+    text: "أنا مريم ترمس، أخصائية علاج فيزيائي، بدأت رحلتي في هذا المجال لأنني أؤمن بقوة الحركة والتمارين وتأثيرها العميق على صحتنا وجودة حياتنا. أؤمن أن الوقاية والعلاج لا يبدآن دائمًا من الخارج، بل من داخل أجسامنا، من خلال فهمها، ودعمها، واستخدام قدراتها الطبيعية بطريقة علمية ومدروسة.",
+    gradient: "linear-gradient(160deg, #FAD9D5 0%, #F5E6E0 55%, #E4E9E2 100%)",
+    accent: "#D4756A",
+  },
+  {
+    icon: Sparkles,
+    label: "الشغف",
+    title: "الأطفال، النساء، والرضاعة",
+    text: "خلال دراستي للعلاج الفيزيائي، اكتشفت شغفي الكبير بالعمل مع الأطفال والنساء. جذبني عالم الطفل بما يحمله من مراحل نمو وتطور مميزة، كما ألهمتني قوة المرأة وقدرتها على التكيف والتغير خلال مختلف مراحل حياتها. ومن هذا الشغف، بدأ اهتمامي بصحة المرأة والرضاعة الطبيعية. وجدت في هذا المجال امتدادًا لقيمي ورغبتي في فهم جسم الإنسان ودعم الأم والطفل خلال واحدة من أجمل المراحل وأكثرها تأثيرًا. لذلك اخترت أن أضيف تخصص الرضاعة الطبيعية إلى مسيرتي، لأجمع بين العلاج الفيزيائي، المعرفة العلمية، والدعم المتكامل.",
+    gradient: "linear-gradient(160deg, #E4E9E2 0%, #F4F6F3 50%, #FAD9D5 100%)",
+    accent: "#8A9E84",
+  },
+];
+
+function useLayoutMetrics() {
+  const [metrics, setMetrics] = useState(() => {
+    if (typeof window === "undefined") {
+      return { viewport: 1200, itemWidth: 640, itemHeight: 300 };
+    }
+    const viewport = window.innerWidth;
+    const itemWidth = Math.min(720, Math.max(320, viewport * 0.72));
+    const itemHeight = Math.min(340, Math.max(240, itemWidth * 0.48));
+    return { viewport, itemWidth, itemHeight };
+  });
 
   useEffect(() => {
-    if (!inView) return;
-    let start = 0;
-    const step = target / (duration / 16);
-    const timer = setInterval(() => {
-      start += step;
-      if (start >= target) {
-        setCount(target);
-        clearInterval(timer);
-      } else {
-        setCount(Math.floor(start));
-      }
-    }, 16);
-    return () => clearInterval(timer);
-  }, [inView, target, duration]);
+    const update = () => {
+      const viewport = window.innerWidth;
+      // Landscape cards: wide horizontal panels
+      const itemWidth = Math.min(720, Math.max(320, viewport * 0.72));
+      const itemHeight = Math.min(340, Math.max(240, itemWidth * 0.48));
+      setMetrics({ viewport, itemWidth, itemHeight });
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  return metrics;
+}
+
+function StoryCard({
+  card,
+  focus,
+  width,
+  height,
+  reduceEffects,
+}: {
+  card: (typeof storyCards)[number];
+  focus: number;
+  width: number;
+  height: number;
+  reduceEffects: boolean;
+}) {
+  const Icon = card.icon;
+  const blur = reduceEffects ? 0 : (1 - focus) * MAX_BLUR;
+  const brightness = reduceEffects
+    ? 1
+    : MIN_BRIGHTNESS + focus * (1.15 - MIN_BRIGHTNESS);
+  const scale = reduceEffects ? 1 : 1 - (1 - focus) * SCALE_EFFECT;
+  const saturation = reduceEffects ? 1 : 0.3 + focus * 0.7;
 
   return (
-    <span ref={ref}>
-      {count}
-      {suffix}
-    </span>
+    <article
+      className="relative flex shrink-0 flex-col justify-center overflow-hidden rounded-[1.75rem] border border-white/60 p-6 text-right shadow-[0_24px_60px_-28px_rgba(74,53,48,0.45)] sm:rounded-[2rem] sm:p-8"
+      style={{
+        width,
+        height,
+        background: card.gradient,
+        transform: `scale(${scale})`,
+        filter: `blur(${blur}px) brightness(${brightness}) saturate(${saturation})`,
+        opacity: 0.5 + focus * 0.5,
+      }}
+    >
+      <div
+        className="mb-3 inline-flex w-fit items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold"
+        style={{
+          background: `${card.accent}18`,
+          color: card.accent,
+          border: `1px solid ${card.accent}33`,
+        }}
+      >
+        <Icon size={14} strokeWidth={1.8} />
+        {card.label}
+      </div>
+
+      <h3
+        className="mb-3 text-xl font-bold leading-snug sm:text-2xl"
+        style={{ fontFamily: "Georgia, serif", color: "#4A3530" }}
+      >
+        {card.title}
+      </h3>
+
+      <p className="line-clamp-6 text-sm leading-[1.85] text-sage-700/85 sm:text-[15px] sm:leading-[1.9]">
+        {card.text}
+      </p>
+
+      <div
+        className="pointer-events-none absolute inset-y-0 left-0 w-28"
+        style={{
+          background: `linear-gradient(to right, ${card.accent}12, transparent)`,
+        }}
+      />
+    </article>
   );
 }
 
-const stats = [
-  { icon: BookOpen, value: 8, suffix: "+", label: "سنوات من الخبرة" },
-  { icon: Users, value: 500, suffix: "+", label: "عميلة سعيدة" },
-  { icon: Award, value: 5, suffix: "", label: "شهادات معتمدة" },
-  { icon: Heart, value: 12, suffix: "+", label: "برامج صحية" },
-];
-
 export default function About() {
+  const reduced = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+  const { viewport, itemWidth, itemHeight } = useLayoutMetrics();
+  const [progress, setProgress] = useState(0);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end end"],
+  });
+
+  useMotionValueEvent(scrollYProgress, "change", (v) => {
+    setProgress(v);
+  });
+
+  // Always travel enough to center each card in turn (independent of viewport width)
+  const step = itemWidth + GAP;
+  const travel = (storyCards.length - 1) * step;
+  // Center first card: left offset = half of leftover viewport space
+  const startPad = (viewport - itemWidth) / 2;
+
+  const x = useTransform(scrollYProgress, (p) => startPad - p * travel);
+
+  const focuses = useMemo(() => {
+    return storyCards.map((_, index) => {
+      const cardCenter =
+        startPad + index * step + itemWidth / 2 - progress * travel;
+      const offset = cardCenter - viewport / 2;
+      // Already viewed (left of center): stay sharp — no blur
+      if (offset <= 0) return 1;
+      // Upcoming cards: fade/blur by distance from focus
+      const range = itemWidth * 0.55;
+      return Math.min(1, Math.max(0, 1 - offset / range));
+    });
+  }, [progress, startPad, step, itemWidth, travel, viewport]);
+
   return (
     <section
+      ref={sectionRef}
       id="about"
-      dir="rtl"
-      className="py-24 relative overflow-hidden"
-      style={{
-        background: "linear-gradient(180deg, #FAF0EC 0%, #F4F6F3 100%)",
-      }}
+      className="relative"
+      style={{ height: `${SCROLL_LENGTH_VH}vh` }}
     >
-      {/* Decorative shape */}
       <div
-        className="absolute top-0 left-0 w-96 h-96 rounded-full blur-3xl opacity-20"
-        style={{ background: "radial-gradient(circle, #E8776F, transparent)" }}
-      />
-      <div
-        className="absolute bottom-0 right-0 w-72 h-72 rounded-full blur-3xl opacity-15"
-        style={{ background: "radial-gradient(circle, #8A9E84, transparent)" }}
-      />
+        className="sticky top-0 flex h-svh flex-col justify-center overflow-hidden"
+        style={{
+          background: "linear-gradient(180deg, #FAF0EC 0%, #F4F6F3 100%)",
+        }}
+      >
+        <div
+          className="pointer-events-none absolute left-0 top-0 h-96 w-96 rounded-full opacity-20 blur-3xl"
+          style={{ background: "radial-gradient(circle, #E8776F, transparent)" }}
+        />
+        <div
+          className="pointer-events-none absolute bottom-0 right-0 h-72 w-72 rounded-full opacity-15 blur-3xl"
+          style={{ background: "radial-gradient(circle, #8A9E84, transparent)" }}
+        />
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Image side */}
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="relative lg:order-2"
+        <div className="relative z-10 mx-auto mb-6 w-full max-w-7xl px-6 text-center lg:mb-8 lg:px-8">
+          <div
+            className="mb-5 inline-block rounded-full px-4 py-1.5 text-sm font-medium text-coral-600"
+            style={{
+              background: "rgba(212,117,106,0.1)",
+              border: "1px solid rgba(212,117,106,0.25)",
+            }}
           >
-            <div
-              className="absolute -top-6 -right-6 w-full h-full rounded-[2rem] opacity-20"
-              style={{
-                background: "linear-gradient(135deg, #D4756A, #8A9E84)",
-              }}
-            />
-            <div className="relative rounded-[2rem] overflow-hidden shadow-2xl aspect-[4/5]">
-              {/* Replace src with your about photo */}
-              <img
-                src={logo}
-                alt="نبذة عن الدكتورة سارة"
-                className="w-full h-full object-cover"
-              />
-              <div
-                className="absolute inset-0"
-                style={{
-                  background:
-                    "linear-gradient(to top, rgba(138,158,132,0.3) 0%, transparent 60%)",
-                }}
-              />
-            </div>
-
-            {/* Floating card on image */}
-            <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -bottom-6 -left-6 bg-white rounded-2xl p-5 shadow-xl border border-coral-100 max-w-[220px]"
-            >
-              <div className="flex items-center gap-3 mb-2">
-                <div
-                  className="w-10 h-10 rounded-full flex items-center justify-center"
-                  style={{
-                    background: "linear-gradient(135deg, #F2A08E, #D4756A)",
-                  }}
-                >
-                  <Heart className="w-5 h-5 text-white fill-white" />
-                </div>
-                <div>
-                  <div className="text-xs text-sage-500 font-medium">
-                    فلسفتي
-                  </div>
-                  <div className="text-sm font-bold text-coral-700">
-                    رعاية شاملة
-                  </div>
-                </div>
-              </div>
-              <p className="text-xs text-sage-600 leading-relaxed">
-                العقل والجسد والروح — دعم وتعافٍ في كل مرحلة من مراحل حياة
-                المرأة والطفل.
-              </p>
-            </motion.div>
-          </motion.div>
-
-          {/* Text side */}
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-right lg:order-1"
+            من أنا
+          </div>
+          <h2
+            className="text-4xl font-bold leading-tight lg:text-5xl"
+            style={{ fontFamily: "Georgia, serif", color: "#4A3530" }}
           >
-            <div
-              className="inline-block px-4 py-1.5 rounded-full text-sm font-medium text-coral-600 mb-6"
-              style={{
-                background: "rgba(212,117,106,0.1)",
-                border: "1px solid rgba(212,117,106,0.25)",
-              }}
-            >
-              من أنا
-            </div>
+            شغفٌ حقيقي
+            <br />
+            <span style={{ color: "#D4756A" }}>
+              بصحة ورفاهية المرأة والطفل
+            </span>
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-sage-600">
+            مرّري للأسفل لاكتشاف رحلتي — بطاقة بعد بطاقة
+          </p>
+        </div>
 
-            <h2
-              className="text-4xl lg:text-5xl font-bold mb-6 leading-tight"
-              style={{ fontFamily: "Georgia, serif", color: "#4A3530" }}
-            >
-              شغفٌ حقيقي
-              <br />
-              <span style={{ color: "#D4756A" }}>بصحة ورفاهية المرأة والطفل</span>
-            </h2>
-
-            <div className="space-y-4 text-sage-700/80 text-base leading-relaxed mb-8">
-              <p>
-              أنا مريم ترمس، أخصائية علاج فيزيائي، بدأت رحلتي في هذا المجال لأنني أؤمن بقوة الحركة والتمارين وتأثيرها العميق على صحتنا وجودة حياتنا. أؤمن أن الوقاية والعلاج لا يبدآن دائمًا من الخارج، بل من داخل أجسامنا، من خلال فهمها، ودعمها، واستخدام قدراتها الطبيعية بطريقة علمية ومدروسة
-              </p>
-              <p>
-              خلال دراستي للعلاج الفيزيائي، اكتشفت شغفي الكبير بالعمل مع الأطفال والنساء. جذبني عالم الطفل بما يحمله من مراحل نمو وتطور مميزة، كما ألهمتني قوة المرأة وقدرتها على التكيف والتغير خلال مختلف مراحل حياتها.
-              ومن هذا الشغف، بدأ اهتمامي بصحة المرأة والرضاعة الطبيعية. وجدت في هذا المجال امتدادًا لقيمي ورغبتي في فهم جسم الإنسان ودعم الأم والطفل خلال واحدة من أجمل المراحل وأكثرها تأثيرًا. لذلك اخترت أن أضيف تخصص الرضاعة الطبيعية إلى مسيرتي، لأجمع بين العلاج الفيزيائي، المعرفة العلمية، والدعم المتكامل
-              </p>
-              <p>
-              وعندما بدأت رحلة اختيار اسم لهذا المشروع، فكرت في العديد من الكلمات، لكنني لم أجد كلمة تعبّر عنه بصدق مثل "خطوة".
-              لأنني أنا أيضًا بدأت بخطوة...
-              ولأن كل خطوة صغيرة، مهما بدت بسيطة، هي بداية لمشوار أكبر. خطوة نحو فهم أجسامنا، نحو استعادة قوتنا، نحو صحة أفضل، ونحو نمو أكثر دعمًا ووعيًا لأطفالنا.
-              أتمنى أن تتذكري دائمًا أن التغيير لا يحتاج إلى أن يحدث دفعة واحدة؛ ففي صحتك، وحركتك، ورحلة نمو طفلك، قد تكون الخطوة الأولى هي كل ما تحتاجينه للبدء
-              </p>
-            </div>
-
-            {/* Stats row */}
-            {/* <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              {stats.map(({ icon: Icon, value, suffix, label }, i) => (
-                <motion.div
-                  key={label}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.2 + i * 0.1 }}
-                  className="bg-white/70 backdrop-blur-sm rounded-2xl p-4 text-center shadow-sm border border-cream-200"
-                >
-                  <div
-                    className="w-9 h-9 rounded-full mx-auto mb-2 flex items-center justify-center"
-                    style={{
-                      background: "linear-gradient(135deg, #FAD9D5, #E4E9E2)",
-                    }}
-                  >
-                    <Icon className="w-4 h-4 text-coral-500" />
-                  </div>
-                  <div
-                    className="text-2xl font-bold"
-                    style={{ fontFamily: "Georgia, serif", color: "#D4756A" }}
-                  >
-                    <AnimatedCounter target={value} suffix={suffix} />
-                  </div>
-                  <div className="text-xs text-sage-600 font-medium mt-0.5 leading-tight">
-                    {label}
-                  </div>
-                </motion.div>
-              ))}
-            </div> */}
+        <div className="relative z-10 w-full overflow-hidden" dir="ltr">
+          <motion.div
+            className="flex w-max items-center will-change-transform"
+            style={{
+              x,
+              gap: GAP,
+              // Anchor track to the left edge so startPad centers card 1
+              marginInlineStart: 0,
+              marginInlineEnd: "auto",
+            }}
+          >
+            {storyCards.map((card, index) => (
+              <StoryCard
+                key={card.title}
+                card={card}
+                focus={focuses[index]}
+                width={itemWidth}
+                height={itemHeight}
+                reduceEffects={!!reduced}
+              />
+            ))}
           </motion.div>
+        </div>
+
+        {/* Scroll progress bar */}
+        <div className="relative z-10 mx-auto mt-8 h-1 w-40 overflow-hidden rounded-full bg-[#4A3530]/10">
+          <motion.div
+            className="h-full rounded-full bg-[#D4756A]"
+            style={{ scaleX: scrollYProgress, transformOrigin: "left" }}
+          />
         </div>
       </div>
     </section>

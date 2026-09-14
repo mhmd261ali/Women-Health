@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
+import heroImage from "../images/hero.jpg";
 
 const FloatingBlob = ({
   className,
@@ -216,11 +217,10 @@ export default function Hero() {
             className="relative w-full max-w-sm lg:max-w-md aspect-[3/4] rounded-[2.5rem] overflow-hidden shadow-2xl"
             style={{ border: "3px solid rgba(255,255,255,0.6)" }}
           >
-            {/* Replace src with your professional photo */}
             <img
-              src="https://images.pexels.com/photos/6740057/pexels-photo-6740057.jpeg?auto=compress&cs=tinysrgb&w=800"
-              alt="د. مريم — مدربة شخصية وأخصائية علاج طبيعي"
-              className="w-full h-full object-cover"
+              src={heroImage}
+              alt="مريم ترمس — أخصائية علاج فيزيائي"
+              className="w-full h-full object-cover object-top"
             />
 
             <div
