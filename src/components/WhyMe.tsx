@@ -6,7 +6,7 @@ import {
   useTransform,
   type MotionValue,
 } from "framer-motion";
-import { Microscope, HandHeart, Handshake, type LucideIcon } from "lucide-react";
+import { FileSearch, HandHeart, Handshake, type LucideIcon } from "lucide-react";
 import { cn } from "../lib/utils";
 import { useWaveFunctions } from "../hooks/useWaveFunctions";
 
@@ -20,26 +20,26 @@ type Reason = {
 
 const reasons: Reason[] = [
   {
-    icon: HandHeart,
-    title: "إرشاد داعم ومتعاطف ورعاية شخصية",
+    icon: FileSearch,
+    title: "رعاية مبنية على العلم",
     description:
-      "بيئة دافئة وخالية من الأحكام، تشعرين فيها بأنكِ مسموعة ومحترمة ومدعومة بصدق في كل خطوة، حيث تصمّم كل خطّة خصيصًا حسب جسمكِ وأهدافكِ ومرحلتكِ الحياتية، بعيدًا عن الحلول العامة الجاهزة.",
+      "أعتمد على أحدث الأدلة والمعلومات العلمية، وأحرص على تحويلها إلى خطوات واضحة وعملية تناسب احتياجات كل شخص.",
     gradient: "linear-gradient(135deg, #FAD9D5 0%, #F2D4C8 100%)",
     iconColor: "#C4605A",
   },
   {
-    icon: Microscope,
-    title: "نهج مبني على الأدلة العلمية وخبرة طبية ورياضية مزدوجة",
+    icon: HandHeart,
+    title: "خطة فرديّة",
     description:
-      "تستند جميع التوصيات إلى أحدث الأبحاث السريرية في علوم الرياضة، والعلاج الفيزيائي، وصحة المرأة، مع الجمع بين شهادات العلاج الفيزيائي واللياقة البدنية ليمنحكِ أفضل ما في التأهيل الطبي والتدريب الرياضي.",
+      "لا أؤمن بالحلول الجاهزة؛ أبدأ بفهم الحالة والاحتياجات والأهداف، ثم أختار ما يناسب من تقييم وتمارين ودعم.",
     gradient: "linear-gradient(135deg, #E4E9E2 0%, #C8D3C5 100%)",
     iconColor: "#8A9E84",
   },
   {
     icon: Handshake,
-    title: "شراكة مبنية على الثقة والاحترام",
+    title: "دعم يتجاوز الجلسة",
     description:
-      "دوري ليس اتخاذ القرارات بدلًا عنك، بل تزويدك بالمعلومات العلمية والدعم اللازم، لتتمكني من اختيار ما يناسبك ويناسب طفلك بثقة ووعي",
+      "هدفي ليس فقط أن أقدّم لكِ تمرينًا أو معلومة، ولا أن آخذ أي قرار عنكِ بل أن أساعدكِ على فهم حالتك أو حالة طفلك ومساعدتكِ على اتخاذ قرارات أفضل، وبناء عادات مستمرّة.",
     gradient: "linear-gradient(135deg, #FDE8E2 0%, #FAD1C6 100%)",
     iconColor: "#D4756A",
   },

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type SVGProps } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   Activity,
@@ -9,17 +9,17 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { cn } from "../lib/utils";
+import motherBabyIcon from "../images/mother-baby-icon.png";
 
 type ServiceDetail = {
   intro: string;
   items: string[];
 };
 
-type ServiceIcon = LucideIcon | ((props: SVGProps<SVGSVGElement>) => JSX.Element);
-
 type Service = {
   id: string;
-  icon: ServiceIcon;
+  icon?: LucideIcon;
+  iconImage?: string;
   title: string;
   description: string;
   more?: ServiceDetail;
@@ -27,42 +27,6 @@ type Service = {
   accent: string;
   border: string;
 };
-
-/** Mother holding her baby — custom icon (not available in Lucide) */
-function MotherHoldingBaby({
-  className,
-  style,
-  ...props
-}: SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.75"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-      style={style}
-      aria-hidden
-      {...props}
-    >
-      {/* Mother head */}
-      <circle cx="8.5" cy="4.8" r="2.3" />
-      {/* Mother torso */}
-      <path d="M5 21.5v-6.2c0-2.4 1.5-4.3 3.5-4.8" />
-      <path d="M8.5 10.5c1.6.3 2.8 1.2 3.5 2.6" />
-      {/* Mother arm cradling baby */}
-      <path d="M5.2 14.8c2.2-.4 4.2.4 5.8 2" />
-      <path d="M11 16.8c1.2 1.4 2.2 3.2 2.6 4.7" />
-      {/* Baby head against chest */}
-      <circle cx="15.2" cy="12.2" r="2.15" />
-      {/* Baby body */}
-      <path d="M13.4 14.2c.5 1.6 1.6 2.9 3.2 3.6" />
-      <path d="M16.6 14.2c1 .9 1.7 2.2 2 3.6" />
-    </svg>
-  );
-}
 
 const PINK = {
   color: "from-coral-100 to-peach-100",
@@ -140,7 +104,7 @@ const services: Service[] = [
   },
   {
     id: "breastfeeding",
-    icon: MotherHoldingBaby,
+    iconImage: motherBabyIcon,
     title: "التحضير للرّضاعة الطّبيعيّة",
     description:
       "أساعد الأمهات على بدء رحلة الرضاعة الطبيعية بثقة ووعي، من خلال فهم أساسيات الرضاعة، تعلّم الوضعيات والالتقام المناسبين، والتعرّف على أكثر التحديات شيوعًا في الأيام والأسابيع الأولى وكيفية التعامل معها بهدوء وواقعية.",
@@ -161,23 +125,34 @@ function ServiceCardBody({
   onToggleMore?: () => void;
   featured: boolean;
 }) {
-  const { icon: Icon, title, description, more, accent } = service;
+  const { icon: Icon, iconImage, title, description, more, accent } = service;
 
   return (
     <div className="flex h-full flex-col text-right" dir="rtl">
       <div
         className={cn(
-          "mb-4 flex items-center justify-center rounded-2xl shadow-md",
+          "mb-4 flex items-center justify-center overflow-hidden rounded-2xl shadow-md",
           featured ? "h-14 w-14" : "h-11 w-11",
         )}
         style={{
           background: `linear-gradient(135deg, ${accent}22, ${accent}44)`,
         }}
       >
-        <Icon
-          className={featured ? "h-7 w-7" : "h-5 w-5"}
-          style={{ color: accent }}
-        />
+        {iconImage ? (
+          <img
+            src={iconImage}
+            alt=""
+            className={cn(
+              "object-contain",
+              featured ? "h-12 w-12" : "h-9 w-9",
+            )}
+          />
+        ) : Icon ? (
+          <Icon
+            className={featured ? "h-7 w-7" : "h-5 w-5"}
+            style={{ color: accent }}
+          />
+        ) : null}
       </div>
 
       <h3

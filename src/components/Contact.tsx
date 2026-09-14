@@ -87,16 +87,13 @@ export default function Contact() {
             className="mb-3 text-2xl font-bold sm:mb-5 sm:text-4xl lg:text-5xl"
             style={{ fontFamily: "Georgia, serif", color: "#4A3530" }}
           >
-            هل أنتِ مستعدة لبدء
-            <span style={{ color: "#D4756A" }}>
-              {" "}
-              رحلتكِ نحو الصحة والرفاهية؟
-            </span>
+            هل أنتِ مستعدة لتبدأي
+            <span style={{ color: "#D4756A" }}> بخطوتك الأولى؟</span>
           </h2>
 
           <p className="mx-auto max-w-2xl text-sm leading-relaxed text-sage-600 sm:text-lg">
-            تواصلي معي اليوم لحجز استشارة أو لمعرفة المزيد حول كيفية دعم أهدافكِ
-            الصحية بطريقة تناسب احتياجاتكِ الخاصة.
+            تواصلي معي اليوم لحجز موعد، أو للحصول على مكالمة تعريفية مجانية
+            والتعرّف أكثر إلى كيفية دعم أهدافكِ الصحية بما يتناسب مع احتياجاتكِ.
           </p>
         </motion.div>
 
