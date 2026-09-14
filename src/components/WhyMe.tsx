@@ -8,6 +8,7 @@ import {
 } from "framer-motion";
 import { Microscope, HandHeart, Handshake, type LucideIcon } from "lucide-react";
 import { cn } from "../lib/utils";
+import { useWaveFunctions } from "../hooks/useWaveFunctions";
 
 type Reason = {
   icon: LucideIcon;
@@ -133,6 +134,7 @@ export default function WhyMe() {
     target: sectionRef,
     offset: ["start 0.85", "end 0.15"],
   });
+  const { canvasRef } = useWaveFunctions("slow", 10, 40, 0.32);
 
   return (
     <section
@@ -144,34 +146,21 @@ export default function WhyMe() {
         background: "linear-gradient(180deg, #FFF5F2 0%, #F4F6F3 100%)",
       }}
     >
-      <motion.div
-        className="absolute left-[-80px] top-20 h-64 w-64 rounded-full opacity-25 blur-3xl"
-        style={{ background: "radial-gradient(circle, #D4756A, transparent)" }}
-        animate={
-          reduced
-            ? undefined
-            : { scale: [1, 1.1, 1], opacity: [0.2, 0.3, 0.2] }
-        }
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-      />
-
-      <motion.div
-        className="absolute bottom-20 right-[-60px] h-56 w-56 rounded-full opacity-20 blur-3xl"
-        style={{ background: "radial-gradient(circle, #8A9E84, transparent)" }}
-        animate={
-          reduced
-            ? undefined
-            : { scale: [1, 1.15, 1], opacity: [0.15, 0.25, 0.15] }
-        }
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-      />
+      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+        <canvas
+          ref={canvasRef}
+          className="absolute inset-[-8%] h-[116%] w-[116%] origin-center"
+          style={{ transform: "rotate(-6deg)" }}
+          aria-hidden
+        />
+      </div>
 
       <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
+          viewport={{ once: false, amount: 0.3 }}
+          transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
           className="mb-10 text-center md:mb-14"
         >
           <div

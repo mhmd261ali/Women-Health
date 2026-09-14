@@ -1,3 +1,118 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Services scroll carousel — previous / current / next cards */
+.svc-carousel-sticky {
+  position: sticky;
+  top: 0;
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.svc-slider {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 1rem 2.5rem;
+}
+
+.svc-slides {
+  position: relative;
+  width: min(920px, 100%);
+  height: min(420px, 52vh);
+}
+
+.svc-slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.55s ease;
+  will-change: transform, opacity;
+}
+
+.svc-slide__card {
+  width: min(520px, 86vw);
+  height: 100%;
+  overflow: hidden;
+  border-radius: 1.75rem;
+  padding: 1.5rem 1.75rem;
+}
+
+.svc-slide[data-role="current"] {
+  transform: translateX(0) scale(1);
+  opacity: 1;
+  filter: blur(0);
+  pointer-events: auto;
+}
+
+.svc-slide[data-role="previous"] {
+  transform: translateX(42%) scale(0.78);
+  opacity: 0.55;
+  filter: blur(1.5px);
+  pointer-events: none;
+}
+
+.svc-slide[data-role="next"] {
+  transform: translateX(-42%) scale(0.78);
+  opacity: 0.55;
+  filter: blur(1.5px);
+  pointer-events: none;
+}
+
+.svc-slide[data-role="idle"] {
+  transform: translateX(0) scale(0.7);
+  opacity: 0;
+  filter: blur(4px);
+  pointer-events: none;
+}
+
+.svc-carousel-progress {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  margin-top: 1.75rem;
+}
+
+.svc-carousel-progress span {
+  display: block;
+  height: 0.5rem;
+  width: 0.5rem;
+  border-radius: 999px;
+  background: rgba(74, 53, 48, 0.22);
+  transition: width 0.35s ease, background 0.35s ease;
+}
+
+.svc-carousel-progress span[data-active="true"] {
+  width: 2rem;
+  background: #4a3530;
+}
+
+@media (max-width: 640px) {
+  .svc-slides {
+    height: min(460px, 58vh);
+  }
+
+  .svc-slide[data-role="previous"] {
+    transform: translateX(28%) scale(0.82);
+  }
+
+  .svc-slide[data-role="next"] {
+    transform: translateX(-28%) scale(0.82);
+  }
+
+  .svc-slide__card {
+    padding: 1.25rem 1.35rem;
+  }
+}

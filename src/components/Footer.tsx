@@ -46,7 +46,13 @@ export default function Footer() {
       />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10" dir="rtl">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+        <motion.div
+          initial={{ opacity: 0, y: 28 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.2 }}
+          transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12"
+        >
           {/* Brand */}
           <div className="lg:col-span-2">
             <div className="flex items-center gap-2 mb-4">
@@ -136,10 +142,14 @@ export default function Footer() {
               Book a Session
             </button>
           </div>
-        </div>
+        </motion.div>
 
         {/* Bottom bar */}
-        <div
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.4 }}
+          transition={{ duration: 0.65, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
           className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-white/40 text-xs"
           style={{ borderTop: "1px solid rgba(255,255,255,0.1)" }}
         >
@@ -147,7 +157,7 @@ export default function Footer() {
           لصحّة المرأة و الطّفل، صمّم بكل حب
           <Heart className="w-3 h-3 text-coral-400 fill-coral-400 inline mx-0.5" />{" "}
           </span>
-        </div>
+        </motion.div>
       </div>
     </footer>
   );

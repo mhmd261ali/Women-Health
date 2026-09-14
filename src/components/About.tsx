@@ -192,7 +192,13 @@ export default function About() {
           style={{ background: "radial-gradient(circle, #8A9E84, transparent)" }}
         />
 
-        <div className="relative z-10 mx-auto mb-6 w-full max-w-7xl px-6 text-center lg:mb-8 lg:px-8">
+        <motion.div
+          className="relative z-10 mx-auto mb-6 w-full max-w-7xl px-6 text-center lg:mb-8 lg:px-8"
+          initial={{ opacity: 0, y: 28 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.5 }}
+          transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+        >
           <div
             className="mb-5 inline-block rounded-full px-4 py-1.5 text-sm font-medium text-coral-600"
             style={{
@@ -215,15 +221,21 @@ export default function About() {
           <p className="mx-auto mt-4 max-w-xl text-sage-600">
             مرّري للأسفل لاكتشاف رحلتي — بطاقة بعد بطاقة
           </p>
-        </div>
+        </motion.div>
 
-        <div className="relative z-10 w-full overflow-hidden" dir="ltr">
+        <motion.div
+          className="relative z-10 w-full overflow-hidden"
+          dir="ltr"
+          initial={{ opacity: 0, y: 36 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.25 }}
+          transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+        >
           <motion.div
             className="flex w-max items-center will-change-transform"
             style={{
               x,
               gap: GAP,
-              // Anchor track to the left edge so startPad centers card 1
               marginInlineStart: 0,
               marginInlineEnd: "auto",
             }}
@@ -239,7 +251,7 @@ export default function About() {
               />
             ))}
           </motion.div>
-        </div>
+        </motion.div>
 
         {/* Scroll progress bar */}
         <div className="relative z-10 mx-auto mt-8 h-1 w-40 overflow-hidden rounded-full bg-[#4A3530]/10">
