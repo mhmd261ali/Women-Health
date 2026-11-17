@@ -1,5 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { createClient } from "@sanity/client";
+import { getPool } from "./lib/db";
+import { getTipById, listTips } from "./lib/tips";
 
 const ALLOWED_ORIGINS = [
   "https://women-health-nu.vercel.app",
@@ -7,42 +8,6 @@ const ALLOWED_ORIGINS = [
   "http://localhost:4173",
   "http://localhost:3000",
 ];
-
-const client = createClient({
-  projectId: process.env.SANITY_PROJECT_ID || "w8a3f9tu",
-  dataset: process.env.SANITY_DATASET || "data",
-  apiVersion: "2024-01-01",
-  useCdn: true,
-  token: process.env.SANITY_API_TOKEN || undefined,
-});
-
-const TIP_FIELDS = `{
-  _id,
-  _type,
-  tip,
-  tip_date,
-  tip_category,
-  hook,
-  tip_description,
-  instagram_url,
-}`;
-
-const TIPS_LIST_QUERY = `*[
-  _type == "Blog" &&
-  (
-    $search == "" ||
-    tip match $search ||
-    tip_description match $search ||
-    tip_category match $search ||
-    hook match $search
-  ) &&
-  (
-    $selectedCategory == "" ||
-    tip_category == $selectedCategory
-  )
-]${TIP_FIELDS} | order(tip_date desc)`;
-
-const TIP_BY_ID_QUERY = `*[_type == "Blog" && _id == $id][0]${TIP_FIELDS}`;
 
 function corsOrigin(req: VercelRequest): string {
   const origin = req.headers.origin;
@@ -70,10 +35,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
+    const pool = getPool();
     const id = typeof req.query.id === "string" ? req.query.id : "";
 
     if (id) {
-      const tip = await client.fetch(TIP_BY_ID_QUERY, { id });
+      const tip = await getTipById(pool, id);
       if (!tip) {
         return res.status(404).json({ error: "Tip not found" });
       }
@@ -82,21 +48,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     const searchParam =
-      typeof req.query.search === "string" ? req.query.search : "";
+      typeof req.query.search === "string" ? req.query.search.trim() : "";
     const selectedCategory =
       typeof req.query.selectedCategory === "string"
         ? req.query.selectedCategory
         : "";
 
-    const data = await client.fetch(TIPS_LIST_QUERY, {
-      search: searchParam ? `*${searchParam}*` : "",
-      selectedCategory: selectedCategory || "",
-    });
+    const data = await listTips(pool, searchParam, selectedCategory);
 
     res.setHeader("Cache-Control", "s-maxage=60, stale-while-revalidate=300");
-    return res.status(200).json(data ?? []);
+    return res.status(200).json(data);
   } catch (err) {
-    console.error("Sanity tips fetch failed:", err);
+    console.error("Postgres tips fetch failed:", err);
     return res.status(500).json({ error: "Failed to fetch tips" });
   }
 }

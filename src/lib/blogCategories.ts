@@ -1,4 +1,4 @@
-/** Fixed blog categories used in Sanity + frontend filters */
+/** Fixed blog categories used in Postgres tips + frontend filters */
 export const BLOG_CATEGORIES = [
   "الحركة والتمارين",
   "الحمل",

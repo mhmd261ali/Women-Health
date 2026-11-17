@@ -54,17 +54,19 @@ function clamp01(n: number) {
 }
 
 function useCardMetrics() {
-  const [metrics, setMetrics] = useState({ width: 640, height: 320, pad: 32 });
+  const [metrics, setMetrics] = useState({ width: 640, height: 360, pad: 24 });
 
   useEffect(() => {
     const update = () => {
       const vw = window.innerWidth;
-      const width = Math.min(680, Math.max(280, vw * 0.86));
-      const height = Math.min(
-        420,
-        Math.max(vw < 640 ? 340 : 280, width * (vw < 640 ? 0.9 : 0.58)),
-      );
-      setMetrics({ width, height, pad: vw < 640 ? 16 : 32 });
+      const vh = window.innerHeight;
+      // Fit full card text (no inner scroll) under nav + section header
+      const reserved = vw < 640 ? 200 : 220;
+      const available = Math.max(300, vh - reserved);
+      const width = Math.min(620, Math.max(280, vw * 0.88));
+      const ideal = vw < 640 ? 360 : 340;
+      const height = Math.min(available, Math.max(ideal, width * 0.55));
+      setMetrics({ width, height, pad: vw < 640 ? 14 : 22 });
     };
     update();
     window.addEventListener("resize", update);
@@ -145,7 +147,7 @@ function MorphingCard({
         aria-hidden={contentOpacity < 0.5}
       >
         <div
-          className="mb-2 inline-flex w-fit items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold sm:mb-3"
+          className="mb-1.5 inline-flex w-fit shrink-0 items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold sm:mb-2"
           style={{
             background: `${card.accent}18`,
             color: card.accent,
@@ -157,13 +159,13 @@ function MorphingCard({
         </div>
 
         <h3
-          className="mb-2 text-lg font-bold leading-snug sm:mb-3 sm:text-2xl"
+          className="mb-1.5 shrink-0 text-base font-bold leading-snug sm:mb-2 sm:text-xl"
           style={{ fontFamily: "Georgia, serif", color: "#4A3530" }}
         >
           {card.title}
         </h3>
 
-        <div className="min-h-0 space-y-2.5 overflow-y-auto text-sm leading-[1.85] text-sage-700/85 sm:space-y-3 sm:text-[15px] sm:leading-[1.9]">
+        <div className="space-y-1.5 text-[13px] leading-[1.65] text-sage-700/85 sm:space-y-2 sm:text-sm sm:leading-[1.7]">
           {card.paragraphs.map((paragraph) => (
             <p key={paragraph.slice(0, 28)}>{paragraph}</p>
           ))}
@@ -439,7 +441,7 @@ export default function About() {
       className="relative h-svh"
     >
       <div
-        className="flex h-svh flex-col justify-center overflow-hidden"
+        className="relative flex h-svh flex-col overflow-hidden pt-20 sm:pt-24"
         style={{
           background: "linear-gradient(180deg, #FAF0EC 0%, #F4F6F3 100%)",
         }}
@@ -454,14 +456,14 @@ export default function About() {
         />
 
         <motion.div
-          className="relative z-10 mx-auto mb-4 w-full max-w-7xl shrink-0 px-4 text-center sm:mb-6 sm:px-6 lg:mb-8 lg:px-8"
+          className="relative z-10 mx-auto mb-2 w-full max-w-7xl shrink-0 px-4 text-center sm:mb-3 sm:px-6 lg:px-8"
           initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, amount: 0.5 }}
           transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
         >
           <div
-            className="mb-3 inline-block rounded-full px-3 py-1 text-xs font-medium text-coral-600 sm:mb-5 sm:px-4 sm:py-1.5 sm:text-sm"
+            className="mb-2 inline-block rounded-full px-3 py-1 text-xs font-medium text-coral-600 sm:mb-3 sm:px-4 sm:py-1.5 sm:text-sm"
             style={{
               background: "rgba(212,117,106,0.1)",
               border: "1px solid rgba(212,117,106,0.25)",
@@ -479,12 +481,12 @@ export default function About() {
               بصحة ورفاهية المرأة والطفل
             </span>
           </h2>
-          <p className="mx-auto mt-2 max-w-xl text-sm text-sage-600 sm:mt-4 sm:text-base">
+          <p className="mx-auto mt-1.5 max-w-xl text-sm text-sage-600 sm:mt-2 sm:text-base">
             مرّري مرة واحدة للبطاقة التالية
           </p>
         </motion.div>
 
-        <div className="relative z-10 flex w-full flex-1 items-center justify-center px-4 sm:px-6">
+        <div className="relative z-10 flex min-h-0 w-full flex-1 items-center justify-center px-4 pb-4 sm:px-6 sm:pb-6">
           <MorphingCard
             card={card}
             morph={morph}
@@ -496,13 +498,16 @@ export default function About() {
           />
         </div>
 
-        <div className="relative z-10 mx-auto mb-6 mt-4 flex items-center gap-2 sm:mb-8 sm:mt-6">
+        <div
+          className="pointer-events-none absolute right-3 top-1/2 z-20 flex -translate-y-1/2 flex-col items-center gap-2 sm:right-5"
+          aria-hidden
+        >
           {storyCards.map((c, i) => (
             <span
               key={c.title}
-              className="block h-2 rounded-full transition-all duration-300"
+              className="block w-2 rounded-full transition-all duration-300"
               style={{
-                width: i === cardIndex ? 28 : 8,
+                height: i === cardIndex ? 28 : 8,
                 background: i === cardIndex ? c.accent : "rgba(74,53,48,0.18)",
               }}
             />

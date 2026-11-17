@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 
-/** Match your Sanity schema fields */
+/** Tip document from Postgres `/api/tips` */
 export type Tip = {
   _id: string;
-  _type: "Blog";
   tip?: string;
   tip_date?: string;
   tip_category?: string;
@@ -15,7 +14,6 @@ export type Tip = {
 function mapTip(d: Tip): Tip {
   return {
     _id: d._id,
-    _type: "Blog",
     tip: d.tip,
     tip_date: d.tip_date,
     tip_category: d.tip_category,
@@ -57,7 +55,7 @@ export default function useGetAllTips(
       .catch((err: unknown) => {
         console.error("Failed to fetch tips:", err);
         if (cancelled) return;
-        setError("Failed to fetch suggestion documents");
+        setError("Failed to fetch tips");
         setLoading(false);
       });
 

@@ -10,6 +10,9 @@
   height: 100svh;
   flex-direction: column;
   overflow: hidden;
+  /* Clear fixed navbar so header + cards stay in view */
+  padding-top: 5rem;
+  box-sizing: border-box;
 }
 
 .svc-slider {
@@ -19,14 +22,15 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 0.75rem 0.75rem 1.75rem;
+  padding: 0.5rem 0.75rem 1rem;
   min-height: 0;
 }
 
 .svc-slides {
   position: relative;
   width: min(920px, 100%);
-  height: min(420px, 52vh);
+  /* Tall enough for longest service copy without inner scroll */
+  height: min(420px, calc(100svh - 14.5rem));
 }
 
 .svc-slide {
@@ -47,7 +51,7 @@
   height: 100%;
   overflow: hidden;
   border-radius: 1.75rem;
-  padding: 1.5rem 1.75rem;
+  padding: 1.15rem 1.35rem;
 }
 
 .svc-slide[data-role="current"] {
@@ -79,11 +83,17 @@
 }
 
 .svc-carousel-progress {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  z-index: 40;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 0.45rem;
-  margin-top: 1.25rem;
+  transform: translateY(-50%);
+  pointer-events: none;
 }
 
 .svc-carousel-progress span {
@@ -92,25 +102,25 @@
   width: 0.5rem;
   border-radius: 999px;
   background: rgba(74, 53, 48, 0.22);
-  transition: width 0.35s ease, background 0.35s ease;
+  transition: height 0.35s ease, background 0.35s ease;
 }
 
 .svc-carousel-progress span[data-active="true"] {
-  width: 2rem;
+  height: 2rem;
   background: #4a3530;
 }
 
 @media (max-width: 640px) {
   .svc-carousel-sticky {
-    padding-top: 0.25rem;
+    padding-top: 4.5rem;
   }
 
   .svc-slider {
-    padding: 0.5rem 0.5rem 1.25rem;
+    padding: 0.35rem 0.5rem 0.75rem;
   }
 
   .svc-slides {
-    height: min(420px, 56svh);
+    height: min(400px, calc(100svh - 13.5rem));
     width: 100%;
   }
 
@@ -124,13 +134,12 @@
 
   .svc-slide__card {
     width: min(100%, 94vw);
-    padding: 1.1rem 1.15rem;
+    padding: 1rem 1.05rem;
     border-radius: 1.35rem;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+    overflow: hidden;
   }
 
   .svc-carousel-progress {
-    margin-top: 0.75rem;
+    right: 0.5rem;
   }
 }

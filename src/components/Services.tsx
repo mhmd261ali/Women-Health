@@ -96,11 +96,11 @@ function ServiceCardBody({
   const { icon: Icon, iconImage, title, description, accent } = service;
 
   return (
-    <div className="flex h-full flex-col text-right" dir="rtl">
+    <div className="flex h-full flex-col justify-center text-right" dir="rtl">
       <div
         className={cn(
-          "mb-4 flex items-center justify-center overflow-hidden rounded-2xl shadow-md",
-          featured ? "h-14 w-14" : "h-11 w-11",
+          "mb-3 flex shrink-0 items-center justify-center overflow-hidden rounded-2xl shadow-md",
+          featured ? "h-12 w-12" : "h-10 w-10",
         )}
         style={{
           background: `linear-gradient(135deg, ${accent}22, ${accent}44)`,
@@ -112,12 +112,12 @@ function ServiceCardBody({
             alt=""
             className={cn(
               "object-contain",
-              featured ? "h-12 w-12" : "h-9 w-9",
+              featured ? "h-10 w-10" : "h-8 w-8",
             )}
           />
         ) : Icon ? (
           <Icon
-            className={featured ? "h-7 w-7" : "h-5 w-5"}
+            className={featured ? "h-6 w-6" : "h-5 w-5"}
             style={{ color: accent }}
           />
         ) : null}
@@ -125,8 +125,8 @@ function ServiceCardBody({
 
       <h3
         className={cn(
-          "mb-2 font-bold leading-snug",
-          featured ? "text-xl sm:text-2xl" : "line-clamp-3 text-base sm:text-lg",
+          "mb-1.5 shrink-0 font-bold leading-snug",
+          featured ? "text-lg sm:text-xl" : "line-clamp-3 text-sm sm:text-base",
         )}
         style={{ color: "#4A3530", fontFamily: "Georgia, serif" }}
       >
@@ -136,7 +136,9 @@ function ServiceCardBody({
       <p
         className={cn(
           "leading-relaxed text-sage-700/75",
-          featured ? "text-sm sm:text-base" : "line-clamp-4 text-xs sm:text-sm",
+          featured
+            ? "text-[13px] sm:text-sm sm:leading-[1.7]"
+            : "line-clamp-4 text-xs sm:text-sm",
         )}
       >
         {description}
@@ -197,9 +199,9 @@ export default function Services() {
       aria-label="الخدمات"
     >
       <div className="svc-carousel-sticky">
-        <header className="relative z-20 mx-auto w-full max-w-7xl shrink-0 px-4 pt-6 text-center sm:px-6 sm:pt-10 lg:px-8">
+        <header className="relative z-20 mx-auto w-full max-w-7xl shrink-0 px-4 text-center sm:px-6 lg:px-8">
           <div
-            className="mb-3 inline-block rounded-full px-3 py-1 text-xs font-medium text-coral-600 sm:mb-4 sm:px-4 sm:py-1.5 sm:text-sm"
+            className="mb-2 inline-block rounded-full px-3 py-1 text-xs font-medium text-coral-600 sm:mb-3 sm:px-4 sm:py-1.5 sm:text-sm"
             style={{
               background: "rgba(212,117,106,0.1)",
               border: "1px solid rgba(212,117,106,0.25)",
@@ -208,13 +210,13 @@ export default function Services() {
             خدماتي
           </div>
           <h2
-            className="text-2xl font-bold sm:text-4xl lg:text-5xl"
+            className="text-2xl font-bold leading-tight sm:text-4xl lg:text-5xl"
             style={{ fontFamily: "Georgia, serif", color: "#4A3530" }}
           >
             خدمات مصمّمة
             <span style={{ color: "#D4756A" }}> خصيصًا لكِ</span>
           </h2>
-          <p className="mx-auto mt-2 max-w-xl text-sm text-sage-600 sm:mt-3 sm:text-base">
+          <p className="mx-auto mt-1.5 max-w-xl text-sm text-sage-600 sm:mt-2 sm:text-base">
             مرّري للأسفل لاستكشاف الخدمات
           </p>
         </header>

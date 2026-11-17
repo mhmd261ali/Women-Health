@@ -31,12 +31,26 @@ export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
-    // استبدلي هذا بمنطق إرسال النموذج الحقيقي
-    await new Promise((r) => setTimeout(r, 1200));
+    const subject = encodeURIComponent(
+      `طلب تواصل${form.service ? `: ${form.service}` : ""}`,
+    );
+    const body = encodeURIComponent(
+      [
+        `الاسم: ${form.name}`,
+        `البريد: ${form.email}`,
+        `الهاتف: ${form.phone || "—"}`,
+        `الخدمة: ${form.service}`,
+        "",
+        "الرسالة:",
+        form.message,
+      ].join("\n"),
+    );
+
+    window.location.href = `mailto:khotwa2khotwa@gmail.com?subject=${subject}&body=${body}`;
 
     setLoading(false);
     setSubmitted(true);
@@ -296,7 +310,7 @@ export default function Contact() {
                       </label>
                       <input
                         type="tel"
-                        placeholder="+1 (555) 000-0000"
+                        placeholder="71 333 333"
                         value={form.phone}
                         onChange={(e) =>
                           setForm({ ...form, phone: e.target.value })
