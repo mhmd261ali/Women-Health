@@ -9,7 +9,7 @@ import { FadeIn } from './components/motion/FadeIn';
 
 export default function App() {
   return (
-    <div className="antialiased" style={{ fontFamily: 'system-ui, sans-serif' }} dir="rtl">
+    <div className="antialiased" style={{ fontFamily: 'Beiruti, sans-serif' }} dir="rtl">
       <Navbar />
       <FadeIn y={24} delay={0.05}>
         <Hero />

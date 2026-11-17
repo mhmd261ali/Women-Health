@@ -78,7 +78,7 @@ export default function Gallery() {
           className="text-center mb-16"
         >
           <div
-            className="inline-block px-4 py-1.5 rounded-full text-sm font-medium text-sage-600 mb-6"
+            className="inline-block px-4 py-1.5 rounded-full text-md font-medium text-sage-600 mb-6"
             style={{
               background: "rgba(138,158,132,0.1)",
               border: "1px solid rgba(138,158,132,0.25)",
@@ -89,10 +89,10 @@ export default function Gallery() {
 
           <h2
             className="text-4xl lg:text-5xl font-bold mb-5"
-            style={{ fontFamily: "Georgia, serif", color: "#4A3530" }}
+            style={{ fontFamily: "Beiruti, sans-serif", color: "#4A3530" }}
           >
             لحظات من
-            <span style={{ color: "#8A9E84" }}> التحوّل</span>
+            <span style={{ color: "#4F644B" }}> التحوّل</span>
           </h2>
 
           <p className="text-sage-600 text-lg max-w-2xl mx-auto leading-relaxed">
@@ -120,7 +120,7 @@ export default function Gallery() {
 
               {/* Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4 text-right">
-                <span className="text-white font-semibold text-sm">
+                <span className="text-white font-semibold text-md">
                   {item.label}
                 </span>
               </div>
@@ -171,7 +171,7 @@ export default function Gallery() {
             >
               <span
                 className="text-base font-bold"
-                style={{ color: "#D4756A", fontFamily: "Georgia, serif" }}
+                style={{ color: "#D4756A", fontFamily: "Beiruti, sans-serif" }}
               >
                 {selected.label}
               </span>

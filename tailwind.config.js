@@ -3,6 +3,10 @@ export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['"Beiruti"', 'sans-serif'],
+        beiruti: ['"Beiruti"', 'sans-serif'],
+      },
       colors: {
         coral: {
           50: '#FDF0EE',
@@ -32,13 +36,13 @@ export default {
           50: '#F4F6F3',
           100: '#E4E9E2',
           200: '#C8D3C5',
-          300: '#ACBDA8',
-          400: '#9DAE97',
-          500: '#8A9E84',
-          600: '#748D6E',
-          700: '#5E7358',
-          800: '#485843',
-          900: '#343F30',
+          300: '#9AAE94',
+          400: '#7E9478',
+          500: '#657A60',
+          600: '#4F644B',
+          700: '#3D4F3A',
+          800: '#2E3C2C',
+          900: '#222E20',
         },
         cream: {
           50: '#FDFAF8',

@@ -41,7 +41,7 @@ export default function BlogDetail({ slug }: { slug: string }) {
       <div className="relative z-10 mx-auto max-w-3xl px-6 lg:px-8">
         <Link
           to="/blog"
-          className="mb-8 inline-flex items-center gap-2 text-sm font-medium text-sage-600 transition-colors hover:text-coral-600"
+          className="mb-8 inline-flex items-center gap-2 text-lg font-medium text-sage-600 transition-colors hover:text-coral-600"
         >
           <ArrowRight className="h-4 w-4" />
           العودة إلى المدونة
@@ -63,7 +63,7 @@ export default function BlogDetail({ slug }: { slug: string }) {
             </p>
             <Link
               to="/blog"
-              className="inline-flex rounded-full px-5 py-2.5 text-sm font-semibold text-white"
+              className="inline-flex rounded-full px-5 py-2.5 text-lg font-semibold text-white"
               style={{
                 background: "linear-gradient(135deg, #E8776F, #D4756A)",
               }}
@@ -102,7 +102,7 @@ export default function BlogDetail({ slug }: { slug: string }) {
 
             <h1
               className="mb-6 text-3xl font-bold leading-tight sm:text-4xl"
-              style={{ fontFamily: "Georgia, serif", color: "#4A3530" }}
+              style={{ fontFamily: "Beiruti, sans-serif", color: "#4A3530" }}
             >
               {tip.tip}
             </h1>

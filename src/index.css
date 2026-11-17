@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  html,
+  body,
+  #root {
+    font-family: "Beiruti", sans-serif;
+  }
+}
+
 /* Services scroll carousel — previous / current / next cards */
 .svc-carousel-sticky {
   position: sticky;

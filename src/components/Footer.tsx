@@ -58,12 +58,12 @@ export default function Footer() {
             <div className="flex items-center gap-2 mb-4">
               <span
                 className="text-xl font-bold text-white"
-                style={{ fontFamily: "Georgia, serif" }}
+                style={{ fontFamily: "Beiruti, sans-serif" }}
               >
                مريم ترمس
               </span>
             </div>
-            <p className="text-white/60 text-sm leading-relaxed max-w-xs mb-6">
+            <p className="text-white/60 text-lg leading-relaxed max-w-xs mb-6">
             معًا نحو حركة أقوى، حياة أكثر توازنًا، ونمو أكثر صحة
             </p>
             <div className="flex gap-3">
@@ -86,7 +86,7 @@ export default function Footer() {
 
           {/* Quick links */}
           <div>
-            <h4 className="text-white font-semibold text-sm mb-5 tracking-wide">
+            <h4 className="text-white font-semibold text-lg mb-5 tracking-wide">
               الروابط السريعة
             </h4>
             <ul className="space-y-3">
@@ -94,7 +94,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <button
                     onClick={() => scrollTo(link.href)}
-                    className="text-white/60 hover:text-coral-300 text-sm transition-colors duration-200"
+                    className="text-white/60 hover:text-coral-300 text-lg transition-colors duration-200"
                   >
                     {link.label}
                   </button>
@@ -105,7 +105,7 @@ export default function Footer() {
 
           {/* Contact info */}
           <div>
-            <h4 className="text-white font-semibold text-sm mb-5 tracking-wide">
+            <h4 className="text-white font-semibold text-lg mb-5 tracking-wide">
               اتصل
             </h4>
             <ul className="space-y-4">
@@ -117,7 +117,7 @@ export default function Footer() {
                   <Mail className="w-3.5 h-3.5 text-coral-400" />
                 </div>
                 {/* Replace with your email */}
-                <span className="text-white/60 text-sm">khotwa2khotwa@gmail.com</span>
+                <span className="text-white/60 text-lg">khotwa2khotwa@gmail.com</span>
               </li>
               <li className="flex items-center gap-3">
                 <div
@@ -127,14 +127,14 @@ export default function Footer() {
                   <Phone className="w-3.5 h-3.5 text-sage-400" />
                 </div>
                 {/* Replace with your phone */}
-                <span className="text-white/60 text-sm ">620 598 76 961+</span>
+                <span className="text-white/60 text-lg ">620 598 76 961+</span>
               </li>
             </ul>
 
             {/* CTA */}
             <button
               onClick={() => scrollTo("#contact")}
-              className="mt-6 w-full py-3 rounded-xl text-white text-sm font-semibold hover:opacity-90 hover:scale-105 transition-all duration-200"
+              className="mt-6 w-full py-3 rounded-xl text-white text-lg font-semibold hover:opacity-90 hover:scale-105 transition-all duration-200"
               style={{
                 background: "linear-gradient(135deg, #E8776F, #D4756A)",
               }}

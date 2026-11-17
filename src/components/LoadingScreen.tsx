@@ -131,7 +131,7 @@ export default function LoadingScreen({
                 >
                   <p
                     className="text-base font-medium leading-relaxed tracking-wide text-sage-600 sm:text-xl md:text-[1.85rem]"
-                    style={{ fontFamily: "system-ui, sans-serif" }}
+                    style={{ fontFamily: "Beiruti, sans-serif" }}
                   >
                     كل{" "}
                     <span
@@ -144,7 +144,7 @@ export default function LoadingScreen({
                   </p>
                   <p
                     className="mt-1 text-base font-medium leading-relaxed tracking-wide text-sage-600 sm:text-xl md:text-[1.85rem]"
-                    style={{ fontFamily: "system-ui, sans-serif" }}
+                    style={{ fontFamily: "Beiruti, sans-serif" }}
                   >
                     لمشوار أكبر
                   </p>

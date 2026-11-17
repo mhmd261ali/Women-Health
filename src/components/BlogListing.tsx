@@ -50,7 +50,7 @@ export default function BlogListing() {
           className="mb-12 text-center"
         >
           <div
-            className="mb-6 inline-block rounded-full px-4 py-1.5 text-sm font-medium"
+            className="mb-6 inline-block rounded-full px-4 py-1.5 text-lg font-medium"
             style={{
               color: "#D4756A",
               background: "rgba(212,117,106,0.1)",
@@ -62,7 +62,7 @@ export default function BlogListing() {
 
           <h1
             className="mb-5 text-4xl font-bold sm:text-5xl lg:text-6xl"
-            style={{ fontFamily: "Georgia, serif", color: "#4A3530" }}
+            style={{ fontFamily: "Beiruti, sans-serif", color: "#4A3530" }}
           >
             نصائح وأفكار لصحة
             <span style={{ color: "#D4756A" }}> المرأة</span>
@@ -95,7 +95,7 @@ export default function BlogListing() {
           <div className="flex flex-wrap justify-start gap-3">
             <button
               onClick={() => setSelectedCategory("")}
-              className={`rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-200 ${
+              className={`rounded-full px-5 py-2.5 text-lg font-medium transition-all duration-200 ${
                 !selectedCategory
                   ? "text-white shadow-md"
                   : "border border-cream-300 bg-white/70 text-sage-700 hover:bg-white"
@@ -113,7 +113,7 @@ export default function BlogListing() {
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-200 ${
+                className={`rounded-full px-5 py-2.5 text-lg font-medium transition-all duration-200 ${
                   selectedCategory === category
                     ? "text-white shadow-md"
                     : "border border-cream-300 bg-white/70 text-sage-700 hover:bg-white"
@@ -185,7 +185,7 @@ export default function BlogListing() {
                     <h3
                       className="mb-3 line-clamp-2 text-2xl font-bold leading-tight"
                       style={{
-                        fontFamily: "Georgia, serif",
+                        fontFamily: "Beiruti, sans-serif",
                         color: "#4A3530",
                       }}
                     >
@@ -193,7 +193,7 @@ export default function BlogListing() {
                     </h3>
 
                     {cardText && (
-                      <p className="mb-5 line-clamp-4 text-sm leading-relaxed text-sage-800">
+                      <p className="mb-5 line-clamp-4 text-lg leading-relaxed text-sage-800">
                         {cardText}
                       </p>
                     )}
@@ -210,7 +210,7 @@ export default function BlogListing() {
                         href={tip.instagram_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                        className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-lg font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg"
                         style={{
                           background:
                             "linear-gradient(135deg, #E8776F 0%, #D4756A 55%, #C4605A 100%)",
@@ -222,7 +222,7 @@ export default function BlogListing() {
                     ) : (
                       <Link
                         to={`/blog/${tip._id}`}
-                        className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                        className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-lg font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg"
                         style={{
                           background:
                             "linear-gradient(135deg, #9DAE97 0%, #8A9E84 55%, #748D6E 100%)",

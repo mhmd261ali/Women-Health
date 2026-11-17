@@ -85,7 +85,7 @@ export default function Certificates() {
           className="text-center mb-16"
         >
           <div
-            className="inline-block px-4 py-1.5 rounded-full text-sm font-medium text-coral-600 mb-6"
+            className="inline-block px-4 py-1.5 rounded-full text-md font-medium text-coral-600 mb-6"
             style={{
               background: "rgba(212,117,106,0.1)",
               border: "1px solid rgba(212,117,106,0.25)",
@@ -96,7 +96,7 @@ export default function Certificates() {
 
           <h2
             className="text-4xl lg:text-5xl font-bold mb-5"
-            style={{ fontFamily: "Georgia, serif", color: "#4A3530" }}
+            style={{ fontFamily: "Beiruti, sans-serif", color: "#4A3530" }}
           >
             الشهادات
             <span style={{ color: "#D4756A" }}> والاعتمادات</span>
@@ -176,7 +176,7 @@ export default function Certificates() {
 
                 <h3
                   className="text-lg font-bold mb-1 leading-tight"
-                  style={{ color: "#4A3530", fontFamily: "Georgia, serif" }}
+                  style={{ color: "#4A3530", fontFamily: "Beiruti, sans-serif" }}
                 >
                   {cert.title}
                 </h3>

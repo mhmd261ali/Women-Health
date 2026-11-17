@@ -100,7 +100,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.75, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/60 backdrop-blur-sm border border-coral-200 text-coral-600 text-sm font-medium mb-6 shadow-sm"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/60 backdrop-blur-sm border border-coral-200 text-coral-600 text-lg font-medium mb-6 shadow-sm"
           >
             <span className="w-2 h-2 rounded-full bg-coral-400 animate-pulse" />
             {/* Replace with your tagline badge */}
@@ -112,7 +112,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
             className="text-3xl sm:text-4xl lg:text-6xl font-bold leading-tight mb-4"
-            style={{ fontFamily: "Georgia, serif", color: "#4A3530" }}
+            style={{ fontFamily: "Beiruti, sans-serif", color: "#4A3530" }}
           >
             {/* Replace with your name */}
            مريم ترمس
@@ -133,7 +133,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.75, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="mb-3 text-sm font-medium tracking-wide text-sage-600 sm:text-lg"
+            className="mb-3 text-lg font-medium tracking-wide text-sage-600 sm:text-lg"
           >
             &nbsp; أخصائية علاج فيزيائي &nbsp;|&nbsp; أخصائية رضاعة طبيعية
           </motion.p>
@@ -142,7 +142,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.75, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            className="mb-8 mr-0 max-w-lg text-base leading-relaxed text-sage-700/80 sm:mb-10 sm:text-lg"
+            className="mb-8 mr-0 max-w-lg text-base leading-relaxed text-sage-700 sm:mb-10 sm:text-lg"
           >
             أؤمن بأن كل رحلة نحو صحة أفضل تبدأ بخطوة، وأن المعرفة الصحيحة، والحركة الهادفة، والدعم المبني على الأدلة العلمية هي أساس بناء حياة أكثر صحة وقوة للمرأة والطفل
             </motion.p>
@@ -155,7 +155,7 @@ export default function Hero() {
           >
             <button
               onClick={() => scrollTo("#contact")}
-              className="rounded-full px-6 py-3 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-[0_8px_30px_rgba(212,117,106,0.45)] sm:px-8 sm:py-4 sm:text-base"
+              className="rounded-full px-6 py-3 text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-[0_8px_30px_rgba(212,117,106,0.45)] sm:px-8 sm:py-4 sm:text-base"
               style={{
                 background: "linear-gradient(135deg, #E8776F 0%, #D4756A 100%)",
               }}
@@ -165,7 +165,7 @@ export default function Hero() {
 
             <button
               onClick={() => scrollTo("#services")}
-              className="rounded-full border-2 border-sage-400 bg-white/60 px-6 py-3 text-sm font-semibold text-sage-700 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-sage-500 hover:bg-sage-50 sm:px-8 sm:py-4 sm:text-base"
+              className="rounded-full border-2 border-sage-400 bg-white/60 px-6 py-3 text-lg font-semibold text-sage-700 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-sage-500 hover:bg-sage-50 sm:px-8 sm:py-4 sm:text-base"
             >
               عرض الخدمات
             </button>
@@ -186,7 +186,7 @@ export default function Hero() {
               <div key={stat.label} className="text-center">
                 <div
                   className="text-2xl font-bold"
-                  style={{ color: "#D4756A", fontFamily: "Georgia, serif" }}
+                  style={{ color: "#D4756A", fontFamily: "Beiruti, sans-serif" }}
                 >
                   {stat.value}
                 </div>
@@ -246,7 +246,7 @@ export default function Hero() {
             >
               <BookOpenCheck className="h-4 w-4 text-white sm:h-5 sm:w-5" />
             </div>
-            <div className="text-sm font-bold text-coral-600 sm:text-base">
+            <div className="text-lg font-bold text-coral-600 sm:text-base">
               معلومات علميّة
             </div>
           </motion.div>
@@ -269,7 +269,7 @@ export default function Hero() {
             >
               <HeartHandshake className="h-4 w-4 text-white sm:h-5 sm:w-5" />
             </div>
-            <div className="text-sm font-bold text-sage-700 sm:text-base">
+            <div className="text-lg font-bold text-sage-700 sm:text-base">
               دعم، ثقة، وعي
             </div>
           </motion.div>

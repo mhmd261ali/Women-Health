@@ -160,12 +160,12 @@ function MorphingCard({
 
         <h3
           className="mb-1.5 shrink-0 text-base font-bold leading-snug sm:mb-2 sm:text-xl"
-          style={{ fontFamily: "Georgia, serif", color: "#4A3530" }}
+          style={{ fontFamily: "Beiruti, sans-serif", color: "#4A3530" }}
         >
           {card.title}
         </h3>
 
-        <div className="space-y-1.5 text-[13px] leading-[1.65] text-sage-700/85 sm:space-y-2 sm:text-sm sm:leading-[1.7]">
+        <div className="space-y-1.5 text-[13px] leading-[1.65] text-sage-700 sm:space-y-2 sm:text-lg sm:leading-[1.7]">
           {card.paragraphs.map((paragraph) => (
             <p key={paragraph.slice(0, 28)}>{paragraph}</p>
           ))}
@@ -463,7 +463,7 @@ export default function About() {
           transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
         >
           <div
-            className="mb-2 inline-block rounded-full px-3 py-1 text-xs font-medium text-coral-600 sm:mb-3 sm:px-4 sm:py-1.5 sm:text-sm"
+            className="mb-2 inline-block rounded-full px-3 py-1 text-xs font-medium text-coral-600 sm:mb-3 sm:px-4 sm:py-1.5 sm:text-lg"
             style={{
               background: "rgba(212,117,106,0.1)",
               border: "1px solid rgba(212,117,106,0.25)",
@@ -473,7 +473,7 @@ export default function About() {
           </div>
           <h2
             className="text-2xl font-bold leading-tight sm:text-4xl lg:text-5xl"
-            style={{ fontFamily: "Georgia, serif", color: "#4A3530" }}
+            style={{ fontFamily: "Beiruti, sans-serif", color: "#4A3530" }}
           >
             شغفٌ حقيقي
             <br />
@@ -481,7 +481,7 @@ export default function About() {
               بصحة ورفاهية المرأة والطفل
             </span>
           </h2>
-          <p className="mx-auto mt-1.5 max-w-xl text-sm text-sage-600 sm:mt-2 sm:text-base">
+          <p className="mx-auto mt-1.5 max-w-xl text-lg text-sage-600 sm:mt-2 sm:text-base">
             مرّري مرة واحدة للبطاقة التالية
           </p>
         </motion.div>

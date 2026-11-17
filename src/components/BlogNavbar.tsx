@@ -32,7 +32,7 @@ export default function BlogNavbar() {
 
         <Link
           to="/"
-          className="text-gray-700 hover:text-coral-600 transition-colors font-medium text-sm"
+          className="text-gray-700 hover:text-coral-600 transition-colors font-medium text-lg"
         >
           الصفحة الرئيسية
         </Link>

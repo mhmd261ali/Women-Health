@@ -57,7 +57,7 @@ export default function Contact() {
   };
 
   const inputClass =
-    "w-full px-5 py-3.5 rounded-2xl bg-white/70 backdrop-blur-sm border border-cream-300 text-sage-800 placeholder-sage-400 text-sm focus:outline-none focus:border-coral-400 focus:ring-2 focus:ring-coral-200 transition-all duration-200 text-right";
+    "w-full px-5 py-3.5 rounded-2xl bg-white/70 backdrop-blur-sm border border-cream-300 text-sage-800 placeholder-sage-400 text-lg focus:outline-none focus:border-coral-400 focus:ring-2 focus:ring-coral-200 transition-all duration-200 text-right";
 
   return (
     <section
@@ -88,7 +88,7 @@ export default function Contact() {
           className="mb-10 text-center sm:mb-16"
         >
           <div
-            className="mb-4 inline-block rounded-full px-3 py-1 text-xs font-medium text-coral-600 sm:mb-6 sm:px-4 sm:py-1.5 sm:text-sm"
+            className="mb-4 inline-block rounded-full px-3 py-1 text-xs font-medium text-coral-600 sm:mb-6 sm:px-4 sm:py-1.5 sm:text-lg"
             style={{
               background: "rgba(212,117,106,0.1)",
               border: "1px solid rgba(212,117,106,0.25)",
@@ -99,13 +99,13 @@ export default function Contact() {
 
           <h2
             className="mb-3 text-2xl font-bold sm:mb-5 sm:text-4xl lg:text-5xl"
-            style={{ fontFamily: "Georgia, serif", color: "#4A3530" }}
+            style={{ fontFamily: "Beiruti, sans-serif", color: "#4A3530" }}
           >
             هل أنتِ مستعدة لتبدأي
             <span style={{ color: "#D4756A" }}> بخطوتك الأولى؟</span>
           </h2>
 
-          <p className="mx-auto max-w-2xl text-sm leading-relaxed text-sage-600 sm:text-lg">
+          <p className="mx-auto max-w-2xl text-lg leading-relaxed text-sage-600 sm:text-lg">
             تواصلي معي اليوم لحجز موعد، أو للحصول على مكالمة تعريفية مجانية
             والتعرّف أكثر إلى كيفية دعم أهدافكِ الصحية بما يتناسب مع احتياجاتكِ.
           </p>
@@ -182,7 +182,7 @@ export default function Contact() {
                     {label}
                   </div>
                   <div
-                    className="text-sm font-semibold"
+                    className="text-lg font-semibold"
                     style={{ color: "#4A3530" }}
                   >
                     {value}
@@ -196,7 +196,7 @@ export default function Contact() {
               href="https://wa.me/96176598620" // Replace with your WhatsApp number
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-3 w-full py-4 rounded-2xl text-white font-semibold text-sm shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
+              className="flex items-center justify-center gap-3 w-full py-4 rounded-2xl text-white font-semibold text-lg shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
               style={{
                 background: "linear-gradient(135deg, #25D366, #128C7E)",
               }}
@@ -238,7 +238,7 @@ export default function Contact() {
 
                   <h3
                     className="text-2xl font-bold mb-3"
-                    style={{ fontFamily: "Georgia, serif", color: "#4A3530" }}
+                    style={{ fontFamily: "Beiruti, sans-serif", color: "#4A3530" }}
                   >
                     تم إرسال الرسالة بنجاح!
                   </h3>
@@ -258,7 +258,7 @@ export default function Contact() {
                         message: "",
                       });
                     }}
-                    className="px-8 py-3 rounded-full text-white font-medium text-sm"
+                    className="px-8 py-3 rounded-full text-white font-medium text-lg"
                     style={{
                       background: "linear-gradient(135deg, #E8776F, #D4756A)",
                     }}

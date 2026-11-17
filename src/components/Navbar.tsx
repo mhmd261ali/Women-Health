@@ -61,7 +61,7 @@ export default function Navbar() {
               <button
                 key={link.href}
                 onClick={() => handleNav(link.href)}
-                className={`text-sm font-medium transition-colors duration-200 hover:text-coral-500 ${
+                className={`text-lg font-medium transition-colors duration-200 hover:text-coral-500 ${
                   scrolled ? "text-sage-700" : "text-sage-600"
                 }`}
               >
@@ -70,7 +70,7 @@ export default function Navbar() {
             ))}
             <button
               onClick={() => handleNav("#contact")}
-              className="px-5 py-2 rounded-full bg-coral-gradient text-white text-sm font-medium shadow-md hover:shadow-[0_4px_20px_rgba(212,117,106,0.4)] hover:scale-105 transition-all duration-200"
+              className="px-5 py-2 rounded-full bg-coral-gradient text-white text-lg font-medium shadow-md hover:shadow-[0_4px_20px_rgba(212,117,106,0.4)] hover:scale-105 transition-all duration-200"
             >
               احجز الآن
             </button>

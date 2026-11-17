@@ -93,7 +93,7 @@ export default function Testimonials() {
           className="text-center mb-16"
         >
           <div
-            className="inline-block px-4 py-1.5 rounded-full text-sm font-medium text-coral-600 mb-6"
+            className="inline-block px-4 py-1.5 rounded-full text-md font-medium text-coral-600 mb-6"
             style={{
               background: "rgba(212,117,106,0.1)",
               border: "1px solid rgba(212,117,106,0.25)",
@@ -104,7 +104,7 @@ export default function Testimonials() {
 
           <h2
             className="text-4xl lg:text-5xl font-bold mb-5"
-            style={{ fontFamily: "Georgia, serif", color: "#4A3530" }}
+            style={{ fontFamily: "Beiruti, sans-serif", color: "#4A3530" }}
           >
             أصوات من
             <span style={{ color: "#D4756A" }}> رحلة التحوّل</span>
@@ -141,7 +141,7 @@ export default function Testimonials() {
               <StarRating count={stars} />
 
               {/* Text */}
-              <p className="text-sage-700/80 text-sm leading-relaxed mt-4 mb-6 italic">
+              <p className="text-sage-700 text-md leading-relaxed mt-4 mb-6 italic">
                 “{text}”
               </p>
 
@@ -157,7 +157,7 @@ export default function Testimonials() {
 
                 <div>
                   <div
-                    className="font-bold text-sm"
+                    className="font-bold text-md"
                     style={{ color: "#4A3530" }}
                   >
                     {name}

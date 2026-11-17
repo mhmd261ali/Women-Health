@@ -33,7 +33,7 @@ const reasons: Reason[] = [
     description:
       "لا أؤمن بالحلول الجاهزة؛ أبدأ بفهم الحالة والاحتياجات والأهداف، ثم أختار ما يناسب من تقييم وتمارين ودعم.",
     gradient: "linear-gradient(135deg, #E4E9E2 0%, #C8D3C5 100%)",
-    iconColor: "#8A9E84",
+    iconcolor: "#4F644B",
   },
   {
     icon: Handshake,
@@ -83,12 +83,12 @@ function CardCopy({ reason }: { reason: Reason }) {
 
       <h3
         className="relative mb-2 text-lg font-bold leading-snug sm:mb-3 sm:text-xl"
-        style={{ color: "#4A3530", fontFamily: "Georgia, serif" }}
+        style={{ color: "#4A3530", fontFamily: "Beiruti, sans-serif" }}
       >
         {reason.title}
       </h3>
 
-      <p className="relative text-sm leading-relaxed text-sage-700/75 sm:text-[15px] sm:leading-[1.9]">
+      <p className="relative text-lg leading-relaxed text-sage-700 sm:text-[15px] sm:leading-[1.9]">
         {reason.description}
       </p>
     </>
@@ -197,7 +197,7 @@ export default function WhyMe() {
           className="mb-8 text-center md:mb-14"
         >
           <div
-            className="mb-4 inline-block rounded-full px-3 py-1 text-xs font-medium text-sage-600 sm:mb-6 sm:px-4 sm:py-1.5 sm:text-sm"
+            className="mb-4 inline-block rounded-full px-3 py-1 text-xs font-medium text-sage-600 sm:mb-6 sm:px-4 sm:py-1.5 sm:text-lg"
             style={{
               background: "rgba(138,158,132,0.1)",
               border: "1px solid rgba(138,158,132,0.25)",
@@ -208,13 +208,13 @@ export default function WhyMe() {
 
           <h2
             className="mb-3 text-2xl font-bold sm:mb-5 sm:text-4xl lg:text-5xl"
-            style={{ fontFamily: "Georgia, serif", color: "#4A3530" }}
+            style={{ fontFamily: "Beiruti, sans-serif", color: "#4A3530" }}
           >
             أنتِ و طفلكِ تستحقّان
-            <span style={{ color: "#8A9E84" }}> الأفضل</span>
+            <span style={{ color: "#4F644B" }}> الأفضل</span>
           </h2>
 
-          <p className="mx-auto max-w-2xl text-sm leading-relaxed text-sage-600 sm:text-lg">
+          <p className="mx-auto max-w-2xl text-lg leading-relaxed text-sage-600 sm:text-lg">
             إليكِ ما يجعل تجربتكِ معي مختلفة وهادفة
           </p>
         </motion.div>
