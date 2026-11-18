@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import App from './App.tsx';
 import BlogPage from './pages/BlogPage.tsx';
+import AdminPage from './pages/AdminPage.tsx';
 import LoadingScreen from './components/LoadingScreen.tsx';
 import './index.css';
 
@@ -14,6 +15,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/" element={<App />} />
         <Route path="/blog" element={<BlogPage />} />
         <Route path="/blog/:slug" element={<BlogPage />} />
+        <Route path="/admin" element={<AdminPage />} />
       </Routes>
     </Router>
   </StrictMode>

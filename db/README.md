@@ -29,7 +29,9 @@ DATABASE_SSL=false
 
 For managed hosts (Supabase/Neon), usually leave SSL on (omit `DATABASE_SSL` or set `true`).
 
-On Vercel, add `DATABASE_URL` in Project → Settings → Environment Variables.
+On Vercel, add `DATABASE_URL` and `ADMIN_PASSWORD` in Project → Settings → Environment Variables.
+
+Admin UI: `/admin` (login with `ADMIN_PASSWORD`).
 
 ## Table: `tips`
 

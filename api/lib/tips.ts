@@ -85,3 +85,65 @@ export async function listTips(
   const { rows } = await pool.query<TipRow>(sql, params);
   return rows.map(rowToTip);
 }
+
+export type TipInput = {
+  tip: string;
+  tip_date?: string | null;
+  tip_category?: string | null;
+  hook?: string | null;
+  tip_description?: string | null;
+  instagram_url?: string | null;
+};
+
+export async function createTip(
+  pool: Pool,
+  input: TipInput,
+): Promise<TipDto> {
+  const { rows } = await pool.query<TipRow>(
+    `INSERT INTO tips (tip, tip_date, tip_category, hook, tip_description, instagram_url)
+     VALUES ($1, $2, $3, $4, $5, $6)
+     RETURNING id, tip, tip_date, tip_category, hook, tip_description, instagram_url`,
+    [
+      input.tip,
+      input.tip_date || null,
+      input.tip_category || null,
+      input.hook || null,
+      input.tip_description || null,
+      input.instagram_url || null,
+    ],
+  );
+  return rowToTip(rows[0]);
+}
+
+export async function updateTip(
+  pool: Pool,
+  id: string,
+  input: TipInput,
+): Promise<TipDto | null> {
+  const { rows } = await pool.query<TipRow>(
+    `UPDATE tips
+     SET tip = $2,
+         tip_date = $3,
+         tip_category = $4,
+         hook = $5,
+         tip_description = $6,
+         instagram_url = $7
+     WHERE id = $1
+     RETURNING id, tip, tip_date, tip_category, hook, tip_description, instagram_url`,
+    [
+      id,
+      input.tip,
+      input.tip_date || null,
+      input.tip_category || null,
+      input.hook || null,
+      input.tip_description || null,
+      input.instagram_url || null,
+    ],
+  );
+  return rows[0] ? rowToTip(rows[0]) : null;
+}
+
+export async function deleteTip(pool: Pool, id: string): Promise<boolean> {
+  const result = await pool.query(`DELETE FROM tips WHERE id = $1`, [id]);
+  return (result.rowCount ?? 0) > 0;
+}
