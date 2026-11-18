@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import logo from "../images/Logo.png";
+import { scrollToSection } from "../lib/scrollToSection";
 
 const navLinks = [
   { label: "حول", href: "#about" },
@@ -29,7 +30,7 @@ export default function Navbar() {
     if (href.startsWith("/")) {
       navigate(href);
     } else {
-      document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+      scrollToSection(href);
     }
   };
 

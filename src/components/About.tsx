@@ -294,10 +294,14 @@ export default function About() {
   useEffect(() => {
     let wheelLockUntil = 0;
     let exitCooldownUntil = 0;
+    let bypassUntil = 0;
     let wasActive = false;
+
+    const isBypassed = () => Date.now() < bypassUntil;
 
     const engageTrap = () => {
       if (trappedRef.current) return;
+      if (isBypassed()) return;
       if (Date.now() < exitCooldownUntil) return;
       trappedRef.current = true;
       pinToSection();
@@ -308,7 +312,21 @@ export default function About() {
       exitCooldownUntil = Date.now() + 700;
     };
 
+    const onSectionNav = (e: Event) => {
+      const id = (e as CustomEvent<{ id?: string }>).detail?.id || "";
+      // Programmatic jumps past About (e.g. "عرض الخدمات") must not get trapped
+      if (id && id !== "#about") {
+        bypassUntil = Date.now() + 2500;
+        releaseTrap();
+      }
+    };
+
     const onWheel = (e: WheelEvent) => {
+      if (isBypassed()) {
+        trappedRef.current = false;
+        return;
+      }
+
       const centered = isSectionCentered();
 
       // Lock only once About is centered in the viewport
@@ -348,6 +366,11 @@ export default function About() {
     };
 
     const onScroll = () => {
+      if (isBypassed()) {
+        trappedRef.current = false;
+        return;
+      }
+
       const centered = isSectionCentered();
       if (centered && !wasActive) engageTrap();
       wasActive = centered;
@@ -370,6 +393,11 @@ export default function About() {
     };
 
     const onTouchMove = (e: TouchEvent) => {
+      if (isBypassed()) {
+        trappedRef.current = false;
+        return;
+      }
+
       const centered = isSectionCentered();
       if (centered && !wasActive) engageTrap();
       wasActive = centered;
@@ -414,6 +442,7 @@ export default function About() {
     window.addEventListener("touchstart", onTouchStart, { passive: true });
     window.addEventListener("touchmove", onTouchMove, { passive: false });
     window.addEventListener("touchend", onTouchEnd);
+    window.addEventListener("section-nav", onSectionNav);
 
     return () => {
       window.removeEventListener("wheel", onWheel);
@@ -421,6 +450,7 @@ export default function About() {
       window.removeEventListener("touchstart", onTouchStart);
       window.removeEventListener("touchmove", onTouchMove);
       window.removeEventListener("touchend", onTouchEnd);
+      window.removeEventListener("section-nav", onSectionNav);
       trappedRef.current = false;
     };
   }, [

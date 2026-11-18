@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { BookOpenCheck, ChevronDown, HeartHandshake } from "lucide-react";
 import heroImage from "../images/hero.jpg";
+import { scrollToSection } from "../lib/scrollToSection";
 
 const FloatingBlob = ({
   className,
@@ -33,8 +34,7 @@ const FloatingOrb = ({
 );
 
 export default function Hero() {
-  const scrollTo = (id: string) =>
-    document.querySelector(id)?.scrollIntoView({ behavior: "smooth" });
+  const scrollTo = (id: string) => scrollToSection(id);
 
   return (
     <section
@@ -153,15 +153,17 @@ export default function Hero() {
             transition={{ duration: 0.7, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
             className="flex flex-wrap gap-3 justify-start sm:gap-4 lg:justify-end"
           >
-            <button
-              onClick={() => scrollTo("#contact")}
+            <a
+              href="https://www.instagram.com/reel/DfSdQ3CxY4P/?utm_source=ig_web_copy_link&evlk=MzRlODBiNWFlZA==&avpt=MzRlODBiNWFlZA=="
+              target="_blank"
+              rel="noopener noreferrer"
               className="rounded-full px-6 py-3 text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-[0_8px_30px_rgba(212,117,106,0.45)] sm:px-8 sm:py-4 sm:text-base"
               style={{
                 background: "linear-gradient(135deg, #E8776F 0%, #D4756A 100%)",
               }}
             >
-              احجزي استشارة
-            </button>
+              ما هي خطوة
+            </a>
 
             <button
               onClick={() => scrollTo("#services")}

@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Instagram, Facebook, Youtube, Mail, Phone, Heart } from "lucide-react";
 import LogoIcon from "./LogoIcon";
+import { scrollToSection } from "../lib/scrollToSection";
 
 const navLinks = [
   { label: "حول", href: "#about" },
@@ -16,8 +17,7 @@ const socials = [
 ];
 
 export default function Footer() {
-  const scrollTo = (href: string) =>
-    document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+  const scrollTo = (href: string) => scrollToSection(href);
 
   return (
     <footer
